@@ -1,0 +1,135 @@
+.formulario
+{
+	background-color: white;
+	border-radius: 2px;
+	width: 100%;
+}
+
+.formulario .tituloFormulario
+{
+	background-color: #EB523E;
+	color: white;
+	cursor: default;
+	font-size: 19px;
+	line-height: 40px;
+	margin: 0px;
+	text-align: center;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+	width: 100%;
+	user-select: none;
+}
+
+.formulario input[type=radio], .formulario input[type=checkbox]
+{
+	margin: 8px;
+}
+
+.formulario textarea
+{
+	border: none;
+	border-radius: 2px;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+	font-family:'Helvetica','Verdana','Monaco',sans-serif;
+	font-size: 15px;
+	margin: 4px;
+	padding: 5px;
+	resize: none;
+}
+
+.formulario textarea:focus
+{
+	outline: none;
+	box-shadow: 0px 0px 2px blue;
+}
+
+.formulario input[type=submit], .formulario input[type=button]
+{
+	background-color: #D4360E;
+	border: none;
+	border-radius: 2px;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+	color: white;
+	font-size: 17px;
+	height: 30px;
+	margin: 4px;
+}
+
+.formulario input[type=submit]:hover, .formulario input[type=button]:hover
+{
+	background-color: #1497CC;
+	cursor: pointer;
+}
+
+.formulario input[type=submit]:focus, .formulario input[type=button]:focus
+{
+	outline: none;
+}
+
+.formulario input[type=text], .formulario input[type=password], .formulario input[type=date]
+{
+	border: none;
+	border-radius: 2px;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+	font-size: 15px;
+	height: 28px;
+	margin: 4px;
+	min-width: 10px;
+	padding: 5px;
+}
+.formulario input[type=text]:focus, .formulario input[type=password]:focus, .formulario input[type=date]:focus
+{
+	outline: none;
+	box-shadow: 0px 0px 2px blue;
+}
+
+.formulario [readonly=readonly]
+{
+	background-color: #EEEEEE;
+}
+
+.formulario select
+{
+	border: none;
+	border-radius: 2px;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+	font-size: 15px;
+	height: 37px;
+	margin: 4px;
+	min-width: 10px;
+	padding: 5px;
+}
+
+.formulario select:focus
+{
+	outline: none;
+	box-shadow: 0px 0px 2px blue;
+}
+
+.formulario .seccionBotones
+{
+	text-align: right;
+	width: 100%;
+}
+
+.labelGrande label:not([class*="noLabel"])
+{
+	display: inline-block;
+	width: 300px;
+}
+
+.labelMediano label:not([class*="noLabel"])
+{
+	display: inline-block;
+	width: 200px;
+}
+
+.labelPequenio label:not([class*="noLabel"])
+{
+	display: inline-block;
+	width: 150px;
+}
+
+.sombraFormulario
+{
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+}

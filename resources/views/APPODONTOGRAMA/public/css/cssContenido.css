@@ -1,0 +1,26 @@
+.anchoCompleto
+{
+	width: 100%;
+}
+
+.contenidoInterno
+{
+	margin: 4px;
+}
+
+.displayInlineBlockMiddle
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.displayInlineBlockTop
+{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.textAlignCenter
+{
+	text-align: center;
+}

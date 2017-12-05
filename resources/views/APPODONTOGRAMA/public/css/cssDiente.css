@@ -1,0 +1,89 @@
+.diente
+{
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+	background-color: black;
+	display: inline-block;
+	height: 37px;
+	margin: 5px;
+	position: relative;
+	vertical-align: middle;
+	width: 39px;
+}
+
+.diente > div:nth-child(1)
+{
+	box-shadow: -2px 2px 1px rgba(0, 0, 0, 0.2);
+	border-bottom: 25px solid white;
+	border-right: 25px solid transparent;
+	height: 0px;
+	left: -12px;
+	position: absolute;
+	top: 6px;
+	width: 0px;
+	-webkit-transform: rotate(-135deg);
+}
+
+.diente > div:nth-child(2)
+{
+	box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+	border-bottom: 25px solid white;
+	border-left: 25px solid transparent;
+	height: 0px;
+	left: 7px;
+	position: absolute;
+	top: -12px;
+	width: 0px;
+	-webkit-transform: rotate(45deg);
+}
+
+.diente > div:nth-child(3)
+{
+	box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+	border-bottom: 25px solid white;
+	border-left: 25px solid transparent;
+	height: 0px;
+	position: absolute;
+	right: -12px;
+	top: 6px;
+	width: 0px;
+	-webkit-transform: rotate(135deg);
+}
+
+.diente > div:nth-child(4)
+{
+	box-shadow: -2px 2px 1px rgba(0, 0, 0, 0.2);
+	border-bottom: 25px solid white;
+	border-right: 25px solid transparent;
+	bottom: -12px;
+	height: 0px;
+	left: 7px;
+	position: absolute;
+	width: 0px;
+	-webkit-transform: rotate(135deg);
+}
+
+.diente > div:nth-child(5)
+{
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), -1px 1px 1px rgba(0, 0, 0, 0.2), 1px -1px 1px rgba(0, 0, 0, 0.2), -1px -1px 1px rgba(0, 0, 0, 0.2);
+	background-color: white;
+	border: 1px solid black;
+	height: 20px;
+	left: 8px; 
+	position: absolute;
+	top: 8px; 
+	width: 20px;
+}
+
+.diente > div:nth-child(6)
+{
+	cursor: pointer;
+	font-size: 12px;
+	left: 10px;
+	position: absolute;
+	top: 40px;
+}
+
+.diente > div:nth-child(6):hover
+{
+	text-decoration: underline;
+}
