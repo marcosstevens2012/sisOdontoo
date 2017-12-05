@@ -240,8 +240,7 @@ class TurnoController extends Controller
     public function destroy($id)
     {
         $turno=Turno::findOrFail($id);
-        $turno->idestado=$request->get('idestado');
-        dd($turno->idestado);
+        $turno->idestado=('3');
         $turno->update();
 
         $estados = new Turnoestado;

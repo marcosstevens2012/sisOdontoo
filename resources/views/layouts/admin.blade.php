@@ -205,28 +205,7 @@
               </ul>
             </li>
 
-                       
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-folder"></i> <span>Acceso</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              
-            </li>
-             <li>
-              <a href="#">
-                <i class="fa fa-plus-square"></i> <span>Ayuda</span>
-                <small class="label pull-right bg-red">PDF</small>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
-                <small class="label pull-right bg-yellow">IT</small>
-              </a>
-            </li>
-
-             <li class="treeview">
+              <li class="treeview">
               <a href="#">
                 <i class="fa fa-folder"></i> <span>Configuraciones</span>
                 <i class="fa fa-angle-left pull-right"></i>
@@ -244,6 +223,14 @@
                 
               </ul>
             </li>
+            <li>
+              <a href="#">
+                <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
+                <small class="label pull-right bg-yellow">IT</small>
+              </a>
+            </li>
+
+           
              <li>
               <a href="#">
                 <i class="fa fa-plus-square"></i> <span>Ayuda</span>

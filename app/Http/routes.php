@@ -21,6 +21,7 @@ Route::resource('insumo/insumo', 'InsumoController');
 Route::resource('inicio/inicio', 'InicioController');
 Route::resource('paciente/paciente', 'PacienteController');
 Route::resource('insumo/ingreso', 'IngresoController');
+Route::resource('seguridad/usuario', 'UsuarioController');
 Route::resource('insumo/proveedor', 'ProveedorController');
 Route::resource('paciente/odontograma', 'OdontogramaController');
 Route::resource('prestaciones/prestaciones', 'PrestacionProfesionalController');
@@ -31,9 +32,10 @@ Route::resource('profesional/prestacion', 'PrestacionController');
 Route::get('/buscarProvincia','PacienteController@buscarProvincia');
 Route::get('/buscarCiudad','PacienteController@buscarCiudad');
 Route::resource('transaccion/transaccion','TransaccionController');
-Route::resource('estadisticas_turnos','EstadisticasTurnosController@index');
-
+Route::resource('estadisticas_turnos','EstadisticasTurnosController');
 Route::resource('pdf','PdfController'); 
+
+Route::get('usuario/{id}','UsuarioController@update');
 
 Route::get('error', function(){ 
     abort(500);

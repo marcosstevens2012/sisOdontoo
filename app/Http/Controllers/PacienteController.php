@@ -14,6 +14,7 @@ use sisOdonto\Pais;
 use sisOdonto\Tipodocumento;
 use sisOdonto\Provincia;
 use sisOdonto\Ciudad;
+use sisOdonto\Turno;
 use Carbon\Carbon; //Fecha zona horaria
 use Response;
 use DB;
@@ -167,6 +168,14 @@ class PacienteController extends Controller
     public function destroy($id)
     {
         $paciente=paciente::findOrFail($id);
+        $estado = DB::table('turno')
+        ->select('idpaciente')->where('idpaciente','=',$id)->first();
+        dd($estado);
+        if ($estado != "" ){
+            return Redirect::to('paciente/paciente')->with('notice','El paciente tiene turno');
+             //redirecciona a la vista turn
+        }
+
         $paciente->condicion='Inactivo';
         $paciente->update();
         return Redirect::to('paciente/paciente');

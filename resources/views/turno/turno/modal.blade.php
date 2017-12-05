@@ -1,5 +1,7 @@
+
+
 <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$tur->idturno}}">
-	{{Form::Open(array('action'=>array('TurnoController@destroy',$tur->idestado),'method'=>'delete'))}}
+	{{Form::Open(array('action'=>array('TurnoController@destroy',$tur->idturno),'method'=>'delete'))}}
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -27,4 +29,6 @@
 		</div>
 	</div>
 	{{Form::Close()}}
+
+	
 </div>

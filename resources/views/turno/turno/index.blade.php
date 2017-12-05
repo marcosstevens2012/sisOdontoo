@@ -44,11 +44,10 @@
 						<td>{{$tur->fecha}}</td>
 						<td>
 						<a href="{{URL::action('TurnoController@edit', $tur->idturno)}}"><button class="btn btn-info"> Editar</button></a>
-              			<a href="{{URL::action('TurnoController@show', $tur->idturno)}}"><button class="btn btn-info"> Detalles</button></a>
-						<a href="" data-toggle="modal"><button class="edit-modal btn btn-info" data-id="{{$tur->idturno}}"
-                   		 data-name="{{$tur->idturno}}">
-                    	<span class="glyphicon glyphicon-edit"></span> Edit
-                		</button></a>
+              			<a href="{{URL::action('TurnoController@show', $tur->idturno)}}"><button class="btn btn-info"> Seguimiento</button></a>
+						<button class="edit-modal btn btn-info" data-id="{{$item->id}}" data-name="{{$item->name}}">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                </button>
 					</tr>
 					@include('turno.turno.modal')
 					@endforeach
@@ -61,6 +60,24 @@
 		</div>
 
 	</div>
+
+	<script>
+	$(document).on('click', '.edit-modal', function() {
+        $('#footer_action_button').text(" Update");
+        $('#footer_action_button').addClass('glyphicon-check');
+        $('#footer_action_button').removeClass('glyphicon-trash');
+        $('.actionBtn').addClass('btn-success');
+        $('.actionBtn').removeClass('btn-danger');
+        $('.actionBtn').addClass('edit');
+        $('.modal-title').text('Edit');
+        $('.deleteContent').hide();
+        $('.form-horizontal').show();
+        $('#fid').val($(this).data('id'));
+        $('#n').val($(this).data('name'));
+        $('#myModal').modal('show');
+    });	
+</script>
+
 <script type="text/javascript">
 $(document).ready(function(){
     $('#example1').DataTable({
