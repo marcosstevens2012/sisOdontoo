@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::resource('turno/turno', 'TurnoController');
 Route::auth();
 Route::resource('insumo/insumo', 'InsumoController');
-Route::resource('index', 'InicioController');
+Route::resource('inicio/inicio', 'InicioController');
 Route::resource('paciente/paciente', 'PacienteController');
 Route::resource('insumo/ingreso', 'IngresoController');
 Route::resource('insumo/proveedor', 'ProveedorController');
@@ -31,6 +31,7 @@ Route::resource('profesional/prestacion', 'PrestacionController');
 Route::get('/buscarProvincia','PacienteController@buscarProvincia');
 Route::get('/buscarCiudad','PacienteController@buscarCiudad');
 Route::resource('transaccion/transaccion','TransaccionController');
+Route::resource('estadisticas_turnos','EstadisticasTurnosController@index');
 
 Route::resource('pdf','PdfController'); 
 

@@ -20,7 +20,6 @@
                     <th>Fecha</th>
                     <th>Proveedor</th>
                     <th>Comprobante</th>
-                    <th>Impuesto</th>
                     <th>Total</th>
                     <th>Estado</th>
                     <th>Opciones</th>
@@ -31,7 +30,6 @@
                     <td>{{$ing->fecha_hora}}</td>
                     <td>{{$ing->nombre}}</td>
                     <td>{{$ing->tipo_comprobante.': '.$ing->serie_comprobante.'-'.$ing->num_comprobante}}</td>
-                    <td>{{$ing->impuesto}}</td>
                     <td>{{$ing->total}}</td>
                     <td>{{$ing->estado}}</td>
                     <td>

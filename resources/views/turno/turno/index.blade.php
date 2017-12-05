@@ -45,7 +45,10 @@
 						<td>
 						<a href="{{URL::action('TurnoController@edit', $tur->idturno)}}"><button class="btn btn-info"> Editar</button></a>
               			<a href="{{URL::action('TurnoController@show', $tur->idturno)}}"><button class="btn btn-info"> Detalles</button></a>
-						<a href="" data-target="#modal-delete-{{$tur->idturno}}" data-toggle="modal"><button class="btn btn-danger">Cambiar Estado</button></a>
+						<a href="" data-toggle="modal"><button class="edit-modal btn btn-info" data-id="{{$tur->idturno}}"
+                   		 data-name="{{$tur->idturno}}">
+                    	<span class="glyphicon glyphicon-edit"></span> Edit
+                		</button></a>
 					</tr>
 					@include('turno.turno.modal')
 					@endforeach

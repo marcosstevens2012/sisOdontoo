@@ -128,7 +128,7 @@
           <ul class="sidebar-menu">
             <li class="header"></li>
             <li class="treeview">
-              <a href="{{url('index')}}">
+              <a href="{{url('inicio/inicio')}}">
                 <i class="fa fa-laptop"></i>
                 <span >INCIO</span>
                 <i class="fa fa-angle-left pull-right"></i>

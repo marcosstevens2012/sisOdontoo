@@ -18,6 +18,12 @@
 	</div>
 	{!! Form::open(array('url'=>'profesional/profesional', 'method'=>'POST', 'autocomplete'=>'off', 'files'=>'true'))!!}
 	{{Form::token()}}
+	@if(Session::has('notice'))<!-- crea una alerta de q ha sido creado correctamente el usuario-->
+                
+   					<div class="alert alert-info">{{ Session::get('notice') }}</div>
+				
+        @endif
+
 		<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
@@ -30,28 +36,8 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Apellido</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un Apellido" required value="{{old('apellido')}}" type="text" name="apellido" required/>
+				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un Apellido" required value="{{old('Apellido')}}" type="text" name="apellido" required/>
 
-			</div>
-		</div>
-
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label>Consultorio</label>
-				<select name="consultorio" id="consultorio" class="consultorio form-control" >
-					@foreach($consultorios as $con)
-						<option value="{{$con->idconsultorio}}">{{$con->numero}}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-
-		
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label>Nacimiento</label>
-				<input type="date" name="nacimiento" id='nacimiento' min="1970-01-01" max="2017-01-01" title="Se necesita fecha" required value="{{old('nacimiento')}}" class="form-control" placeholder="Nacimiento">
 			</div>
 		</div>
 
@@ -79,6 +65,28 @@
 				<input name="matricula" type="number"  class="form-control" required value="{{old('matricula')}}" placeholder="MATRICULA" title="Introduzca numero de matricula">
 			</div>
 		</div>
+
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label>Consultorio</label>
+				<select name="consultorio" id="consultorio" class="consultorio form-control" >
+					@foreach($consultorios as $con)
+						<option value="{{$con->idconsultorio}}">{{$con->numero}}</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+
+		
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label>Nacimiento</label>
+				<input type="date" name="nacimiento" id='nacimiento' min="1970-01-01" max="2017-01-01" title="Se necesita fecha" required value="{{old('nacimiento')}}" class="form-control" placeholder="Nacimiento">
+			</div>
+		</div>
+
+		
 		
 
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
@@ -141,72 +149,6 @@
 			</div>
 		</div>
 
-		<div class="col-lg-12 col-xs-12">
-			<h3>Prestaciones</h3>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<label for="fecha">Prestacion</label>
-			<div class="form-group">
-				<select name="pprestacion" id="pprestacion" class="selectpicker form-control " data-live-search="true"  >
-					<option >Seleccione Prestacion</option>
-					@foreach($prestacion as $pre)
-						
-						<option value="{{$pre->idprestacion}}">{{$pre->nombre}}</option>
-						
-					@endforeach
-				</select>
-			</div>
-		</div>
-
-		
-				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-					<label>Plus $</label>
-					<div class="input-group">
-						<div class="input-group-addon">
-                    		<i class="fa fa-usd"></i>
-                  		</div>
-						
-						<input type="double" name="pplus" id="pplus" class="form-control" placeholder="Plus">
-					</div>
-				</div>
-
-				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-					<label>Tiempo(HH:MM)</label>
-					<div class="input-group">
-						<div class="input-group-addon">
-                    		<i class="fa fa-clock-o"></i>
-                  		</div>
-						<input type="text" class="form-control timepicker" onBlur="CheckTime(this)" name="ptiempo" id="ptiempo" placeholder="Tiempo"> 
-
-					</div>
-				</div>
-
-				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-					<div class="form-group">
-						<button type="button" id="bt_add" style="margin-top: 25px;" class="btn btn-primary">Agregar</button>
-					</div>
-				</div>
-
-				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-					<table id="detalles" class="table table-striped table-bordered table-condensed">
-						<thead style="background-color: #ccc">
-							<th>Opciones</th>
-							<th>Prestacion</th>
-							<th>Tiempo (hh:mm)</th>
-							<th>Plus ($)</th>
-						</thead>
-						<tfoot>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tfoot>
-						<tbody>
-						
-						</tbody>
-					</table>
-				</div>
 		
 		<div class="col-md-6 col-md-offset-3">
 			<div class="col-md-6 col-md-offset-3">
@@ -384,45 +326,6 @@
 			} 
 
 </script> 
-
-	<script>
-		$(document).ready(function(){
-			$('#bt_add').click(function(){
-				agregar();
-			});
-		});
-		var cont=0;
-	
-		
-		$('#guardar').hide();
-
-		function agregar(){
-			idprestacion = $('#pprestacion').val();
-			prestacion = $('#pprestacion option:selected').text();
-			tiempo = $('#ptiempo').val();
-			plus = $('#pplus').val();
-			if(tiempo !="" && plus !=""){
-				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="prestacion[]" value="'+idprestacion+'">'+prestacion+'</td><td><input type="time" name="tiempo[]" value="'+tiempo+'"></td><td><input type="double" name="plus[]" value="'+plus+'"></td></tr>';
-				cont++;
-				
-				$('#detalles').append(fila);
-				limpiar();
-			}else{
-				alert("Error al ingresar el horario, revise los datos");
-			}
-
-
-		}
-		function limpiar(){
-			$('#pprestacion').val("");
-			$('#ptiempo').val("");
-			$('#pplus').val("");
-		}
-
-		function eliminar(index){
-			$("#fila" + index).remove();
-		}
-	</script>
 
 	<script type="text/javascript">
 	function CheckTime(str) 

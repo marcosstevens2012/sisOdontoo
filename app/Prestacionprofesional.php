@@ -11,9 +11,7 @@ class Prestacionprofesional extends Model
     protected $primaryKey = 'idprestacionprof';
     public $timestamps = false;
     protected $fillable = [
-    	'idprofesional',
-    	'tiempo',
-    	'costo'
+    	'idprofesional'
     ];
     protected $guarded = [ ];
 }

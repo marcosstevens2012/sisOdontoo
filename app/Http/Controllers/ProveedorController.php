@@ -41,7 +41,7 @@ class ProveedorController extends Controller
             ->orwhere('per.documento','LIKE','%'.$query.'%')
             ->orderBy('p.idproveedor','desc')
              
-            ->paginate(10);
+            ->paginate(100);
             //retorna la vista en la carpeta almacen/categoria/index.php
             return view('insumo.proveedor.index',["proveedores"=>$proveedores,"searchText"=>$query]);
         }

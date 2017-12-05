@@ -2,7 +2,7 @@
 @section ('contenido')
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h3>Nuevo Insumo</h3>
+			<h3>Nueva Obra Social</h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -41,7 +41,6 @@
 				<label for="stock_min">Email</label>
 				<input type="mail" name="email" required value="{{old('email')}}" class="form-control" placeholder="Email">
 			</div>
-			
 		</div>
 
 		<div class="col-md-6 col-md-offset-3">

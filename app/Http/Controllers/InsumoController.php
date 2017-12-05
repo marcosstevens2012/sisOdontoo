@@ -28,7 +28,7 @@ class InsumoController extends Controller
             //otro campo
             ->orwhere('i.codigo','LIKE','%'.$query.'%')
     		->orderBy('i.idinsumo','desc')
-    		->paginate(7);
+    		->paginate(100);
     		//retorna la vista en la carpeta almacen/categoria/index.php
     		return view('insumo.insumo.index',["insumos"=>$insumos,"searchText"=>$query]);
     	}
@@ -75,9 +75,21 @@ class InsumoController extends Controller
     }
     public function destroy($id)
     {
+        try {
+            DB::beginTransaction();
         $insumo=Insumo::findOrFail($id);
         $insumo->estado='Inactivo';
         $insumo->update();
-        return Redirect::to('insumo/insumo');
+        DB::commit();
+        $r = 'Insumo Eliminado';
+        }
+
+        catch (\Exception $e) {
+        DB::rollback(); 
+        $r = 'No se ha podido eliminar Insumo';
+        }
+
+        return Redirect::to('insumo/insumo')->with('notice',$r); //redirecciona a la vista turno
+
     }
 }

@@ -62,8 +62,11 @@ class TurnoController extends Controller
         $personas = DB::table('persona as p')
         ->join('paciente as pac','p.idpersona','=','pac.idpersona')
         ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pac.idpaciente')
+        ->where('pac.condicion','=','Activo')
         ->get();
-        $pacientes = DB::table('paciente')->get();
+        $pacientes = DB::table('paciente as paci')
+        ->where('paci.condicion','=','Activo')
+        ->get();
         $estados = DB::table('estado_turno')->get();
         $prestaciones = DB::table('prestacion_profesional as prep')
         ->join('prestacion as pre','prep.idprestacion','=','pre.idprestacion')
@@ -79,7 +82,15 @@ class TurnoController extends Controller
         $fechamax = Carbon::now();
         $fechamax = $fechamax->format('Y-m-d');
 
-        return view("turno.turno.create",["horarios"=>$horarios, "turnos"=>$turnos,"pacientes"=>$pacientes,"personas"=>$personas, "estados"=>$estados, "prestaciones"=>$prestaciones, "fechamax"=>$fechamax]);
+        return view("turno.turno.create",["horarios"=>$horarios, "turnos"=>$turnos,"personas"=>$personas, "estados"=>$estados, "prestaciones"=>$prestaciones, "fechamax"=>$fechamax]);
+    }
+
+    public function buscarHoras(Request $request){
+
+        //it will get price if its id match with product id
+        $c=Horarios::select('hora','idhorario')->where('idhorario',$request->id)->orderBy('hora','asc')->get();
+
+        return response()->json($c);
     }
 
     public function store (TurnoFormRequest $request){
@@ -94,18 +105,21 @@ class TurnoController extends Controller
         $hora=$request->get('hora_inicio');
         $fecha=$request->get('fecha');
         $profesional=$request->get('profesional');
+        $paciente=$request->get('idpaciente');
 
         $vhora = DB::table('turno as t')
         ->where('t.hora_inicio','=',$hora)
         ->where('fecha','=',$fecha)
         ->where('idprofesional','=',$profesional)
-        
+        ->where('idpaciente','=',$paciente)
         ->first();
+
 
         $fhora = DB::table('turno as t')
         ->where('t.hora_fin','>',$hora)
         ->where('fecha','=',$fecha)
         ->where('idprofesional','=',$profesional)
+        ->where('idpaciente','=',$paciente)
         
         ->first();
         
@@ -223,10 +237,11 @@ class TurnoController extends Controller
         $estados->save();
         return Redirect::to('turno/turno');
     }
-    public function destroy($id, TurnoFormRequest $request)
+    public function destroy($id)
     {
         $turno=Turno::findOrFail($id);
         $turno->idestado=$request->get('idestado');
+        dd($turno->idestado);
         $turno->update();
 
         $estados = new Turnoestado;

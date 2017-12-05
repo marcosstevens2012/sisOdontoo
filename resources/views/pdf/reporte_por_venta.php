@@ -1,117 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Reporte Por Pais</title>
+  <head>
+    <meta charset="utf-8">
+    <title>Example 1</title>
+    <link rel="stylesheet" href="style.css" media="all" />
 <style>
  
- .col-md-12 {
-    width: 100%;
-} 
-
-.box {
-    position: relative;
-    border-radius: 3px;
-    background: #ffffff;
-    border-top: 3px solid #d2d6de;
-    margin-bottom: 20px;
-    width: 100%;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-    background-color: #ECF0F5;
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-.box-header {
-    color: #444;
-    display: block;
-    padding: 10px;
-    position: relative;
+a {
+  color: #5D6975;
+  text-decoration: underline;
 }
 
-.box-header.with-border {
-    border-bottom: 1px solid #f4f4f4;
+body {
+  margin: 30mm 8mm 2mm 30mm;
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+  font-family: Arial;
 }
 
-
-.box-header .box-title {
-    display: inline-block;
-    font-size: 18px;
-    margin: 0;
-    line-height: 1;
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
 }
 
-.box-body {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    padding: 10px;
-
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-
-.box-footer {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-top: 1px solid #f4f4f4;
-    padding: 10px;
-    background-color: #fff;
+#logo img {
+  width: 90px;
 }
 
-
-.table-bordered {
-    border: 1px solid #f4f4f4;
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
 }
 
+#project {
+  float: left;
+}
 
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 20px;
+#project span {
+  color: #5D6975;
+  text-align: right;
+  width: 52px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+#project div,
+#company div {
+  white-space: nowrap;        
 }
 
 table {
-    background-color: transparent;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
 }
 
- .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
-    border: 1px solid #f4f4f4;
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
 }
 
-
-.badge {
-    display: inline-block;
-    min-width: 10px;
-    padding: 3px 7px;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    background-color: #777;
-    border-radius: 10px;
+table th,
+table td {
+  text-align: center;
 }
 
-.bg-red {
-    background-color: #dd4b39 !important;
+table th {
+  padding: 5px 20px;
+  color: #5D6975;
+  border-bottom: 1px solid #C1CED9;
+  white-space: nowrap;        
+  font-weight: normal;
 }
 
+table .service,
+table .desc {
+  text-align: left;
+}
+
+table td {
+  padding: 20px;
+  text-align: right;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+}
 
 </style>
     
 </head>
-<body>
-
-<div class="col-md-12">
-              <div class="box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Reporte de venta a la fecha - <?=  $date; ?></h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <table class="table table-bordered">
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+        <img src="logo.png">
+      </div>
+      <h1>BRUNA DENT</h1>
+      <div id="company" class="clearfix">
+        <div>Company Name</div>
+        <div>455 Foggy Heights,<br /> AZ 85004, US</div>
+        <div>(602) 519-0450</div>
+        <div><a href="mailto:company@example.com">company@example.com</a></div>
+      </div>
+      <div id="project">
+        <div><span>PROJECT</span> Website development</div>
+        <div><span>CLIENT</span> John Doe</div>
+        <div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>
+        <div><span>EMAIL</span> <a href="mailto:john@example.com">john@example.com</a></div>
+        <div><span>DATE</span> August 17, 2015</div>
+        <div><span>DUE DATE</span> September 17, 2015</div>
+      </div>
+    </header>
+    <main>
+      <table class="table table-bordered">
                   <thead>
                      <tr>
                       <th style="width: 40px">Venta #</th>
@@ -139,18 +197,13 @@ table {
                   </tbody>
 
                   </table>
-                </div><!-- /.box-body -->
-                <div class="box-footer clearfix">
-                  
-                </div>
-              </div><!-- /.box -->
-
-              
-            </div>
-
-
-  
-</body>
+      <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+      </div>
+    </main>
+    <footer>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </footer>
+  </body>
 </html>
-
-

@@ -34,7 +34,7 @@ class IngresoController extends Controller
 
     		->orderBy('i.idingreso','desc')
     		->groupBy('i.idingreso','i.fecha_hora','per.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado')
-    		->paginate(7);
+    		->paginate(100);
     		return view('insumo.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query]);
     	}
     }

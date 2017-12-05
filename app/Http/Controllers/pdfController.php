@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use sisOdonto\Ingreso;
 use sisOdonto\Persona;
-use sisOdonto\DetalleIngreso;
 use sisOdonto\Proveedor;
 use DB;
-use Dompdf\Dompdf;
+use PDF; 
 use Carbon\Carbon; //Fecha zona horaria
 use Response;
 use Illuminate\Support\Collection;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 class PdfController extends Controller
@@ -34,15 +34,15 @@ class PdfController extends Controller
     public function index()
     {
 
-    		$ingreso=DB::table('ingreso as i')
-    		->join('proveedor as p','i.idproveedor','=','p.idproveedor')
+            $ingreso=DB::table('ingreso as i')
+            ->join('proveedor as p','i.idproveedor','=','p.idproveedor')
             ->join('persona as per','per.idpersona','=','p.idpersona')
-    		->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-    		->select('p.idproveedor', 'i.idingreso','i.fecha_hora','per.nombre','per.apellido','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precio_compra) as total'))
-    		->orderBy('i.idingreso','desc')
-    		->groupBy('i.idingreso','i.fecha_hora','per.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado', 'p.idproveedor')
-    		->paginate(7);
-    		return view('pdf.index',["ingresos"=>$ingreso]);
+            ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
+            ->select('p.idproveedor', 'i.idingreso','i.fecha_hora','per.nombre','per.apellido','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precio_compra) as total'))
+            ->orderBy('i.idingreso','desc')
+            ->groupBy('i.idingreso','i.fecha_hora','per.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado', 'p.idproveedor')
+            ->paginate(7);
+            return view('pdf.index',["ingresos"=>$ingreso]);
     }
     
 
@@ -82,7 +82,10 @@ class PdfController extends Controller
     $date = date('Y-m-d');
     $view =  \View::make($vistaurl, compact('ventap', 'date', 'ventas'))->render();
     $pdf = \App::make('dompdf.wrapper');
-    
+    $pdf->setPaper('A4');
+    $pdf->setOrientation('landscape');
+    $customPaper = array(0,0,750,700);
+    $pdf->setpaper($customPaper);
     $pdf->loadHTML($view);
     return $pdf->stream('reporte',["ventas"=>$ventap]);
     // return $this->crearPDF($venta, $vistaurl,$tipo);

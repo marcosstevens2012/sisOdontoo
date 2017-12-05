@@ -43,7 +43,7 @@ class ProfesionalController extends Controller
             ->orwhere('per.documento','LIKE','%'.$query.'%')
     		->orderBy('p.idprofesional','desc')
              
-    		->paginate(10);
+    		->paginate(100);
     		//retorna la vista en la carpeta almacen/categoria/index.php
     		return view('profesional.profesional.index',["profesionales"=>$profesionales,"searchText"=>$query]);
     	}
@@ -80,8 +80,8 @@ class ProfesionalController extends Controller
     }
 
     public function store (profesionalFormRequest $request)
-    {   
-        try {
+    {
+         try {
             DB::beginTransaction();
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
@@ -118,15 +118,11 @@ class ProfesionalController extends Controller
                     $prestacionp=new PrestacionProfesional();
                     $prestacionp->idprofesional=$profesional->idprofesional;
                     $prestacionp->idprestacion=$idprestacion[$cont];
-                    $prestacionp->tiempo=$tiempo[$cont];
-                    $prestacionp->costo=$costo[$cont];
                     $prestacionp->save();
                     $cont=$cont+1;
             }
-        
-        
         DB::commit();
-        $r = 'Turno Creado';
+        $r = 'Profesional Creado';
         }
 
         catch (\Exception $e) {
@@ -155,7 +151,25 @@ class ProfesionalController extends Controller
     public function update(ProfesionalFormRequest $request,$id)
     {
         $persona=profesional::findOrFail($id);
+        $persona->nombre=$request->get('nombre');
+        $persona->apellido=$request->get('apellido');
+        $persona->documento=$request->get('documento');
+        $persona->idtipo_documento=$request->get('idtipo_documento');
+        $persona->telefono=$request->get('telefono');
+        $persona->email=$request->get('email');
+        $persona->idciudad=$request->get('ciudadnombre');
+        $persona->direccion=$request->get('direccion');
+        $persona->observaciones=$request->get('observaciones');
+        $persona->contradicciones=$request->get('contradicciones');
+        $persona->nacimiento = $request->get('nacimiento'); // 1990-10-25
+
+              
+        $persona->update();
         
+        $profesional = Profesional::where('idpersona',$persona->idpersona)->first();
+        $profesional->consultorio=$request->get('consultorio');
+        $profesional->matricula=$request->get('matricula');
+        $profesional->update();
         return Redirect::to('profesional/profesional');
     }
    

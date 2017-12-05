@@ -43,14 +43,6 @@
 				<input type="number" class="form-control" name="pcantidad" id="pcantidad" placeholder="Cantidad"  value="{{old('cantidad')}}"/>
 			</div>
 		</div>
-	
-
-				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-					<div class="form-group">
-						<label for="precio_venta">Precio Salida ($)</label>
-						<input type="double" name="pprecio_venta" style="text-align:right " step=".01" id="pprecio_venta" disabled class="form-control" placeholder="Precio salida">
-					</div>
-				</div>
 
 		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
@@ -64,17 +56,11 @@
 							<th>Opciones</th>
 							<th>Insumo</th>
 							<th>Cantidad</th>
-							<th>Precio Salida ($)</th>
-							<th>subtotal</th>
-							
 						</thead>
 						<tfoot>
 							<th>Total</th>
 							<th></th>
 							<th></th>
-							<th></th>
-							
-							<th><h4 id="total"> 0.00</h4><input type="hidden" name="total_venta" id="total_venta"></th>
 						</tfoot>
 						<tbody>
 						
@@ -122,7 +108,6 @@
 		
 		function mostrarValores(){
 			datosArticulo = document.getElementById('pidinsumo').value.split('_');
-			$('#pprecio_venta').val(datosArticulo[1]);
 			
 		}
 
@@ -134,20 +119,14 @@
 			console.log(idarticulo);
 			articulo = $('#pidinsumo option:selected').text();
 			cantidad = $('#pcantidad').val();
-			precio_venta = $('#pprecio_venta').val();
 			
 			console.log('c..'+cantidad);
 			
-			if(idarticulo !="" && cantidad !=""  && precio_venta != ""){
-
-					subtotal[cont]=(cantidad * precio_venta);
-					total = total + subtotal[cont];
-					var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_venta" value="'+precio_venta+'"></td><td>'+subtotal[cont]+'</td></tr>';
+			if(idarticulo !="" && cantidad !=""){
+					var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td></tr>';
 					cont++;
 					limpiar();
-					$('#total').html("$ " + total);
-					$('#total_venta').val(total)
-					evaluar();
+				
 					$('#detalles').append(fila);
 				}
 				
@@ -159,22 +138,9 @@
 		}
 		function limpiar(){
 			$('#pcantidad').val("");
-
-			$('#pprecio_venta').val("");
 		}
 
-		function evaluar(){
-			if (total>0) {
-				$('#guardar').show();
-			}
-			else{
-				$('#guardar').hide();
-			}
-		}
 		function eliminar(index){
-			total=total-subtotal[index];
-			$("#total").html("$ " + total);
-			$("#total_venta").val(total);
 			$("#fila" + index).remove();
 			evaluar();
 		}

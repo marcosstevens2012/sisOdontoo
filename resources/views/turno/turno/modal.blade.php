@@ -1,6 +1,5 @@
 <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$tur->idturno}}">
-	{!!Form::model($tur, ['method'=>'PATCH', 'route'=>['turno.turno.update', $tur->idturno],'files'=>'true'])!!}
-	{{Form::token()}}
+	{{Form::Open(array('action'=>array('TurnoController@destroy',$tur->idestado),'method'=>'delete'))}}
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -17,7 +16,6 @@
 
 			<label>Estado</label>
 				<select name="idestado" id="idestado" class="form-control selectpicker" data-live-search="true">
-					
 					<option value="{{$tur->estado}}">{{$tur->estado}}</option>
 					<option value="3">Finalizado</option>
 					<option value="1">Activo</option>

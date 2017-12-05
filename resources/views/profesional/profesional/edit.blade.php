@@ -66,13 +66,13 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label name="documento" for="dni">Documento</label>
-				<input name="documento" type="number"  class="form-control" required value="{{old('dni')}}" placeholder="DNI">
+				<input name="documento" type="number"  class="form-control" required value="{{$persona->documento}}" placeholder="DNI">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label name="direccion" for="direccion">Direccion</label>
-				<input name="direccion" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="direccion" type="text"  class="form-control" required value="{{old('direccion')}}" placeholder="Direccion">
+				<input name="direccion" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="direccion" type="text"  class="form-control" required value="{{$persona->direccion}}" placeholder="Direccion">
 			</div>
 		</div>
 
@@ -113,20 +113,20 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="telefono">Telefono</label>
-				<input type="tel" name="telefono"  class="form-control" required value="{{old('telefono')}}" placeholder="Telefono">
+				<input type="tel" name="telefono"  class="form-control" required value="{{$persona->telefono}}" placeholder="Telefono">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="fecha">Email</label>
-				<input type='email' class='form-control' name="email" required value="{{old('email')}}" required 
+				<input type='email' class='form-control' name="email" required value="{{$persona->email}}" required 
 				pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" placeholder="Email">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="observaciones">Observaciones</label>
-				<textarea name="observaciones" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="observaciones"  class="form-control" rows="5" cols="10" required value="{{old('observaciones')}}"placeholder="Observaciones" required> </textarea>
+				<textarea name="observaciones" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="observaciones" class="form-control" rows="5" cols="10" required value="" placeholder="Observaciones" required>{{$persona->observaciones}} </textarea>
 			</div>
 		</div>
 		

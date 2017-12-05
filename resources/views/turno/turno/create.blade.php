@@ -30,7 +30,7 @@
 				<select name="idpaciente" id="idpaciente" class="form-control selectpicker" data-live-search="true">
 					<option>Seleccione Paciente</option>
 					@foreach($personas as $per)
-						<option value="{{$per->idpersona}}">{{$per->nombre . " " . $per->apellido}}</option>
+						<option value="{{$per->idpersona}}_{{$per->idpaciente}}">{{$per->nombre . " " . $per->apellido}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -39,7 +39,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label>Prestacion/Profesional</label>
-				<select name="idprestacion" id="idprestacion" class="form-control selectpicker">
+				<select name="idprestacion" id="idprestacion" class="form-control selectpicker" data-live-search="true">
 					<option>Seleccione</option>
 					@foreach($prestaciones as $pre)
 					<option value="{{$pre->idprestacion}}_{{$pre->tiempo}}_{{$pre->costo}}_{{$pre->idprofesional}}_{{$pre->numero}}">{{$pre->nombre . " " . $pre->profesional . " " . $pre->apellido}}</option>
@@ -59,10 +59,11 @@
 			<div class="form-group">
 				<label for="fecha">Hora Inicio</label>
 				<select name="hora_inicio" id="hora_inicio" class="form-control selectpicker" data-live-search="true">
+					<option>Seleccione Hora Inicio</option>
 					@foreach($horarios as $hor)
 						<option value="{{$hor->hora}}">{{$hor->hora}}</option>
 					@endforeach
-					<option>08:30</option>
+					
 				
 				</select>
 			</div>
@@ -97,6 +98,7 @@
 		</div>
 		
 		<input type="num" name="profesional" id="profesional" style="visibility: hidden;" readonly class="form-control" placeholder="Consultorio">
+		<input type="num" name="paciente" id="paciente" style="visibility: hidden;" readonly class="form-control" placeholder="Consultorio">
 		
 
 		
@@ -148,10 +150,12 @@ $('.').datepicker({
 		function mostrarValores(){
 			datosPrestacion = document.getElementById('idprestacion').value.split('_');
 			datosProfesional = document.getElementById('idprestacion').value.split('_');
+			datosPaciente = document.getElementById('idpaciente').value.split('_');
 			$('#ptiempo').val(datosPrestacion[1]);
 			$('#costo').val("$ " +datosPrestacion[2]);
 			$('#consultorio').val(datosProfesional[4]);
 			$('#profesional').val(datosProfesional[3]);
+			$('#paciente').val(datosPaciente[1]);
 
 			inicio = document.getElementById("hora_inicio").value;
 			fin = document.getElementById("ptiempo").value;
