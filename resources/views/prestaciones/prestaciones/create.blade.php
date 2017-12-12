@@ -17,20 +17,16 @@
 	{!! Form::open(array('url'=>'prestaciones/prestaciones', 'method'=>'POST', 'autocomplete'=>'off', 'files'=>'true'))!!}
 	{{Form::token()}}
 		<div class="row">
-		
 		<div class="col-lg-12 col-xs-12">
 			<h3>Prestaciones</h3>
 		</div>
-
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<label for="fecha">Profesional</label>
 			<div class="form-group">
 				<select name="pprofesional" id="pprofesional" class="selectpicker form-control " data-live-search="true"  >
 					<option >Seleccione Profesional</option>
-					@foreach($profesional as $pro)
-						
+					@foreach($profesional as $pro)	
 						<option value="{{$pro->idprofesional}}">{{$pro->nombre . " " . $pro->apellido}}</option>
-						
 					@endforeach
 				</select>
 			</div>

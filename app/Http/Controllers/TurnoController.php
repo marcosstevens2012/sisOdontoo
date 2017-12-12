@@ -67,6 +67,7 @@ class TurnoController extends Controller
         $pacientes = DB::table('paciente as paci')
         ->where('paci.condicion','=','Activo')
         ->get();
+
         $estados = DB::table('estado_turno')->get();
         $prestaciones = DB::table('prestacion_profesional as prep')
         ->join('prestacion as pre','prep.idprestacion','=','pre.idprestacion')
@@ -185,33 +186,32 @@ class TurnoController extends Controller
         ->select('hor.hora')
         ->get();
 
-        $paciente = DB::table('paciente as pac')
-        ->join('persona as per','per.idpersona','=','pac.idpersona')
-        ->join('turno as t','t.idpaciente','=','pac.idpaciente')
-        ->select('per.nombre','per.apellido as apellido','per.idpersona','pac.idpaciente')
-        ->where('pac.idpaciente','=',$turno->idpaciente)
+        $pacientes = DB::table('turno as pac')
+        ->join('persona as per','per.idpersona','=','pac.idpaciente')
+        ->where('pac.idturno','=',$turno->idturno)
         ->first();
 
-        $pacientes = DB::table('paciente as pac')
-        ->join('persona as per','per.idpersona','=','pac.idpersona')
-        ->select('per.nombre','per.apellido as apellido','per.idpersona','pac.idpaciente')
-        ->get();
+        $profesional = DB::table('turno as pac')
+        ->join('profesional as pro','pro.idprofesional','=','pac.idprofesional')
+        ->join('persona as per','per.idpersona','=','pro.idpersona')
+        ->where('pac.idturno','=',$turno->idturno)
+        ->first();
+        
         
         $estados = DB::table('estado_turno')->get();
-        $prestaciones = DB::table('prestacion_profesional as prep')
-        ->join('prestacion as pre','prep.idprestacion','=','pre.idprestacion')
-        ->join('profesional as pro','pro.idprofesional','=','prep.idprofesional')
-        ->join('persona as per','per.idpersona','=','pro.idpersona')
-        ->join('consultorio as con','con.idconsultorio','=','pro.consultorio')
-        ->select('per.nombre as profesional','per.apellido','pro.idprofesional','prep.tiempo','prep.costo','pre.nombre','pre.nombre','pre.idprestacion', 'con.numero')
-        ->get();
+
+        $prestaciones = DB::table('turno as t')
+        ->join('prestacion as pre','pre.idprestacion','=','t.idprestacion')
+        ->first();
+
+        
 
         $fechas = DB::table('turno as t')->select('hora_inicio','fecha')
         ->get();
 
         $fechamax = Carbon::now();
         $fechamax = $fechamax->format('Y-m-d');
-        return view("turno.turno.edit",["horarios"=>$horarios, "turno"=>$turno,"pacientes"=>$pacientes, "estados"=>$estados, "prestaciones"=>$prestaciones, "fechamax"=>$fechamax,"paciente"=>$paciente]);
+        return view("turno.turno.edit",["horarios"=>$horarios, "turno"=>$turno, "profesional"=>$profesional, "pacientes"=>$pacientes, "estados"=>$estados, "prestaciones"=>$prestaciones, "fechamax"=>$fechamax]);
         
         //return view("almacen.categoria.edit",["categoria"=>Categoria::findOrFail($id)]);
 

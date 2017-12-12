@@ -25,6 +25,14 @@
 			</div>
 		</div>
 
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group ">
+				<label> Codigo</label>
+				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('codigo')}}" type="text" name="codigo" required/>
+
+			</div>
+		</div>
+
 
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
@@ -37,7 +45,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
 				<label name="cantidad" for="cantidad">Cantidad:</label>
 				<input type="number" class="form-control" name="pcantidad" id="pcantidad" placeholder="Cantidad"  value="{{old('cantidad')}}"/>

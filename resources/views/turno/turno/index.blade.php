@@ -45,9 +45,10 @@
 						<td>
 						<a href="{{URL::action('TurnoController@edit', $tur->idturno)}}"><button class="btn btn-info"> Editar</button></a>
               			<a href="{{URL::action('TurnoController@show', $tur->idturno)}}"><button class="btn btn-info"> Seguimiento</button></a>
-						<button class="edit-modal btn btn-info" data-id="{{$item->id}}" data-name="{{$item->name}}">
-                    <span class="glyphicon glyphicon-edit"></span> Edit
-                </button>
+              			<button class="edit-modal btn btn-info" data-id="{{$tur->idturno}}" data-name="{{$tur->estado}}">
+                    	<span class="glyphicon glyphicon-edit"></span> Edit
+                		</button>
+						<!--<a href="" onclick="modalEditTurno({{$tur->idturno}})"><button class="btn btn-danger"> Eliminar</button></a>-->
 					</tr>
 					@include('turno.turno.modal')
 					@endforeach
@@ -60,6 +61,21 @@
 		</div>
 
 	</div>
+
+	<script type="text/javascript">
+		function modalEditTurno(id){
+			
+			$.post('getEstados',
+		    {
+		        id: id,
+		    },
+		    function(data, status){
+		        console.log(data);
+		    });	
+
+
+		}
+	</script>
 
 	<script>
 	$(document).on('click', '.edit-modal', function() {

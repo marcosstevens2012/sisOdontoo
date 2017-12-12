@@ -17,28 +17,25 @@
 	{!!Form::model($turno, ['method'=>'PATCH', 'route'=>['turno.turno.update', $turno->idturno],'files'=>'true'])!!}
 	{{Form::token()}}
 	<div class="row">
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4col-xs-12">
 			<div class="form-group ">
 				<label clas=>Paciente</label>
-				<select name="idpaciente" id="idpaciente" class="form-control selectpicker" data-live-search="true">
-					
-					<option>{{$turno->idpaciente}}</option>
-					@foreach($pacientes as $pac)
-						<option value="{{$pac->idpersona}}">{{$pac->nombre . " " . $pac->apellido}}</option>
-					@endforeach
-				</select>
+				
 			</div>
+			<h3 value="{{$pacientes->idpersona}}">{{$pacientes->nombre . " " . $pacientes->apellido}}</h3>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4col-xs-12">
 			<div class="form-group">
-				<label>Prestacion/Profesional</label>
-				<select name="idprestacion" id="idprestacion" class="form-control selectpicker">
-					<option>Seleccione</option>
-					@foreach($prestaciones as $pre)
-					<option value="{{$pre->idprestacion}}_{{$pre->tiempo}}_{{$pre->costo}}_{{$pre->idprofesional}}_{{$pre->numero}}">{{$pre->nombre . " " . $pre->profesional . " " . $pre->apellido}}</option>
-					@endforeach
-				</select>
+				<label>Prestacion</label>
+			</div>
+			<h3 value="{{$prestaciones->idprestacion}}">{{$prestaciones->nombre}}</h3>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group">
+				<label for="observaciones">Profesional</label>
+				<h3 value="{{$turno->idprofesional}}">{{$profesional->nombre . " " . $profesional->apellido}}</h3>
 			</div>
 		</div>
 		
@@ -69,28 +66,6 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label for="ptiempo">Tiempo</label>
-				<input type="time" name="ptiempo" id="ptiempo" value="{{$turno->tiempo_at}}" class="form-control" placeholder="Tiempo">
-			</div>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-					<div class="form-group">
-						<label for="costo">Costo($)</label>
-						<input type="double" name="costo" id="costo" value="{{$pre->costo}}" disabled class="form-control" placeholder="ARS">
-					</div>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-					<div class="form-group">
-						<label for="Consultorio">Consultorio</label>
-						<input type="num" name="consultorio" id="consultorio" readonly class="form-control" placeholder="Consultorio">
-					</div>
-		</div>
-		
-		<input type="num" name="profesional" id="profesional" value="{{$turno->idprofesional}}" style="visibility: hidden;" readonly class="form-control" placeholder="Consultorio">
 		
 
 		

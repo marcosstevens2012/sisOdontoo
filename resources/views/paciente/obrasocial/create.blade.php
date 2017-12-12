@@ -43,6 +43,44 @@
 			</div>
 		</div>
 
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group">
+				<label>Prestacion</label>
+				<select name="pidinsumo" id="pidinsumo" class="form-control selectpicker" data-live-search="true">
+				</select>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group">
+				<label name="cantidad" for="cantidad">Conseguro</label>
+				<input type="number" class="form-control" name="pcantidad" id="pcantidad" placeholder="Conseguro"  value="{{old('conseguro')}}"/>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+					<div class="form-group">
+						<button type="button" id="bt_add" style="margin-top: 25px " class="btn btn-primary btn-lg btn-block">Agregar</button>
+					</div>
+				</div>
+
+			<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<table id="detalles" class="table table-striped table-bordered table-condensed">
+						<thead style="background-color: #ccc">
+							<th>Opciones</th>
+							<th>Prestacion</th>
+							<th>Coseguro</th>
+						</thead>
+						<tfoot>
+							<th></th>
+							<th></th>
+						</tfoot>
+						<tbody>
+						
+						</tbody>
+					</table>
+				</div>
+
 		<div class="col-md-6 col-md-offset-3">
 			<div class="col-md-6 col-md-offset-3">
 			<div class="form-group">
