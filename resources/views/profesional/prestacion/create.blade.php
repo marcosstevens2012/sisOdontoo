@@ -25,13 +25,21 @@
 			</div>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group ">
 				<label> Codigo</label>
 				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('codigo')}}" type="text" name="codigo" required/>
 
 			</div>
 		</div>
+
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+					<div class="form-group">
+						<label name="tiempo" for="tiempo">Tiempo (hh:mm):</label>
+						<input type="text" class="form-control timepicker" onBlur="CheckTime(this)" name="ptiempo" id="ptiempo" placeholder="Tiempo"> 
+
+					</div>
+				</div>
 
 
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">

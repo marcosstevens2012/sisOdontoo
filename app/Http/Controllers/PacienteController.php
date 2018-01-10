@@ -123,7 +123,9 @@ class PacienteController extends Controller
    public function edit($id)
     {
         $paciente=Paciente::findOrFail($id);
-        $persona = Persona::where('idpersona',$paciente->idpersona)->first();
+        $persona = Persona::where('idpersona',$paciente->idpersona);
+
+        $pais= DB::table('pais');
         //dd($persona);
         $tipodocumentos= DB::table('tipo_documento')->get(); 
         $obrasociales = DB::table('obrasocial')->get();

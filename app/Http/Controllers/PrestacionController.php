@@ -22,7 +22,6 @@ class PrestacionController extends Controller
 {
     //constructor
     public function __construct(){
-        
 
     }
     public function index(Request $request){
@@ -57,6 +56,8 @@ class PrestacionController extends Controller
 
         $prestacion=new Prestacion;
         $prestacion->nombre=$request->get('nombre');
+        $prestacion->codigo=$request->get('codigo');
+        $prestacion->tiempo=$request->get('tiempo');
         $prestacion->save();
 
         $idarticulo = $request->get('idarticulo');
@@ -106,9 +107,7 @@ class PrestacionController extends Controller
         $prestacion=prestacion::findOrFail($id);
         $prestacion->codigo=$request->get('codigo');
         $prestacion->nombre=$request->get('nombre');
-        $prestacion->stock=$request->get('stock');
-        $prestacion->stock_min=$request->get('stock_min');
-        $prestacion->descripcion=$request->get('descripcion');
+        $prestacion->tiempo=$request->get('tiempo');
         $prestacion->update();
         return Redirect::to('profesional/prestacion');
     }

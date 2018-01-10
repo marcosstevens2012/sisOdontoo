@@ -135,14 +135,25 @@ class ProfesionalController extends Controller
     }
     public function show($id)
     {
-        return view("profesional.profesional.show",["profesional"=>profesional::findOrFail($id)]);//muestra categoria especifica
+        $profesional=Profesional::findOrFail($id);
+        $persona = Persona::where('idpersona',$profesional->idpersona)->first();
+        $tipodocumentos = Tipodocumento::all();
+        $pais= DB::table('ciudad as ciu')
+        ->join('persona as p','p.idciudad','=','ciu.idciudad')
+        ->select('ciu.nombre as ciudad','ciu.idciudad')
+        ->get();
+        $consultorios = DB::table('consultorio')->get();
+        return view("profesional.profesional.show",["persona"=>$persona, "profesional"=>$profesional, "pais"=>$pais, "consultorios"=>$consultorios, "tipodocumentos"=>$tipodocumentos]);
     }
    public function edit($id)
     {
         $profesional=Profesional::findOrFail($id);
         $persona = Persona::where('idpersona',$profesional->idpersona)->first();
         $tipodocumentos = Tipodocumento::all();
-   		$pais= Pais::all();
+   		$pais= DB::table('ciudad as ciu')
+        ->join('persona as p','p.idciudad','=','ciu.idciudad')
+        ->select('ciu.nombre as ciudad','ciu.idciudad')
+        ->get();
         $consultorios = DB::table('consultorio')->get();
         return view("profesional.profesional.edit",["persona"=>$persona, "profesional"=>$profesional, "pais"=>$pais, "consultorios"=>$consultorios, "tipodocumentos"=>$tipodocumentos]);
         //return view("almacen.categoria.edit",["categoria"=>Categoria::findOrFail($id)]);

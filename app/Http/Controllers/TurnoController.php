@@ -64,34 +64,24 @@ class TurnoController extends Controller
         ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pac.idpaciente')
         ->where('pac.condicion','=','Activo')
         ->get();
-        $pacientes = DB::table('paciente as paci')
-        ->where('paci.condicion','=','Activo')
-        ->get();
 
-        $estados = DB::table('estado_turno')->get();
-        $prestaciones = DB::table('prestacion_profesional as prep')
-        ->join('prestacion as pre','prep.idprestacion','=','pre.idprestacion')
-        ->join('profesional as pro','pro.idprofesional','=','prep.idprofesional')
-        ->join('persona as per','per.idpersona','=','pro.idpersona')
+        $insumos = DB::table('insumo')->get();
+
+        $profesionales = DB::table('persona as p')
+        ->join('profesional as pro','p.idpersona','=','pro.idpersona')
         ->join('consultorio as con','con.idconsultorio','=','pro.consultorio')
-        ->select('per.nombre as profesional','per.apellido','pro.idprofesional','prep.tiempo','prep.costo','pre.nombre','pre.nombre','pre.idprestacion', 'con.numero')
+        ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pro.idprofesional','con.numero as consultorio')
         ->get();
 
+        $prestaciones = DB::table('prestacion')->get();
+        $estados = DB::table('estado_turno')->get();
         $fechas = DB::table('turno as t')->select('hora_inicio','fecha')
         ->get();
 
         $fechamax = Carbon::now();
         $fechamax = $fechamax->format('Y-m-d');
 
-        return view("turno.turno.create",["horarios"=>$horarios, "turnos"=>$turnos,"personas"=>$personas, "estados"=>$estados, "prestaciones"=>$prestaciones, "fechamax"=>$fechamax]);
-    }
-
-    public function buscarHoras(Request $request){
-
-        //it will get price if its id match with product id
-        $c=Horarios::select('hora','idhorario')->where('idhorario',$request->id)->orderBy('hora','asc')->get();
-
-        return response()->json($c);
+        return view("turno.turno.create",["insumos"=>$insumos, "horarios"=>$horarios, "turnos"=>$turnos,"personas"=>$personas, "estados"=>$estados, "prestaciones"=>$prestaciones, "fechamax"=>$fechamax, "profesionales"=>$profesionales]);
     }
 
     public function store (TurnoFormRequest $request){
@@ -129,18 +119,10 @@ class TurnoController extends Controller
             return Redirect::to('turno/turno/create')->with('notice','Ingrese horario posterior');
              //redirecciona a la vista turn
         }
-         //dd($vhora);
-            
-        //por último checamos si hubo algún error
-
-
         $turno->hora_inicio=$request->get('hora_inicio');  
         $turno->fecha=$request->get('fecha');
-        
-
         $turno->idconsultorio=$request->get('consultorio');
         $turno->tiempo_at=$request->get('ptiempo');
-        
         $turno->hora_fin=$request->get('hora_fin');
         $turno->observaciones=$request->get('observaciones');
         $turno->save();
@@ -219,14 +201,7 @@ class TurnoController extends Controller
     public function update(TurnoFormRequest $request,$id)
     {
         $turno=Turno::findOrFail($id);
-        $turno->idpaciente=$request->get('idpaciente');
-        $turno->idprestacion=$request->get('idprestacion');
-        $turno->idprofesional=$request->get('idprofesional');
         $turno->idestado=$request->get('idestado');
-        $turno->hora_inicio=$request->get('hora_inicio');
-        $turno->hora_fin=$request->get('hora_fin');
-        $turno->observaciones=$request->get('observaciones');
-        $turno->fecha=$request->get('fecha');
         $turno->update();
 
         $date = Carbon::now();

@@ -1,8 +1,8 @@
 @extends ('layouts.admin')
 @section ('contenido')
 	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<h3>Editar Paciente </h3>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<h3 class="box-title">NUEVO MECANICO</h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -14,90 +14,84 @@
 			@endif
 		</div>
 	</div>
-	{!!Form::model($paciente, ['method'=>'PATCH', 'route'=>['paciente.paciente.update', $paciente->idpersona, $paciente->idpaciente]])!!}
+	{!! Form::open(array('url'=>'mecanico/mecanico', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
-	<div class="row">
+<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Nombre</label>
-				<input class='form-control' title="Se necesita un nombre" required value="{{$persona->nombre}}" type="text" name="nombre" required>
+				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" 
+         		title="Letras"/>
 
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
-				<label>Apellido</label>
-				<input class='form-control' title="Se necesita un nombre" required value="{{$persona->apellido}}" type="text" name="apellido" required/>
+				<label> Apellido</label>
+				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un apellido" required value="{{old('apellido')}}"type="text" name="apellido"  />
 
 			</div>
 		</div>
-
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label>Nacimiento</label>
-				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" required value="{{$persona->nacimiento}}" class="form-control" placeholder="Nacimiento">
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label>Tipo Sangre</label>
-				<select name="tipo_sangre" id="tipo_sangre" required class="form-control selectpicker">
-					<option>O-</option>
-					<option>O+</option>
-					<option>A−</option>
-					<option>A+</option>
-					<option>B−</option>
-					<option>B+</option>
-					<option>AB-</option>
-					<option>AB+</option>
-
-				</select>
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
 				<label>Tipo Documento</label>
-				<select name="idtipo_documento" id="idtipo_documento" class="form-control selectpicker" data-live-search="true">
-					@foreach($tipodocumentos as $doc)
+				<select name="tipodocumento" id="tipodocumento" required class="form-control selectpicker">
+					<option >Seleccione Documento</option>
+					@foreach($documento as $doc)
+
 						<option value="{{$doc->idtipo_documento}}">{{$doc->nombre}}</option>
+						
 					@endforeach
 				</select>
 			</div>
 		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
-				<label name="dni" for="dni">Documento</label>
-				<input name="documento" type="number"  class="form-control" required value="{{$persona->documento}}" placeholder="Documento">
+				<label name="documento" for="documento">DOCUMENTO</label>
+				<input name="documento" type="number"  class="form-control" required value="{{old('documento')}}" placeholder="DOCUMENTO" maxlength="8" >
 			</div>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group">
+				<label name="matricula" for="documento">MATRICULA</label>
+				<input name="matricula" type="number"  class="form-control" required value="{{old('matricula')}}" placeholder="DOCUMENTO" maxlength="8" >
+			</div>
+		</div>
+
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+			<div class="form-group">
+				<label>Nacimiento</label>
+				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" required value="{{old('nacimiento')}}" class="form-control" placeholder="Nacimiento" min="1800-01-01" max="2020-12-31">
+			</div>
+		</div>
+
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<label for="fecha">Pais</label>
 			<div class="form-group">
-				<select name="paisnombre" id="paisnombre" class="paisnombre form-control " data-live-search="true"  >
+				<select class="paisnombre js-states form-control" name="paisnombre"  id="paisnombre" >
+					<option >Seleccione Pais</option>
 					@foreach($pais as $pai)
-						<option ></option>
+
 						<option value="{{$pai->idpais}}">{{$pai->nombre}}</option>
+						
 					@endforeach
 				</select>
 			</div>
 		</div>
-	
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
 				<label for="fecha">Provincia</label>
-				<select name="provincianombre" id="provincianombre"  class="provincianombre form-control" >
-					<option required value="" disabled="true" selected="true"></option>
+				<select name="provincianombre" id="provincianombre" class="provincianombre form-control" >
+					<option required value="0" disabled="true" selected="true">Seleccione Provincia</option>
 				</select>
 			</div>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
 				<label for="fecha">Ciudad</label>
 				<select name="ciudadnombre" id="ciudadnombre" class="ciudadnombre form-control"  >
@@ -108,52 +102,49 @@
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label name="direccion" for="direccion">Direccion</label>
-				<input name="direccion" id="direccion" type="text"  class="form-control" required value="{{$persona->direccion}}" placeholder="Direccion">
-			</div>
-		</div>
-
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="telefono">Telefono</label>
-				<input type="tel" name="telefono"  class="form-control" required value="{{$persona->telefono}}" placeholder="Telefono">
+				<label name="email" for="email">EMAIL</label>
+				<input name="email" type="mail"  class="form-control" required value="{{old('email')}}" placeholder="EMAIL" >
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="fecha">Email</label>
-				<input type='email' class='form-control' name="email" required value="{{$persona->email}}" required placeholder="email">
-			</div>
+					<div class="form-group">
+						<label for="telefono">Telefono</label>
+						<input type="" name="telefono" id="telefono"  class="form-control" value="{{old('telefono')}}" placeholder="Telefono">
+					</div>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label>Obra Social</label>
-				<select name="idobra_social" id="idobra_social" class="form-control selectpicker" data-live-search="true">
-					@foreach($obrasociales as $obr)
-						<option value="{{$obr->idobrasocial}}">{{$obr->nombre}}</option>
-					@endforeach
-				</select>
-			</div>
+		
+
+		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+				<div class="form-group">
+					<label for="fecha">Direccion</label>
+					<input type='text' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" class='form-control' name="direccion" id="direccion" required value="{{old('email')}}" placeholder="Direccion">
+					</div>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<div class="form-group">
-				<label for="observaciones">Alertas Medicas</label>
-				<textarea name="contradicciones" id="contradicciones"  class="form-control" rows="5" cols="10" value="{{$persona->contradicciones}}" placeholder="contradicciones" required> {{$persona->contradicciones}} </textarea>
+				<label for="observaciones">Observaciones</label>
+				<textarea name="observaciones" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="observaciones"  class="form-control" rows="5" cols="10" required value="{{old('observaciones')}}"placeholder="Observaciones" required> </textarea>
 			</div>
 		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		
+	
+		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" id="guardar">
 			<div class="form-group">
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<button class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
 			</div>
 		</div>
+	   
+	  </div>
 
+	  
+</div>
 	{!!Form::close() !!}
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -239,9 +230,9 @@
     });
 </script>
 
-@push ('scripts')
+@push ('scripts') <!-- Trabajar con el script definido en el layout-->
 
-<script>
+	<script>
 		
 		$(document).ready(function() {
 
@@ -259,6 +250,16 @@
 	    
 	});
 	</script>
-@endpush
+	@endpush
+
+	<script type="text/javascript">
+
+		function aMays(e, elemento) {
+		tecla=(document.all) ? e.keyCode : e.which; 
+		 elemento.value = elemento.value.toUpperCase();
+		}
+
+	</script>
+	
 
 @endsection

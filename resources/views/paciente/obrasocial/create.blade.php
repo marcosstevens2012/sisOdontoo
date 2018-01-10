@@ -59,6 +59,13 @@
 		</div>
 
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group">
+				<label name="codigo" for="cantidad">Codigo</label>
+				<input type="number" class="form-control" name="pcantidad" id="pcantidad" placeholder="Conseguro"  value="{{old('codigo')}}"/>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 					<div class="form-group">
 						<button type="button" id="bt_add" style="margin-top: 25px " class="btn btn-primary btn-lg btn-block">Agregar</button>
 					</div>
@@ -69,9 +76,11 @@
 						<thead style="background-color: #ccc">
 							<th>Opciones</th>
 							<th>Prestacion</th>
+							<th>Codigo</th>
 							<th>Coseguro</th>
 						</thead>
 						<tfoot>
+							<th></th>
 							<th></th>
 							<th></th>
 						</tfoot>

@@ -17,14 +17,14 @@
 	{!! Form::open(array('url'=>'turno/turno', 'method'=>'POST', 'autocomplete'=>'off', 'files'=>'true'))!!}
 	{{Form::token()}}
 
-		@if(Session::has('notice'))<!-- crea una alerta de q ha sido creado correctamente el usuario-->
+		@if(Session::has('notice'))<!-- crea una alerta de q ha sido creado correctamente el turno-->
                 
    					<div class="alert alert-info">{{ Session::get('notice') }}</div>
 				
         @endif
 
 		<div class="row">
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group ">
 				<label clas=>Paciente</label>
 				<select name="idpaciente" id="idpaciente" class="form-control selectpicker" data-live-search="true">
@@ -36,13 +36,25 @@
 			</div>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group ">
+				<label clas=>Profesional</label>
+				<select name="idprofesional" id="idprofesional" class="form-control selectpicker" data-live-search="true">
+					<option>Seleccione Profesional</option>
+					@foreach($profesionales as $pro)
+						<option value="{{$pro->idprofesional}}_{{$pro->consultorio}}">{{$pro->nombre . " " . $pro->apellido}}</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
 				<label>Prestacion/Profesional</label>
 				<select name="idprestacion" id="idprestacion" class="form-control selectpicker" data-live-search="true">
 					<option>Seleccione</option>
 					@foreach($prestaciones as $pre)
-					<option value="{{$pre->idprestacion}}_{{$pre->tiempo}}_{{$pre->costo}}_{{$pre->idprofesional}}_{{$pre->numero}}">{{$pre->nombre . " " . $pre->profesional . " " . $pre->apellido}}</option>
+					<option value="{{$pre->idprestacion}}_{{$pre->tiempo}}">{{$pre->nombre . " " . $pre->tiempo}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -55,7 +67,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
 				<label for="fecha">Hora Inicio</label>
 				<select name="hora_inicio" id="hora_inicio" class="form-control selectpicker" data-live-search="true">
@@ -69,28 +81,21 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
 				<label name="hora_fin" for="hora_fin">Hora Fin</label>
 				<input type="text" name="hora_fin" id="hora_fin" class="form-control" placeholder="Hora Fin">
 			</div>
 		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
-				<label for="ptiempo">Tiempo</label>
-				<input type="time" name="ptiempo" id="ptiempo" value="{{old('ptiempo')}}" class="form-control" placeholder="Tiempo">
+				<label name="ptiempo" for="ptiempo">Tiempo</label>
+				<input type="text" name="ptiempo" id="ptiempo" class="form-control" placeholder="Tiempo">
 			</div>
 		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-					<div class="form-group">
-						<label for="costo">Costo($)</label>
-						<input type="double" name="costo" id="costo" value="{{old('costo')}}" disabled class="form-control" placeholder="ARS">
-					</div>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
 						<label for="Consultorio">Consultorio</label>
 						<input type="num" name="consultorio" id="consultorio" readonly class="form-control" placeholder="Consultorio">
@@ -128,13 +133,7 @@
 	
 
 	
-	<script>
 
-$(function() {
-$('.').datepicker({
-    startDate: '-3d'});
-}
-</script>
 
 	<script>
 
@@ -149,12 +148,11 @@ $('.').datepicker({
 		
 		function mostrarValores(){
 			datosPrestacion = document.getElementById('idprestacion').value.split('_');
-			datosProfesional = document.getElementById('idprestacion').value.split('_');
+			datosProfesional = document.getElementById('idprofesional').value.split('_');
 			datosPaciente = document.getElementById('idpaciente').value.split('_');
 			$('#ptiempo').val(datosPrestacion[1]);
-			$('#costo').val("$ " +datosPrestacion[2]);
-			$('#consultorio').val(datosProfesional[4]);
-			$('#profesional').val(datosProfesional[3]);
+			$('#consultorio').val(datosProfesional[1]);
+			$('#profesional').val(datosProfesional[0]);
 			$('#paciente').val(datosPaciente[1]);
 
 			inicio = document.getElementById("hora_inicio").value;

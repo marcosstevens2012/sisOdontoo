@@ -17,6 +17,7 @@
 			<div class="table-responsive">
 				<table id="example1" class="table table-bordered table-striped">
 					<thead>
+						<th></th>
 						<th>Paciente</th>
 						<th>Prestacion</th>
 						<th>Profesional</th>
@@ -29,6 +30,7 @@
 					<!-- bucle -->
 					@foreach ($turnos as $tur)
 					<tr>
+						<td><input type="checkbox" class="form-check-input"></td>
 						<td>{{$tur->paciente}}</td>
 						<td>{{$tur->prestacion}}</td>
 						<td>{{$tur->profesional}}</td>
@@ -43,11 +45,8 @@
 						<td>{{$tur->hora_fin}}</td>
 						<td>{{$tur->fecha}}</td>
 						<td>
-						<a href="{{URL::action('TurnoController@edit', $tur->idturno)}}"><button class="btn btn-info"> Editar</button></a>
+						<a href="{{URL::action('TurnoController@edit', $tur->idturno)}}"><button class="btn btn-info"> Estado</button></a>
               			<a href="{{URL::action('TurnoController@show', $tur->idturno)}}"><button class="btn btn-info"> Seguimiento</button></a>
-              			<button class="edit-modal btn btn-info" data-id="{{$tur->idturno}}" data-name="{{$tur->estado}}">
-                    	<span class="glyphicon glyphicon-edit"></span> Edit
-                		</button>
 						<!--<a href="" onclick="modalEditTurno({{$tur->idturno}})"><button class="btn btn-danger"> Eliminar</button></a>-->
 					</tr>
 					@include('turno.turno.modal')
@@ -61,38 +60,6 @@
 		</div>
 
 	</div>
-
-	<script type="text/javascript">
-		function modalEditTurno(id){
-			
-			$.post('getEstados',
-		    {
-		        id: id,
-		    },
-		    function(data, status){
-		        console.log(data);
-		    });	
-
-
-		}
-	</script>
-
-	<script>
-	$(document).on('click', '.edit-modal', function() {
-        $('#footer_action_button').text(" Update");
-        $('#footer_action_button').addClass('glyphicon-check');
-        $('#footer_action_button').removeClass('glyphicon-trash');
-        $('.actionBtn').addClass('btn-success');
-        $('.actionBtn').removeClass('btn-danger');
-        $('.actionBtn').addClass('edit');
-        $('.modal-title').text('Edit');
-        $('.deleteContent').hide();
-        $('.form-horizontal').show();
-        $('#fid').val($(this).data('id'));
-        $('#n').val($(this).data('name'));
-        $('#myModal').modal('show');
-    });	
-</script>
 
 <script type="text/javascript">
 $(document).ready(function(){

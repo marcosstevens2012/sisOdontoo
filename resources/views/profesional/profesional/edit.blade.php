@@ -81,8 +81,8 @@
 			<div class="form-group">
 				<select name="paisnombre" id="paisnombre" class="paisnombre form-control " data-live-search="true"  >
 					@foreach($pais as $pai)
-						<option >Seleccione Pais</option>
-						<option value="{{$pai->idpais}}">{{$pai->nombre}}</option>
+						<option value="{{$pai->idciudad}}">{{$pai->ciudad}}</option>
+						
 						
 					@endforeach
 				</select>

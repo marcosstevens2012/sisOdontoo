@@ -36,13 +36,22 @@
 			</div>
 			
 		</div>
+		
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="stock_min">Stock_minimo</label>
 				<input type="number" name="stock_min" required value="{{old('stock_min')}}" class="form-control" placeholder="Stock Minimo">
 			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="vencimiento">Vencimiento</label>
+				<input type="number" name="vencimiento" required value="{{old('vencimiento')}}" class="form-control" placeholder="Vencimiento">
+			</div>
 			
 		</div>
+
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="descripcion">Descripcion</label>

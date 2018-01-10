@@ -2,7 +2,7 @@
 @section ('contenido')
 	<div class="row">
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<h3>Editar Turno {{$turno->hora_inicio}}</h3>
+			<h3>Editar Estado Turno {{$turno->hora_inicio}}</h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -17,56 +17,17 @@
 	{!!Form::model($turno, ['method'=>'PATCH', 'route'=>['turno.turno.update', $turno->idturno],'files'=>'true'])!!}
 	{{Form::token()}}
 	<div class="row">
-		<div class="col-lg-4 col-sm-4 col-md-4col-xs-12">
-			<div class="form-group ">
-				<label clas=>Paciente</label>
-				
-			</div>
-			<h3 value="{{$pacientes->idpersona}}">{{$pacientes->nombre . " " . $pacientes->apellido}}</h3>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4col-xs-12">
-			<div class="form-group">
-				<label>Prestacion</label>
-			</div>
-			<h3 value="{{$prestaciones->idprestacion}}">{{$prestaciones->nombre}}</h3>
-		</div>
 
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
-				<label for="observaciones">Profesional</label>
-				<h3 value="{{$turno->idprofesional}}">{{$profesional->nombre . " " . $profesional->apellido}}</h3>
-			</div>
-		</div>
-		
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label for="fecha">Fecha</label>
-				<input type="date" id="fecha" name="fecha" class="form-control" data-date-format="mm/dd/yyyy" min="{{$fechamax}}" value="{{$turno->fecha}}">
-			</div>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label for="fecha">Hora Inicio</label>
+				<label for="fecha">Estado</label>
 				<select name="hora_inicio" id="hora_inicio" class="form-control selectpicker" data-live-search="true">
-					@foreach($horarios as $hor)
-						<option value="{{$hor->hora}}">{{$hor->hora}}</option>
+					@foreach($estados as $est)
+						<option value="{{$est->estado}}">{{$est->estado}}</option>
 					@endforeach
-					<option>08:30</option>
-				
 				</select>
 			</div>
 		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label name="hora_fin" for="hora_fin">Hora Fin</label>
-				<input type="text" value="{{$turno->hora_fin}}" name="hora_fin" id="hora_fin" class="form-control" placeholder="Hora Fin">
-			</div>
-		</div>
-
-		
 
 		
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -76,14 +37,13 @@
 			</div>
 		</div>
 		
-
-		
-	
 		
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="col-md-6 col-md-offset-3">
+				<button class="btn btn-danger" type="reset">Volver</button>
 				<button class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
+
 			</div>
 		</div>
 	</div>

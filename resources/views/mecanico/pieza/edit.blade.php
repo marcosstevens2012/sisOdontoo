@@ -1,8 +1,8 @@
 @extends ('layouts.admin')
 @section ('contenido')
 	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<h3>Editar Paciente </h3>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<h3>Editar mecanico </h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -14,47 +14,20 @@
 			@endif
 		</div>
 	</div>
-	{!!Form::model($paciente, ['method'=>'PATCH', 'route'=>['paciente.paciente.update', $paciente->idpersona, $paciente->idpaciente]])!!}
+	{!!Form::model($mecanico, ['method'=>'PATCH', 'route'=>['mecanico.mecanico.update', $mecanico->idpersona]])!!}
 	{{Form::token()}}
 	<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group ">
-				<label>Nombre</label>
-				<input class='form-control' title="Se necesita un nombre" required value="{{$persona->nombre}}" type="text" name="nombre" required>
-
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group ">
-				<label>Apellido</label>
-				<input class='form-control' title="Se necesita un nombre" required value="{{$persona->apellido}}" type="text" name="apellido" required/>
-
-			</div>
-		</div>
-
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label>Nacimiento</label>
-				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" required value="{{$persona->nacimiento}}" class="form-control" placeholder="Nacimiento">
+				<label for="nombre">Nombre</label>
+				<input type="text" name="nombre" required value="{{$persona->nombre}}" class="form-control" placeholder="Nombre">
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label>Tipo Sangre</label>
-				<select name="tipo_sangre" id="tipo_sangre" required class="form-control selectpicker">
-					<option>O-</option>
-					<option>O+</option>
-					<option>A−</option>
-					<option>A+</option>
-					<option>B−</option>
-					<option>B+</option>
-					<option>AB-</option>
-					<option>AB+</option>
-
-				</select>
+				<label for="apellido">Apellido</label>
+				<input type="text" name="apellido" required value="{{$persona->apellido}}" class="form-control" placeholder="Apellido">
 			</div>
 		</div>
 
@@ -71,28 +44,59 @@
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label name="dni" for="dni">Documento</label>
-				<input name="documento" type="number"  class="form-control" required value="{{$persona->documento}}" placeholder="Documento">
+				<label for="dni">Identificacion</label>
+				<input type="text" name="dni"  value="{{$persona->documento}}" class="form-control" placeholder="Num. documento">
 			</div>
 		</div>
+
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+			<div class="form-group">
+				<label>Nacimiento</label>
+				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" value="{{$persona->nacimiento}}" class="form-control" placeholder="Nacimiento">
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group">
+				<label for="telefono">Teléfono</label>
+				<input type="text" name="telefono"  value="{{$persona->telefono}}" class="form-control" placeholder="Telefono">
+			</div>
+			
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="fecha">Email</label>
+				<input type='email' class='form-control' name="email" value="{{$persona->email}}"  required placeholder="Email">
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="direccion">Direccion</label>
+				<input type="text" name="direccion" value="{{$persona->direccion}}" class="form-control" placeholder="Direccion">
+			</div>
+		</div>
+		
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<label for="fecha">Pais</label>
 			<div class="form-group">
 				<select name="paisnombre" id="paisnombre" class="paisnombre form-control " data-live-search="true"  >
+					<option value="{{$ciudad->idpais}}">{{$ciudad->pais}}</option>
 					@foreach($pais as $pai)
-						<option ></option>
 						<option value="{{$pai->idpais}}">{{$pai->nombre}}</option>
 					@endforeach
 				</select>
 			</div>
 		</div>
-	
+
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="fecha">Provincia</label>
 				<select name="provincianombre" id="provincianombre"  class="provincianombre form-control" >
-					<option required value="" disabled="true" selected="true"></option>
+					<option  value="{{$ciudad->idprovincia}}" selected="true">{{$ciudad->provincia}}</option>
+					<option  required value="{{$persona->provincianombre}}" ></option>
 				</select>
 			</div>
 		</div>
@@ -101,48 +105,23 @@
 			<div class="form-group">
 				<label for="fecha">Ciudad</label>
 				<select name="ciudadnombre" id="ciudadnombre" class="ciudadnombre form-control"  >
-					<option  value="0" disabled="true" selected="true" name="ciudadnombre" >Seleccione</option>
+					<option selected="true" value="{{$ciudad->idciudad}}">{{$ciudad->ciudad}}</option>
+					<option  value="0"   name="ciudadnombre" >Seleccione</option>
 				</select>
 			</div>
 		</div>
 
+		
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label name="direccion" for="direccion">Direccion</label>
-				<input name="direccion" id="direccion" type="text"  class="form-control" required value="{{$persona->direccion}}" placeholder="Direccion">
+				<label for="observaciones">Observaciones</label>
+				<textarea name="observaciones" id="observaciones"  class="form-control" rows="5" cols="10" required value="{{old('observaciones')}}"placeholder="Observaciones" required> </textarea>
 			</div>
 		</div>
-
-
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="telefono">Telefono</label>
-				<input type="tel" name="telefono"  class="form-control" required value="{{$persona->telefono}}" placeholder="Telefono">
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="fecha">Email</label>
-				<input type='email' class='form-control' name="email" required value="{{$persona->email}}" required placeholder="email">
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label>Obra Social</label>
-				<select name="idobra_social" id="idobra_social" class="form-control selectpicker" data-live-search="true">
-					@foreach($obrasociales as $obr)
-						<option value="{{$obr->idobrasocial}}">{{$obr->nombre}}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="observaciones">Alertas Medicas</label>
-				<textarea name="contradicciones" id="contradicciones"  class="form-control" rows="5" cols="10" value="{{$persona->contradicciones}}" placeholder="contradicciones" required> {{$persona->contradicciones}} </textarea>
+				<label for="observaciones">Contradicciones</label>
+				<textarea name="contradicciones" id="Contradicciones"  class="form-control" rows="5" cols="10" required value="{{old('Contradicciones')}}"placeholder="Observaciones" required> </textarea>
 			</div>
 		</div>
 
@@ -153,9 +132,13 @@
 			</div>
 		</div>
 
+		
+
+
+	</div>
 	{!!Form::close() !!}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -238,27 +221,5 @@
 
     });
 </script>
-
-@push ('scripts')
-
-<script>
-		
-		$(document).ready(function() {
-
-	    $('.paisnombre').select2({
-       		theme: "bootstrap"
-    	});
-	    $('.ciudadnombre').select2({
-       		theme: "bootstrap"
-    	});;
-	    $('.provincianombre').select2({
-       		theme: "bootstrap"
-    	});;
-
-    
-	    
-	});
-	</script>
-@endpush
 
 @endsection

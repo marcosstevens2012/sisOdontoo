@@ -149,13 +149,12 @@
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-th"></i>
+                <i class="fa fa-users"></i>
                 <span>Pacientes</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('paciente/paciente')}}"><i class="fa fa-circle-o"></i>Informacion Personal</a></li>
-                <li><a href="http://localhost/APPODONTOGRAMA/view/"><i class="fa fa-circle-o"></i>Odontograma</a></li>
                 <li><a href="{{url('turno/turno')}}"><i class="fa fa-circle-o"></i>Turnos</a></li>
               </ul>
             </li>
@@ -167,24 +166,41 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('paciente/obrasocial')}}"><i class="fa fa-circle-o"></i> Obra Social</a></li>
+                <li><a href="{{url('profesional/prestacion')}}"><i class="fa fa-circle-o"></i>Prestaciones</a></li>
+                <li><a href="{{url('profesional/liquidacion')}}"><i class="fa fa-circle-o"></i>Liquidacion</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-shopping-cart"></i>
+                <i class="fa fa-user-md"></i>
                 <span>Profesionales</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('profesional/profesional')}}"><i class="fa fa-circle-o"></i>Informacion Personal</a></li>
-                <li><a href="{{url('profesional/prestacion')}}"><i class="fa fa-circle-o"></i>Prestaciones</a></li>
+                
                 <li><a href="{{url('profesional/consultorio')}}"><i class="fa fa-circle-o"></i>Consultorios</a></li>
               </ul>
             </li>
 
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-shopping-cart"></i>
+                <i class="fa fa-user"></i>
+                <span>Mecanico Dental</span>
+                 <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{url('mecanico/mecanico')}}"><i class="fa fa-circle-o"></i>Informacion Personal</a></li>
+                
+                <li><a href="{{url('mecanico/pedido')}}"><i class="fa fa-circle-o"></i>Pedidos</a></li>
+
+                <li><a href="{{url('mecanico/pieza')}}"><i class="fa fa-circle-o"></i>Piezas</a></li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-money"></i>
                 <span>Transacciones</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
