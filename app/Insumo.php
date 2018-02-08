@@ -21,4 +21,33 @@ class Insumo extends Model
     	'descripcion'
     ];
     protected $guarded = [ ];
+
+
+    public function incrementStock()
+    {
+        $this->stock--;
+    }
+
+    public function decrementStock()
+    {
+        $this->verifyStockCanDecrement();
+        $this->stock++;
+    }
+
+    public function verifyStockCanDecrement()
+    {
+        if($this->stock <= 0) throw new Exception("Stock can't decrement");
+         
+    }
+
+
+class DecrementarInsumo
+{
+    public function execute($command)
+    {
+        $prestacionSeleccionada = Prestacion::findOrFail($command->prestacionId());
+        $prestacionSeleccionada->incrementStockInsumo($command->insumoId());
+        return $prestacionSeleccionada;
+    }
+}
 }

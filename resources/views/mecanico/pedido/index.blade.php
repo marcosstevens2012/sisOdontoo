@@ -2,8 +2,8 @@
 @section ('contenido')
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>LISTADO DE MECANICOS <a href="mecanico/create"><button class="btn btn-success">Nuevo</button></a></h3>
-			@include('mecanico.mecanico.search')
+			<h3>LISTADO DE PEDIDOS<a href="pedido/create"><button class="btn btn-success">Nuevo</button></a></h3>
+			@include('mecanico.pedido.search')
 		</div>
 	</div>
 	<div class="row">
@@ -12,35 +12,36 @@
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
 						
-						<th>Nombre</th>
-						<th>Apellido</th>
-						<th>Num. docu</th>
-						<th>Email</th>
+						<th>Fecha</th>
+						<th>Mecanico</th>
 						<th>Estado</th>
 						<th>Opciones</th>
 					</thead>
 					<!-- bucle -->
-					@foreach ($mecanicos as $per)
+					@foreach ($pedidos as $ped)
 					<tr>
-						
-						<td>{{$per->nombre}}</td>
-						<td>{{$per->apellido}}</td>
-						<td>{{$per->dni}}</td>
-						<td>{{$per->email}}</td>
-						<td>{{$per->estado}}</td>
+						<td>{{$ped->fecha_hora}}</td>
+						<td>{{$ped->nombre}}</td>
+						@if ($ped->estado=='Activo')
+						<td><small class="label pull-right bg-green">{{$ped->estado}}</small></td>
+						@elseif ($ped->estado=='Pendiente')
+						<td><small class="label pull-right bg-yellow">{{$ped->estado}}</small></td>
+						@else
+						<td><small class="label pull-right bg-red">{{$ped->estado}}</small></td>
+						@endif
 						<td>
-							<a href="{{URL::action('MecanicoController@show', $per->idmecanico)}}"><button class="btn btn-info"> Detalles</button></a>
-							<a href="{{URL::action('MecanicoController@edit', $per->idmecanico)}}"><button class="btn btn-info"> Editar</button></a>
-							<a href="" data-target="#modal-delete-{{$per->idmecanico}}" data-toggle="modal"><button class="btn btn-danger"> Eliminar</button></a>
+							<a href="{{URL::action('PedidoController@show', $ped->idpedido)}}"><button class="btn btn-info">Detalles</button></a>
+							<a href="{{URL::action('PedidoController@edit', $ped->idpedido)}}"><button class="btn btn-info">Editar Estado</button></a>
+							<a href="" data-target="#modal-delete-{{$ped->idpedido}}" data-toggle="modal"><button class="btn btn-danger">Finalizar</button></a>
 						</td>
 					</tr>
-					@include('mecanico.mecanico.modal')
+					@include('mecanico.pedido.modal')
 					@endforeach
 					
 				</table>
 				
 			</div>
-			{{$mecanicos->render()}}
+			{{$pedidos->render()}}
 			
 		</div>
 	</div>

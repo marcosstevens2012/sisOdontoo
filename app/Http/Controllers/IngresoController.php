@@ -69,11 +69,11 @@ class IngresoController extends Controller
 
             //recorre los articulos agregados
             $cont = 0;
-            while ($cont < count($idarticulo)) {
+            while ($cont < count($idartefacto)) {
                 # code...
                     $detalle = new DetalleIngreso();
-                    $detalle->idingreso=$ingreso->idingreso;
-                    $detalle->idarticulo=$idarticulo[$cont];
+                    $detalle->ingreso_id=$ingreso->id;
+                    $detalle->idartefacto=$idartefacto[$cont];
                     $detalle->cantidad=$cantidad[$cont];
                     $detalle->precio_compra=$precio_compra[$cont];
                     $detalle->precio_venta=$precio_venta[$cont];

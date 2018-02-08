@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use sisOdonto\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
-use sisOdonto\Http\Requests\IngresoFormRequest;
-use sisOdonto\Ingreso;
-use sisOdonto\Insumo;
-use sisOdonto\DetalleIngreso;
+use sisOdonto\Http\Requests\PedidoFormRequest;
+use sisOdonto\Pedido;
+use sisOdonto\Pieza;
+use sisOdonto\Mecanico;
+use sisOdonto\DetallePedido;
 
 use DB;
 use Carbon\Carbon; //Fecha zona horaria
@@ -25,107 +26,78 @@ class PedidoController extends Controller
     public function index(Request $request){
     	if($request){
     		$query=trim($request->get('searchText'));
-    		$ingresos=DB::table('pedido as p')
-    		->join('mecanico as m','p.idmecanico','=','mec.idmecanico')
+    		$pedido=DB::table('pedido as p')
+    		->join('mecanico as m','p.idmecanico','=','m.idmecanico')
     		->join('persona as per','m.idpersona','=','per.idpersona')
     		->join('detalle_pedido as dp','p.idpedido','=','dp.idpedido')
-    		->select('p.idingreso','p.fecha_hora','per.nombre','p.estado')
-    		->where('p.mecanico','LIKE','%'.$query.'%')
+    		->select('p.idpedido','p.fecha_hora','p.idmecanico','p.estado','per.nombre','per.apellido')
+    		->where('per.nombre','LIKE','%'.$query.'%')
     		->orderBy('p.idpedido','desc')
-    		->groupBy('p.idpedido','p.fecha_hora','per.nombre','p.impuesto','p.estado')
+    		->groupBy('p.idpedido','p.fecha_hora','p.idmecanico','p.estado','per.nombre','per.apellido')
     		->paginate(100);
-    		return view('insumo.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query]);
+    		return view('mecanico.pedido.index',["pedidos"=>$pedido,"searchText"=>$query]);
     	}
     }
     public function create(){
     	$persona=DB::table('persona as p')
-    	->join('proveedor as pro','pro.idpersona','=','p.idpersona')
-        ->where('p.condicion','=','1')
-    	->get();
-    	$insumos=DB::table('insumo as art')
-    	->select(DB::raw('CONCAT(art.codigo, " ",art.nombre) AS insumo'),'art.idinsumo')
-    	->where('art.estado','=','Activo')
-    	->get();
-    	return view("insumo.ingreso.create",["personas"=>$persona,"insumos"=>$insumos]);
+        ->join('mecanico as mec','mec.idpersona','=','p.idpersona')
+        ->where('p.condicion','=','Activo')
+        ->get();
+        $pieza=DB::table('pieza as pie')
+        ->get();
+        return view("mecanico.pedido.create",["personas"=>$persona,"piezas"=>$pieza]);
     }
-    public function store(IngresoFormRequest $request){
-        try {
-            DB::beginTransaction();
-            $ingreso = new Ingreso;
-            $ingreso->idproveedor=$request->get('idproveedor');
-            $ingreso->tipo_comprobante=$request->get('tipo_comprobante');
-            $ingreso->serie_comprobante=$request->get('serie_comprobante');
-            $ingreso->num_comprobante=$request->get('num_comprobante');
+    public function store(pedidoFormRequest $request){
+        
+            
+            $pedido = new Pedido;
+            $pedido->idmecanico=$request->get('idmecanico');
             $mytime = Carbon::now();
-            $ingreso->fecha_hora = $mytime->toDateTimeString();
-            $ingreso->estado='Activo';
-            $ingreso->save();
+            $pedido->fecha_hora = $mytime->toDateTimeString();
+            $pedido->estado='Activo';
+            $pedido->observaciones=$request->get('observaciones');
+            $pedido->save();
 
-            $idarticulo=$request->get('idinsumo');
+            $idpieza=$request->get('idpieza');
             $cantidad = $request->get('cantidad');
-            $precio_compra = $request->get('precio_compra');
-            $precio_venta = $request->get('precio_venta');
-
+            
             //recorre los articulos agregados
             $cont = 0;
-            while ($cont < count($idarticulo)) {
+            while ($cont < count($idpieza)) {
                 # code...
-                    $detalle = new DetalleIngreso();
-                    $detalle->idingreso=$ingreso->idingreso;
-                    $detalle->idarticulo=$idarticulo[$cont];
+                    $detalle = new DetallePedido();
+                    $detalle->idpedido=$pedido->idpedido;
+                    $detalle->idpieza=$idpieza[$cont];
                     $detalle->cantidad=$cantidad[$cont];
-                    $detalle->precio_compra=$precio_compra[$cont];
-                    $detalle->precio_venta=$precio_venta[$cont];
                     $detalle->save();
                     $cont=$cont+1;
             }
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();}
+       
            
-        return Redirect::to('insumo/ingreso');
+        return Redirect::to('mecanico/pedido');
     }
 
     public function show($id){
-        $ingreso=DB::table('ingreso as i')
-            ->join('proveedor as p','i.idproveedor','=','p.idproveedor')
-            ->join('persona as per', 'per.idpersona','=','p.idpersona')
-            ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-            ->select('i.idingreso','i.fecha_hora','per.nombre','per.apellido','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precio_compra) as total'))
-            ->where('i.idingreso','=',$id)
-             ->groupBy('i.idingreso','i.fecha_hora','per.nombre','i.tipo_comprobante','i.serie_comprobante', 'i.num_comprobante','i.impuesto','i.estado')
-            ->first();
-            $detalles=DB::table('detalle_ingreso as d')
-            ->join('insumo as a', 'd.idarticulo','=', 'a.idinsumo')
-            ->select('a.nombre as articulo','d.cantidad', 'd.precio_compra', 'd.precio_venta')
-            ->where('d.idingreso','=',$id)
-
-            ->get();//obengo todos los detalles;
-            return view("insumo.ingreso.show",["ingreso"=>$ingreso,"detalles"=>$detalles]);
+        
     }
-    public function destroy($id){
-        $ingreso=Ingreso::findOrFail($id); //coincida con el id
-        $ingreso->Estado='Cancelado';
+       public function destroy($id)
+    {
+        $pedido=Pedido::findOrFail($id);
+        $turno->idestado=('3');
+        $turno->update();
 
-        $detalle = DetalleIngreso::where('idingreso',$ingreso->idingreso)
-        ->select('idarticulo')
-        ->get();
+        $estados = new PedidoeEstado;
+        $date = Carbon::now();
+        $date->toDateTimeString();  
+        $estados->idpedido=$pedido->idpedido;
+        $estados->idestado_turno=$turno->idestado;
+        $estados->fin=$date;
+        $estados->save();
 
-        $detalle->toArray();
-        dd($detalle);
-        $idarticulo=$detalle->idarticulo;
-        $cantidad = $detalle->cantidad;
+        
+        
+        return Redirect::to('mecanico/pedido');
 
-            //recorre los articulos agregados
-        $cont = 0;
-        while ($cont < count($detalle)) {
-                # code...
-            $insumo=Insumo::findOrFail($detalle->idarticulo);
-            $insumo->stock = ($insumo->stock - $cantidad);
-            $insumo->update();
-            $cont=$cont+1;
-            }
-
-        return Redirect::to('insumo/ingreso');
+        
     }
 }

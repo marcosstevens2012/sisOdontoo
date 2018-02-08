@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use SisOdonto\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
-use mol\Http\Requests\PiezasFormRequest;
-use mol\Piezas;
+use sisOdonto\Http\Requests\PiezasFormRequest;
+use sisOdonto\Piezas;
 use DB;
 
 
@@ -23,11 +23,11 @@ class PiezasController extends Controller
     		$query=trim($request->get('searchText'));
     		$piezas=DB::table('pieza as p')
     		//de la union eligo los campos que requiero
-    		->select('p.id', 'p.nombre', 'p.stock', 'p.descripcion', 'p.estado')
+    		->select('p.idpieza', 'p.nombre', 'p.descripcion', 'p.estado')
     		->where('p.nombre','LIKE','%'.$query.'%')
             //otro campo
             //->orwhere('p.nombre','LIKE','%'.$query.'%')
-    		->orderBy('p.id','desc')
+    		->orderBy('p.idpieza','desc')
     		->paginate(100);
     		//retorna la vista en la carpeta almacen/categoria/index.php
     		return view('mecanico.pieza.index',["piezas"=>$piezas,"searchText"=>$query]);
@@ -37,14 +37,14 @@ class PiezasController extends Controller
     {
         return view("mecanico.pieza.create");
     }
-    public function store (InventarioFormRequest $request)
+    public function store (PiezasFormRequest $request)
     {
-        $pieza = new Inventario;
+        $pieza = new Piezas;
         $pieza->nombre=$request->get('nombre');
         $pieza->descripcion=$request->get('descripcion');
         $pieza->estado='Activo';
         $pieza->save();
-        return Redirect::to('pieza/pieza'); //redirecciona a la vista categoria
+        return Redirect::to('mecanico/pieza'); //redirecciona a la vista categoria
 
     }
     public function show($id)
@@ -71,7 +71,7 @@ class PiezasController extends Controller
     {
         try {
         DB::beginTransaction();
-        $pieza=Inventario::findOrFail($id);
+        $pieza=Piezas::findOrFail($id);
         $pieza->estado='Inactivo';
         $pieza->update();
         DB::commit();
@@ -83,7 +83,7 @@ class PiezasController extends Controller
         $r = 'No se ha podido eliminar pieza';
         }
 
-        return Redirect::to('pieza/pieza')->with('notice',$r); //redirecciona a la vista turno
+        return Redirect::to('mecanico/pieza')->with('notice',$r); //redirecciona a la vista turno
 
     }
 }

@@ -4,17 +4,14 @@ namespace sisOdonto;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido extends Model
+class PrestacionObrasocial extends Model
 {
     //declaración de los atributos de la tabla
-    protected $table = 'pedido';
-    protected $primaryKey = 'idpedido';
+    protected $table = 'prestacion_obrasocial';
+    protected $primaryKey = 'idprestacionprof';
     public $timestamps = false;
     protected $fillable = [
-    	'fecha_hora',
-    	'estado',
-    	'idmecanico',
-    	'observaciones'
+    	'idprofesional'
     ];
     protected $guarded = [ ];
 }

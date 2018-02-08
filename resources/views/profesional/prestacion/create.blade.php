@@ -17,73 +17,71 @@
 	{!! Form::open(array('url'=>'profesional/prestacion', 'method'=>'POST', 'autocomplete'=>'off', 'files'=>'true'))!!}
 	{{Form::token()}}
 		<div class="row">
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group ">
-				<label> Nombre</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}" type="text" name="nombre" required/>
+			<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+				<div class="form-group ">
+					<label> Nombre</label>
+					<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}" type="text" name="nombre" required/>
 
+				</div>
 			</div>
-		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group ">
-				<label> Codigo</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('codigo')}}" type="text" name="codigo" required/>
+		
 
-			</div>
-		</div>
-
-		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+			<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
 						<label name="tiempo" for="tiempo">Tiempo (hh:mm):</label>
 						<input type="text" class="form-control timepicker" onBlur="CheckTime(this)" name="ptiempo" id="ptiempo" placeholder="Tiempo"> 
-
 					</div>
-				</div>
-
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label>Insumo</label>
-				<select name="pidinsumo" id="pidinsumo" class="form-control selectpicker" data-live-search="true">
-					@foreach($insumos as $ins)
-						<option value="{{$ins->idinsumo}}_{{$ins->precio_promedio}}">{{$ins->insumo}}</option>
-					@endforeach
-				</select>
 			</div>
 		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label name="cantidad" for="cantidad">Cantidad:</label>
-				<input type="number" class="form-control" name="pcantidad" id="pcantidad" placeholder="Cantidad"  value="{{old('cantidad')}}"/>
+		<div class="panel panel-primary">
+			<div class="panel-body">
+
+			<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+				<div class="form-group">
+					<label>Insumo</label>
+					<select name="pidinsumo" id="pidinsumo" class="form-control selectpicker" data-live-search="true">
+						@foreach($insumos as $ins)
+							<option value="{{$ins->idinsumo}}_{{$ins->precio_promedio}}">{{$ins->insumo}}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+				<div class="form-group">
+					<label name="cantidad" for="cantidad">Cantidad:</label>
+					<input type="number" class="form-control" name="pcantidad" id="pcantidad" placeholder="Cantidad"  value="{{old('cantidad')}}"/>
+				</div>
+			</div>
+
+			<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+						<div class="form-group">
+							<button type="button" id="bt_add" style="margin-top: 25px " class="btn btn-primary">Agregar</button>
+						</div>
+					</div>
+
+				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+						<table id="detalles" class="table table-striped table-bordered table-condensed">
+							<thead style="background-color: #ccc">
+								<th>Opciones</th>
+								<th>Insumo</th>
+								<th>Cantidad</th>
+							</thead>
+							<tfoot>
+								<th>Total</th>
+								<th></th>
+								<th></th>
+							</tfoot>
+							<tbody>
+							
+							</tbody>
+						</table>
+					</div>
 			</div>
 		</div>
-
-		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-					<div class="form-group">
-						<button type="button" id="bt_add" style="margin-top: 25px " class="btn btn-primary">Agregar</button>
-					</div>
-				</div>
-
-			<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-					<table id="detalles" class="table table-striped table-bordered table-condensed">
-						<thead style="background-color: #ccc">
-							<th>Opciones</th>
-							<th>Insumo</th>
-							<th>Cantidad</th>
-						</thead>
-						<tfoot>
-							<th>Total</th>
-							<th></th>
-							<th></th>
-						</tfoot>
-						<tbody>
-						
-						</tbody>
-					</table>
-				</div>
-
+		
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<div class="form-group">
 				<label for="observaciones">Observaciones</label>

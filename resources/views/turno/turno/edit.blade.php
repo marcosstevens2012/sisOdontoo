@@ -18,22 +18,27 @@
 	{{Form::token()}}
 	<div class="row">
 
+		
+		
+		
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label for="fecha">Estado</label>
-				<select name="hora_inicio" id="hora_inicio" class="form-control selectpicker" data-live-search="true">
-					@foreach($estados as $est)
-						<option value="{{$est->estado}}">{{$est->estado}}</option>
-					@endforeach
+			<div class="form-group ">
+				<label clas=>Estado</label>
+				<select name="estado" id="estado" class="form-control selectpicker" data-live-search="true">
+						@foreach($estados as $est)
+						<option value="{{$est->idestado_turno}}">{{$est->estado}}</option>
+						@endforeach
 				</select>
 			</div>
 		</div>
-
 		
+		<input type="num" name="profesional" id="profesional" style="visibility: hidden;" readonly class hidden ="form-control" placeholder="Consultorio">
+		<input type="num" name="paciente" id="paciente" style="visibility: hidden;" readonly class hidden="form-control" placeholder="Consultorio">
+
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<div class="form-group">
 				<label for="observaciones">Observaciones</label>
-				<textarea name="observaciones" required value="" class="form-control" rows="5" cols="10" placeholder="Observaciones" required>{{$turno->observaciones}} </textarea>
+				<textarea name="observaciones" required value="{{old('observaciones')}}" value="{{$turno->observaciones}}" class="form-control" rows="5" cols="10" placeholder="Observaciones" required>{{$turno->observaciones}}</textarea>
 			</div>
 		</div>
 		

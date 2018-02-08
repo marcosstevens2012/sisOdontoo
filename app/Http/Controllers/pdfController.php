@@ -77,7 +77,7 @@ class PdfController extends Controller
          ->join('persona as per','per.idpersona','=','p.idpersona')
          ->join('detalle_ingreso as di','di.idingreso','=','i.idingreso')
          ->where('p.idproveedor','=', $id)
-         ->select((DB::raw('sum(di.cantidad*precio_compra) as total_venta')),'i.tipo_comprobante','i.fecha_hora','i.idproveedor','estado','i.idingreso')
+         ->select((DB::raw('sum(di.cantidad*precio_compra) as total_venta')),'i.tipo_comprobante','i.fecha_hora','i.idproveedor','i.estado','i.idingreso')
          ->get();
     $date = date('Y-m-d');
     $view =  \View::make($vistaurl, compact('ventap', 'date', 'ventas'))->render();

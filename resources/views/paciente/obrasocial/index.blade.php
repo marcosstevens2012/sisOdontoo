@@ -28,7 +28,7 @@
 						<td>{{$obr->estado}}</td>
 						<td>
 							<a href="{{URL::action('ObrasocialController@edit', $obr->idobrasocial)}}"><button class="btn btn-info"> Editar</button></a>
-							<a href=""><button class="btn btn-info">Prestaciones</button></a>
+							<a href="{{URL::action('PrestacionObrasocialController@index', ['idobrasocial'=>$obr->idobrasocial])}}"><button class="btn .btn.bg-maroon">Prestaciones</button></a>
 							<a href="" data-target="#modal-delete-{{$obr->idobrasocial}}" data-toggle="modal"><button class="btn btn-danger"> Eliminar</button></a>
 						</td>
 					</tr>

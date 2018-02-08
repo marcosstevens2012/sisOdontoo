@@ -13,7 +13,7 @@ class PiezasFormRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class PiezasFormRequest extends Request
     public function rules()
     {
         return [
-            //
+            'nombre'=>'required|max:50',
+            'descripcion'=>'required'
+            
         ];
     }
 }

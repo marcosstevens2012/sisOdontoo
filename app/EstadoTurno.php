@@ -4,7 +4,7 @@ namespace sisOdonto;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pedidos extends Model
+class EstadoTurno extends Model
 {
     //
 }

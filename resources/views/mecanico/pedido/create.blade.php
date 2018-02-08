@@ -2,7 +2,7 @@
 @section ('contenido')
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h3 class="box-title">NUEVO MECANICO</h3>
+			<h3 class="box-title">NUEVO PEDIDO</h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -14,113 +14,68 @@
 			@endif
 		</div>
 	</div>
-	{!! Form::open(array('url'=>'mecanico/mecanico', 'method'=>'POST', 'autocomplete'=>'off'))!!}
+	{!! Form::open(array('url'=>'mecanico/pedido', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
 <div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group ">
-				<label>Nombre</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" 
-         		title="Letras"/>
-
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group ">
-				<label> Apellido</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un apellido" required value="{{old('apellido')}}"type="text" name="apellido"  />
-
-			</div>
-		</div>
-		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
-				<label>Tipo Documento</label>
-				<select name="tipodocumento" id="tipodocumento" required class="form-control selectpicker">
-					<option >Seleccione Documento</option>
-					@foreach($documento as $doc)
-
-						<option value="{{$doc->idtipo_documento}}">{{$doc->nombre}}</option>
-						
-					@endforeach
-				</select>
-			</div>
-		</div>
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label name="documento" for="documento">DOCUMENTO</label>
-				<input name="documento" type="number"  class="form-control" required value="{{old('documento')}}" placeholder="DOCUMENTO" maxlength="8" >
-			</div>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label name="matricula" for="documento">MATRICULA</label>
-				<input name="matricula" type="number"  class="form-control" required value="{{old('matricula')}}" placeholder="DOCUMENTO" maxlength="8" >
-			</div>
-		</div>
-
-		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-			<div class="form-group">
-				<label>Nacimiento</label>
-				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" required value="{{old('nacimiento')}}" class="form-control" placeholder="Nacimiento" min="1800-01-01" max="2020-12-31">
-			</div>
-		</div>
-
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<label for="fecha">Pais</label>
-			<div class="form-group">
-				<select class="paisnombre js-states form-control" name="paisnombre"  id="paisnombre" >
-					<option >Seleccione Pais</option>
-					@foreach($pais as $pai)
-
-						<option value="{{$pai->idpais}}">{{$pai->nombre}}</option>
-						
-					@endforeach
+				<label for="mecanico">Mecanico</label>
+				
+				<select name="idmecanico" id="idmecanico" class="form-control selectpicker" data-live-search="true">
+				@foreach($personas as $persona)
+					<option value="{{$persona->idmecanico}}">{{$persona->nombre . " " . $persona->apellido}}</option>
+				@endforeach	
 				</select>
 			</div>
 		</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label for="fecha">Provincia</label>
-				<select name="provincianombre" id="provincianombre" class="provincianombre form-control" >
-					<option required value="0" disabled="true" selected="true">Seleccione Provincia</option>
-				</select>
-			</div>
-		</div>
+	</div>
 
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label for="fecha">Ciudad</label>
-				<select name="ciudadnombre" id="ciudadnombre" class="ciudadnombre form-control"  >
-					<option  value="0" disabled="true" selected="true" name="ciudadnombre" >Seleccione</option>
-				</select>
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label name="email" for="email">EMAIL</label>
-				<input name="email" type="mail"  class="form-control" required value="{{old('email')}}" placeholder="EMAIL" >
-			</div>
-		</div>
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 					<div class="form-group">
-						<label for="telefono">Telefono</label>
-						<input type="" name="telefono" id="telefono"  class="form-control" value="{{old('telefono')}}" placeholder="Telefono">
+						<label>Pieza</label>
+						<select name="pidpieza" id="pidpieza" class="form-control selectpicker" data-live-search="true">
+							@foreach($piezas as $pieza)
+								<option value="{{$pieza->idpieza}}">{{$pieza->nombre}}</option>
+							@endforeach	
+						</select>
 					</div>
-		</div>
+				</div>
 
-		
-
-		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-				<div class="form-group">
-					<label for="fecha">Direccion</label>
-					<input type='text' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" class='form-control' name="direccion" id="direccion" required value="{{old('email')}}" placeholder="Direccion">
+				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+					<div class="form-group">
+						<label for="cantidad">Cantidad</label>
+						<input type="number" name="pcantidad" id="pcantidad" class="form-control " placeholder="cantidad">
 					</div>
+				</div>
+
+				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+					<div class="form-group">
+						<button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+					</div>
+				</div>
+
+				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<table id="detalles" class="table table-striped table-bordered table-condensed">
+						<thead style="background-color: #ccc">
+							<th>Opciones</th>
+							<th>Pieza</th>
+							<th>Cantidad</th>
+						</thead>
+						<tfoot>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tfoot>
+						<tbody>
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
 		</div>
 
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -130,7 +85,6 @@
 			</div>
 		</div>
 		
-	
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" id="guardar">
 			<div class="form-group">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -260,6 +214,43 @@
 		}
 
 	</script>
+	<script>
+		$(document).ready(function(){
+			$('#bt_add').click(function(){
+				agregar();
+			});
+		});
+		var cont=0;
 	
+		$('#guardar').hide();
+
+		function agregar(){
+			idpieza = $('#pidpieza').val();
+			pieza = $('#pidpieza option:selected').text();
+			cantidad = $('#pcantidad').val();
+			idmecanico = $('#pidmecanico').val();
+			
+			if(idpieza !="" && cantidad !="" ){
+						var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idpieza[]" value="'+idpieza+'">'+pieza+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td></tr>';
+				cont++;
+				limpiar();
+				$('#detalles').append(fila);
+			}else{
+				alert("Error al ingresar el detalle del ingreso, revise los datos del insumo");
+			}
+
+
+		}
+		function limpiar(){
+			$('#pcantidad').val("");
+			
+			$('#guardar').show();
+		}
+
+		function eliminar(index){
+			$("#fila" + index).remove();
+			
+		}
+	</script>
 
 @endsection

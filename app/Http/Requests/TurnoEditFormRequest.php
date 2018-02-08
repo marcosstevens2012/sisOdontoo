@@ -2,9 +2,10 @@
 
 namespace sisOdonto\Http\Requests;
 
-use sisOdonto\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
-class PedidosFormRequest extends Request
+class TurnoEditFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class PedidosFormRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,11 @@ class PedidosFormRequest extends Request
      */
     public function rules()
     {
+
         return [
-            //
+        'idestado_turno',
+    
         ];
     }
+    
 }

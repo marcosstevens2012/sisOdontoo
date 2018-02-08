@@ -4,7 +4,7 @@ namespace sisOdonto\Http\Requests;
 
 use sisOdonto\Http\Requests\Request;
 
-class PedidoFormRequest extends Request
+class LiquidacionFormRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class PedidoFormRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**

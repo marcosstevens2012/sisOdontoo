@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use sisOdonto\Http\Requests\ObrasocialFormRequest;
 use sisOdonto\Obrasocial;
+use sisOdonto\PrestacionObrasocial;
 use DB;
 
 
@@ -36,10 +37,14 @@ class ObrasocialController extends Controller
     }
     public function create()
     {
-        return view("paciente.obrasocial.create");
+        $prestaciones=DB::table('prestacion')->get();
+
+        return view('paciente.obrasocial.create',["prestaciones"=>$prestaciones]);
     }
     public function store (ObrasocialFormRequest $request)
     {
+         try {
+            DB::beginTransaction();
         $obrasocial=new obrasocial;
         $obrasocial->nombre=$request->get('nombre');
         $obrasocial->telefono=$request->get('telefono');
@@ -47,7 +52,33 @@ class ObrasocialController extends Controller
         $obrasocial->numero=$request->get('numero');
         $obrasocial->estado=('Activo');
         $obrasocial->save();
-        return Redirect::to('paciente/obrasocial'); //redirecciona a la vista categoria
+
+        $idprestacion=$request->get('idprestacion');
+        $coseguro = $request->get('coseguro');
+        $codigo = $request->get('codigo');
+
+            //recorre los articulos agregados
+            $cont = 0;
+            while ($cont < count($idprestacion)) {
+                # code...
+                    $prestacionp=new PrestacionObrasocial();
+                    $prestacionp->idobrasocial=$obrasocial->idobrasocial;
+                    $prestacionp->idprestacion=$idprestacion[$cont];
+                    $prestacionp->coseguro=$coseguro[$cont];
+                    $prestacionp->codigo=$codigo[$cont];
+                    $prestacionp->save();
+                    $cont=$cont+1;
+            }
+        DB::commit();
+        $r = 'Obra Social Creada';
+        }
+
+        catch (\Exception $e) {
+        DB::rollback(); 
+        $r = 'No se ha podido crear Obra Social';
+        }
+
+        return Redirect::to('paciente/obrasocial')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)

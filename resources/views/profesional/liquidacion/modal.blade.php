@@ -1,5 +1,5 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$pre->idprestacion}}">
-	{{Form::Open(array('action'=>array('PrestacionObrasocialController@destroy',$pre->idprestacionprof),'method'=>'delete'))}}
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$liq->idprofesional}}">
+	{{Form::Open(array('action'=>array('LiquidacionController@destroy',$liq->idprofesional),'method'=>'delete'))}}
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -7,10 +7,10 @@
 				aria-label="Close">
                      <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title">Eliminar Prestacion</h4>
+                <h4 class="modal-title">Eliminar Liquidacion</h4>
 			</div>
 			<div class="modal-body">
-				<p>Confirme si desea Eliminar Prestacion</p>
+				<p>Confirme si desea Eliminar el Liquidacion</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

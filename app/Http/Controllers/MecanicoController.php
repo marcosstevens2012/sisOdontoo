@@ -35,7 +35,7 @@ class mecanicoController extends Controller
             //join de dos tablas
             ->join('persona as per', 'per.idpersona', '=', 'p.idpersona')
             //de la union eligo los campos que requiero
-            ->select('p.idmecanico', 'per.estado', 'per.nombre as nombre', 'per.apellido','per.documento as dni','per.email as email' ,'per.observaciones as observaciones','per.contradicciones as contradicciones','p.estado')
+            ->select('p.idmecanico', 'p.estado as estado', 'per.nombre as nombre', 'per.apellido','per.documento as dni','per.email as email' ,'per.observaciones as observaciones','per.contradicciones as contradicciones')
             ->where('per.nombre','LIKE','%'.$query.'%')
             //otro campo
             ->orwhere('per.documento','LIKE','%'.$query.'%')
@@ -84,7 +84,7 @@ class mecanicoController extends Controller
         $persona->telefono=$request->get('telefono');
         $persona->email=$request->get('email');
         $persona->contradicciones=$request->get('contradicciones');
-        $persona->condicion='Activo';
+        
         $persona->nacimiento=$request->get('nacimiento');
         //$persona->edad = Carbon::parse($edad)->age; // 1990-10-25
         $persona->save();
@@ -92,6 +92,7 @@ class mecanicoController extends Controller
 
         $mecanico = new Mecanico;
         $mecanico->idpersona= $persona->idpersona;
+        $mecanico->estado ='Activo';
         $mecanico->matricula=$request->get('matricula');
         $mecanico->save();
         

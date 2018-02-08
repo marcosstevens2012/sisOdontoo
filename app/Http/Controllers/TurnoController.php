@@ -7,11 +7,13 @@ use sisOdonto\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use sisOdonto\Http\Requests\TurnoFormRequest;
+use sisOdonto\Http\Requests\TurnoEditFormRequest;
 use sisOdonto\Turno;
 use sisOdonto\Profesional;
 use sisOdonto\Paciente;
 use sisOdonto\Persona;
 use sisOdonto\Prestacion;
+use sisOdonto\Estado_turno;
 use sisOdonto\Turnoestado;
 use Carbon\carbon; 
 
@@ -170,38 +172,45 @@ class TurnoController extends Controller
 
         $pacientes = DB::table('turno as pac')
         ->join('persona as per','per.idpersona','=','pac.idpaciente')
+        ->join('paciente as p','p.idpersona','=','per.idpersona')
         ->where('pac.idturno','=',$turno->idturno)
+        ->select('per.idpersona','p.idpaciente','per.nombre','per.apellido')
         ->first();
 
         $profesional = DB::table('turno as pac')
         ->join('profesional as pro','pro.idprofesional','=','pac.idprofesional')
         ->join('persona as per','per.idpersona','=','pro.idpersona')
+        ->join('consultorio as con','con.idconsultorio','=','pro.consultorio')
+        ->select('per.nombre','per.apellido','pro.idprofesional','con.numero as consultorio')
         ->where('pac.idturno','=',$turno->idturno)
         ->first();
+
+        //dd($profesional);
         
         
         $estados = DB::table('estado_turno')->get();
 
         $prestaciones = DB::table('turno as t')
         ->join('prestacion as pre','pre.idprestacion','=','t.idprestacion')
+        ->select('pre.idprestacion','pre.nombre','pre..tiempo')
         ->first();
-
+        //dd($prestaciones);
         
 
         $fechas = DB::table('turno as t')->select('hora_inicio','fecha')
-        ->get();
+        ->first();
 
         $fechamax = Carbon::now();
         $fechamax = $fechamax->format('Y-m-d');
-        return view("turno.turno.edit",["horarios"=>$horarios, "turno"=>$turno, "profesional"=>$profesional, "pacientes"=>$pacientes, "estados"=>$estados, "prestaciones"=>$prestaciones, "fechamax"=>$fechamax]);
+        return view("turno.turno.edit",["horarios"=>$horarios, "turno"=>$turno, "profesional"=>$profesional, "pacientes"=>$pacientes, "estados"=>$estados, "prestacion"=>$prestaciones, "fechamax"=>$fechamax]);
         
         //return view("almacen.categoria.edit",["categoria"=>Categoria::findOrFail($id)]);
 
     }
-    public function update(TurnoFormRequest $request,$id)
+    public function update(TurnoEditFormRequest $request,$id)
     {
         $turno=Turno::findOrFail($id);
-        $turno->idestado=$request->get('idestado');
+        $turno->idestado=$request->get('estado');
         $turno->update();
 
         $date = Carbon::now();

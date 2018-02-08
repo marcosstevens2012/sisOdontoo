@@ -44,6 +44,89 @@
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
+				<label for="dni">Identificacion</label>
+				<input type="text" name="dni"  value="{{$persona->documento}}" class="form-control" placeholder="Num. documento">
+			</div>
+		</div>
+
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+			<div class="form-group">
+				<label>Nacimiento</label>
+				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" value="{{$persona->nacimiento}}" class="form-control" placeholder="Nacimiento">
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group">
+				<label for="telefono">Teléfono</label>
+				<input type="text" name="telefono"  value="{{$persona->telefono}}" class="form-control" placeholder="Telefono">
+			</div>
+			
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="fecha">Email</label>
+				<input type='email' class='form-control' name="email" value="{{$persona->email}}"  required placeholder="Email">
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="direccion">Direccion</label>
+				<input type="text" name="direccion" value="{{$persona->direccion}}" class="form-control" placeholder="Direccion">
+			</div>
+		</div>
+		
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<label for="fecha">Pais</label>
+			<div class="form-group">
+				<select name="paisnombre" id="paisnombre" class="paisnombre form-control " data-live-search="true"  >
+					<option value="{{$ciudad->idpais}}">{{$ciudad->pais}}</option>
+					@foreach($pais as $pai)
+						<option value="{{$pai->idpais}}">{{$pai->nombre}}</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="fecha">Provincia</label>
+				<select name="provincianombre" id="provincianombre"  class="provincianombre form-control" >
+					<option  value="{{$ciudad->idprovincia}}" selected="true">{{$ciudad->provincia}}</option>
+					<option  required value="{{$persona->provincianombre}}" ></option>
+				</select>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="fecha">Ciudad</label>
+				<select name="ciudadnombre" id="ciudadnombre" class="ciudadnombre form-control"  >
+					<option selected="true" value="{{$ciudad->idciudad}}">{{$ciudad->ciudad}}</option>
+					<option  value="0"   name="ciudadnombre" >Seleccione</option>
+				</select>
+			</div>
+		</div>
+
+		
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="observaciones">Observaciones</label>
+				<textarea name="observaciones" id="observaciones"  class="form-control" rows="5" cols="10" required value="{{old('observaciones')}}"placeholder="Observaciones" required> </textarea>
+			</div>
+		</div>
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="observaciones">Contradicciones</label>
+				<textarea name="contradicciones" id="Contradicciones"  class="form-control" rows="5" cols="10" required value="{{old('Contradicciones')}}"placeholder="Observaciones" required> </textarea>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
 				<button class="btn btn-primary" type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
 			</div>

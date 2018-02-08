@@ -23,13 +23,26 @@
 				<input type="text" name="nombre" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" required value="{{old('nombre')}}" class="form-control" placeholder="Nombre">
 			</div>
 		</div>
+
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
+				<div class="form-group">
+				<label>Medida</label>
+						<select name="tipo_comprobante" class="form-control selectpicker">
+						<option value="Boleta">Un</option>
+						<option value="Factura">Lts</option>
+						<option value="Ticket">Cm</option>
+						</select>
+					</div>
+				</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="codigo">Código</label>
 				<input type="number" name="codigo" required value="{{old('codigo')}}" class="form-control" placeholder="Código">
 			</div>
 		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+
+
+		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
 				<label for="stock">Stock</label>
 				<input type="number" name="stock" required value="{{old('stock')}}" class="form-control" placeholder="Stock">
@@ -37,7 +50,7 @@
 			
 		</div>
 		
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+		<div class="col-lg-2 col-sm-2 col-md-62 col-xs-12">
 			<div class="form-group">
 				<label for="stock_min">Stock_minimo</label>
 				<input type="number" name="stock_min" required value="{{old('stock_min')}}" class="form-control" placeholder="Stock Minimo">
