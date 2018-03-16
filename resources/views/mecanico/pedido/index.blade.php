@@ -20,14 +20,19 @@
 					<!-- bucle -->
 					@foreach ($pedidos as $ped)
 					<tr>
-						<td>{{$ped->fecha_hora}}</td>
-						<td>{{$ped->nombre}}</td>
+						<td align="left"> <?php 
+												$originalDate = $ped->fecha_hora;
+        										$newDate = date("d-m-Y h:i:s", strtotime($originalDate));
+
+											?>{{$newDate}}</td>
+						
+						<td>{{$ped->apellido}} {{$ped->nombre}}</td>
 						@if ($ped->estado=='Activo')
-						<td><small class="label pull-right bg-green">{{$ped->estado}}</small></td>
+						<td><small class="label pull-center bg-green">{{$ped->estado}}</small></td>
 						@elseif ($ped->estado=='Pendiente')
-						<td><small class="label pull-right bg-yellow">{{$ped->estado}}</small></td>
+						<td><small class="label pull-center bg-yellow">{{$ped->estado}}</small></td>
 						@else
-						<td><small class="label pull-right bg-red">{{$ped->estado}}</small></td>
+						<td><small class="label pull-center bg-red">{{$ped->estado}}</small></td>
 						@endif
 						<td>
 							<a href="{{URL::action('PedidoController@show', $ped->idpedido)}}"><button class="btn btn-info">Detalles</button></a>

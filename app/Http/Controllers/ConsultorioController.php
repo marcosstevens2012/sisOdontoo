@@ -16,7 +16,7 @@ class ConsultorioController extends Controller
     //constructor
     public function __construct(){
         
-
+        $this->middleware('auth');
     }
     public function index(Request $request){
     	if($request){
@@ -40,7 +40,7 @@ class ConsultorioController extends Controller
     }
     public function store (ConsultorioFormRequest $request)
     {
-        $consultorio=new consultorio;
+        $consultorio = new Consultorio;
         $consultorio->numero=$request->get('numero');
         $consultorio->piso=$request->get('piso');
         $consultorio->sillas=$request->get('sillas');

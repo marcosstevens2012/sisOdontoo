@@ -22,6 +22,8 @@ class PrestacionController extends Controller
 {
     //constructor
     public function __construct(){
+        
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -43,8 +45,7 @@ class PrestacionController extends Controller
         //$insumos=Insumo::select('nombre','idinsumo')->where('estado','Activo')->take(100)->get();
         //dd($insumos);
         $insumos=DB::table('insumo as ins')
-        ->join('detalle_ingreso as di','ins.idinsumo','=','di.idarticulo')
-        ->select(DB::raw('CONCAT(ins.codigo, " ",ins.nombre) AS insumo'),'ins.idinsumo', 'ins.stock', 'di.precio_venta as precio_promedio')
+        ->select(DB::raw('CONCAT(ins.codigo, " ",ins.nombre) AS insumo'),'ins.idinsumo', 'ins.stock')
         ->where('ins.estado','=','Activo')
         ->groupBy('insumo','ins.idinsumo','ins.stock')
         ->get();
@@ -52,21 +53,19 @@ class PrestacionController extends Controller
     }
     
     public function store (prestacionFormRequest $request)
-    {
+    {   
+        try {
+            DB::beginTransaction();
 
         $prestacion=new Prestacion;
-        $prestacion->nombre=$request->get('nombre');
-        $prestacion->codigo=$request->get('codigo');
+        $prestacion->nombre=$request->get('nombre');;
         $prestacion->tiempo=$request->get('tiempo');
         $prestacion->save();
 
         $idarticulo = $request->get('idarticulo');
+        
         $cantidad = $request->get('cantidad');
-        $costo = $request->get('total_venta');
-
-        $prestacionp = new PrestacionProfesional; 
-        $prestacionp->idprestacion=$prestacion->idprestacion;
-        $prestacionp->costo= $request->get('costo');
+        
         //recorre los insumos agregados
         $cont = 0;
             while ($cont < count($idarticulo)) {
@@ -78,7 +77,18 @@ class PrestacionController extends Controller
                 $prestacioni->save();
                 $cont=$cont+1;
             }
-        return Redirect::to('profesional/prestacion'); //redirecciona a la vista categoria
+        DB::commit();
+        //flash('Welcome Aboard!');
+                $r = 'Prestacion Creada';
+            }
+
+            catch (\Exception $e) {
+        DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Prestacion';
+            }
+
+        return Redirect::to('profesional/prestacion')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)
@@ -99,7 +109,7 @@ class PrestacionController extends Controller
         ->groupBy('insumo','ins.idinsumo','ins.stock')
         ->get();
         return view("profesional.prestacion.edit",["prestacion"=>$prestacion, "insumos"=>$insumos]);
-        //return view("almacen.categoria.edit",["categoria"=>Categoria::findOrFail($id)]);
+        
 
     }
     public function update(prestacionoFormRequest $request,$id)

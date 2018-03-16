@@ -18,8 +18,20 @@
 	{{Form::token()}}
 	<div class="row">
 
-		
-		
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group ">
+				<label value="{{$profesional->idprofesional}}">Profesional</label>
+				<input readonly class='form-control' style="text-transform:uppercase;" required value="{{$profesional->profesional}}" type="text" id="profesional" name="profesional" required/>
+
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+			<div class="form-group ">
+				<label value="{{$pacientes->idpaciente}}" >Paciente</label>
+				<input readonly class='form-control' style="text-transform:uppercase;"  required value="{{$pacientes->paciente}}" type="text" name="apellido" id="paciente" required/>
+			</div>
+		</div>
 		
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group ">
@@ -31,9 +43,51 @@
 				</select>
 			</div>
 		</div>
-		
-		<input type="num" name="profesional" id="profesional" style="visibility: hidden;" readonly class hidden ="form-control" placeholder="Consultorio">
-		<input type="num" name="paciente" id="paciente" style="visibility: hidden;" readonly class hidden="form-control" placeholder="Consultorio">
+
+		<div class="row">
+                    <div class="col-md-12">
+                         
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Lista de Prestaciones Brindadas</h3>                
+                            </div>
+                      
+                            <div class="panel-body">
+				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+					<div class="form-group">
+						<label>Artículo</label>
+						<select name="pidinsumo" id="pidinsumo" class="form-control selectpicker" data-live-search="true">
+							@foreach($prestacion as $pre)
+								<option value="{{$pre->idprestacion}}">{{$pre->nombre}}</option>
+							@endforeach	
+						</select>
+					</div>
+				</div>
+
+				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+					<div class="form-group">
+						<button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
+					</div>
+				</div>
+
+				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<table id="detalles" class="table table-striped table-bordered table-condensed">
+						<thead style="background-color: #ccc">
+							<th>Opciones</th>
+							<th>Prestacion</th>
+						</thead>
+						<tfoot>
+							<th></th>
+							<th></th>
+						</tfoot>
+						<tbody>
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+		</div>
 
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<div class="form-group">
@@ -159,6 +213,38 @@ $('.').datepicker({
 			} 
 
 </script> 
+
+<script>
+		$(document).ready(function(){
+			$('#bt_add').click(function(){
+				agregar();
+			});
+		});
+		var cont=0;
+		$('#guardar').hide();
+
+		function agregar(){
+			idprestacion = $('#pidprestacion').val();
+			prestacion = $('#pidprestacion option:selected').text();
+		
+			if(idinsumo !=""){
+				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idprestacion[]" value="'+idprestacion+'">'+prestacion+'</td></tr>';
+				cont++;
+				limpiar();
+				evaluar();
+				$('#detalles').append(fila);
+				$('#guardar').show();
+			}else{
+				alert("Error al ingresar el detalle del ingreso, revise los datos del insumo");
+			}
+
+
+		}
+		function eliminar(index){
+			$("#fila" + index).remove();
+			evaluar();
+		}
+	</script>
 
 	@endpush
 

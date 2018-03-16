@@ -8,10 +8,10 @@
 		</div>
 	</div>
 	@if(Session::has('notice'))<!-- crea una alerta de q ha sido creado correctamente el usuario-->
-                
-   					<div class="alert alert-info">{{ Session::get('notice') }}</div>
-				
-    @endif
+   					<div class="alert alert-success">
+   					<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    				<strong>Success!</strong> {{Session::get('notice') }}</div>
+        @endif
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
@@ -63,8 +63,15 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    $('#example1').DataTable();
-});
+    $('#example1').DataTable({
+
+
+    	"language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+     }
+    } );
+} 
+);
 
 </script>
 

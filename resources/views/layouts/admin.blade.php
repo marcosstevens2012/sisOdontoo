@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
 
+    <script src="{{asset('sweetalert2.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('sweetalert2.scss')}}">
+
+    <link rel="stylesheet" href="{{asset('daterangepicker.css')}}">
+
     <link href="{{asset('css/base.css')}}" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
@@ -218,6 +223,9 @@
               </a>
               <ul class="treeview-menu">
                 <li> <a href="{{URL::to('pdf')}}"> <i class="fa fa-circle-o"></i> Reporte de Ingreso</a></li>
+                <li><a href="{{url('turno/pdfgeneral')}}"><i class="fa fa-circle-o"></i> Reporte de Turnos</a></li>
+                <li><a href="{{url('paciente/pdfgeneral')}}"><i class="fa fa-circle-o"></i> Reporte de Pacientes</a></li>
+                <li><a href="{{url('almacen/insumo')}}"><i class="fa fa-circle-o"></i> Reporte de insumos</a></li>
               </ul>
             </li>
 
@@ -229,6 +237,9 @@
               <ul class="treeview-menu">
                 <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
                 
+              </ul>
+              <ul class="treeview-menu">
+                <li><a href="{{url('auditoria/auditoria')}}"><i class="fa fa-circle-o"></i> Auditoria</a></li> 
               </ul>
               <ul class="treeview-menu">
                 <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Formas de pago</a></li>
@@ -320,6 +331,10 @@
     <link href="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" rel="stylesheet"/>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
 
+    <!-- daterangepicker -->
+    <script src="{{asset('moment.min.js')}}"></script>
+    <script src="{{asset('daterangepicker.js')}}"></script> 
+    
 
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/bootstrap-select.min.js')}}"></script>

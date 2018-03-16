@@ -20,7 +20,6 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="mecanico">Mecanico</label>
-				
 				<select name="idmecanico" id="idmecanico" class="form-control selectpicker" data-live-search="true">
 				@foreach($personas as $persona)
 					<option value="{{$persona->idmecanico}}">{{$persona->nombre . " " . $persona->apellido}}</option>

@@ -19,15 +19,15 @@
 	<div class="row">
 		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
-						<label for="precio_compra">Plus</label>
-						<input type="double" name="pplus" id="pplus" class="form-control" placeholder="Plus" value="{{$prestacion->costo}}">
+						<label for="precio_compra">Importe</label>
+						<input type="double" name="pplus" id="pplus" class="form-control" placeholder="Plus" value="{{$prestacion->coseguro}}">
 					</div>
 				</div>
 
 				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
-						<label name="tiempo" for="tiempo">Tiempo (hh:mm):</label>
-						<input type="text" class="form-control timepicker" onBlur="CheckTime(this)" name="ptiempo" id="ptiempo" placeholder="Tiempo" value="{{$prestacion->tiempo}}"> 
+						<label name="tiempo" for="tiempo">Codigo</label>
+						<input type="text" class="form-control timepicker" onBlur="CheckTime(this)" name="ptiempo" id="ptiempo" placeholder="Tiempo" value="{{$prestacion->codigo}}"> 
 
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 
 	<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<button class="btn btn-primary" type="submit">Guardar</button>
+				<button class="btn btn-primary"  type="submit">Guardar</button>
 				<button class="btn btn-danger" type="reset">Cancelar</button>
 			</div>
 		</div>

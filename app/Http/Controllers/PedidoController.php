@@ -21,6 +21,8 @@ class PedidoController extends Controller
 {
     //constructor
     public function __construct(){
+        
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -39,17 +41,21 @@ class PedidoController extends Controller
     	}
     }
     public function create(){
+
+
     	$persona=DB::table('persona as p')
         ->join('mecanico as mec','mec.idpersona','=','p.idpersona')
-        ->where('p.condicion','=','Activo')
+        ->where('mec.estado','=','Activo')
         ->get();
+
         $pieza=DB::table('pieza as pie')
         ->get();
         return view("mecanico.pedido.create",["personas"=>$persona,"piezas"=>$pieza]);
     }
     public function store(pedidoFormRequest $request){
         
-            
+            try {
+                DB::beginTransaction();
             $pedido = new Pedido;
             $pedido->idmecanico=$request->get('idmecanico');
             $mytime = Carbon::now();
@@ -72,9 +78,19 @@ class PedidoController extends Controller
                     $detalle->save();
                     $cont=$cont+1;
             }
-       
-           
-        return Redirect::to('mecanico/pedido');
+            DB::commit();
+        //flash('Welcome Aboard!');
+                $r = 'Pedido Creado';
+            }
+
+            catch (\Exception $e) {
+            DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Pedido';
+            }
+
+        return Redirect::to('mecanico/pedido')->with('notice',$r); //redirecciona a la vista turno
+
     }
 
     public function show($id){

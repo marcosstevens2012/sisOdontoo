@@ -14,8 +14,9 @@ use DB;
 class InsumoController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -39,15 +40,28 @@ class InsumoController extends Controller
     }
     public function store (InsumoFormRequest $request)
     {
+
+        try {
+            DB::beginTransaction();
         $insumo=new Insumo;
         $insumo->codigo=$request->get('codigo');
         $insumo->nombre=$request->get('nombre');
         $insumo->stock=$request->get('stock');
+        $insumo->unidad=$request->get('unidad');
         $insumo->stock_min=$request->get('stock_min');
         $insumo->descripcion=$request->get('descripcion');
         $insumo->estado='Activo';
         $insumo->save();
-        return Redirect::to('insumo/insumo'); //redirecciona a la vista categoria
+         DB::commit();
+        $r = 'Insumo Creado';
+        }
+
+        catch (\Exception $e) {
+        DB::rollback(); 
+        $r = 'No se ha podido crear Insumo';
+        }
+
+        return Redirect::to('insumo/insumo')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)
@@ -78,6 +92,9 @@ class InsumoController extends Controller
         try {
             DB::beginTransaction();
         $insumo=Insumo::findOrFail($id);
+
+       
+
         $insumo->estado='Inactivo';
         $insumo->update();
         DB::commit();

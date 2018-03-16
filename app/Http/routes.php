@@ -31,13 +31,20 @@ Route::resource('profesional/liquidacion', 'LiquidacionController');
 Route::resource('paciente/obrasocial', 'ObrasocialController');
 Route::resource('prestaciones/prestaciones', 'PrestacionObrasocialController');
 Route::resource('profesional/prestacion', 'PrestacionController');
+Route::resource('auditoria/auditoria', 'AuditoriaController');
 Route::resource('mecanico/mecanico', 'MecanicoController');
 Route::resource('mecanico/pedido', 'PedidoController');
 Route::get('/buscarProvincia','PacienteController@buscarProvincia');
+Route::get('/buscarSaldo','TurnoController@buscarSaldo');
+Route::get('/buscarAlerta','TurnoController@buscarAlerta');
+Route::get('/buscarStock','TurnoController@buscarStock');
 Route::get('/buscarCiudad','PacienteController@buscarCiudad');
+Route::get('/buscarHorario','TurnoController@buscarHorario');
 Route::resource('transaccion/transaccion','TransaccionController');
 Route::resource('estadisticas_turnos','EstadisticasTurnosController');
 Route::resource('pdf','PdfController'); 
+Route::resource('turno/pdf','PdfturnoController'); 
+Route::resource('turno/pdfgeneral','PdfturnosController'); 
 
 Route::get('usuario/{id}','UsuarioController@update');
 

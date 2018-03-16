@@ -18,8 +18,9 @@ use Illuminate\Support\Collection;
 class PrestacionProfesionalController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){

@@ -1,7 +1,7 @@
 @extends ('layouts.admin')
 @section ('contenido')
 	<div class="row">
-		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		<div class="col-md-6 col-md-offset-3">
 			<h3>Editar proveedor </h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
@@ -14,74 +14,39 @@
 			@endif
 		</div>
 	</div>
-	{!!Form::model($proveedor, ['method'=>'PATCH', 'route'=>['insumo.proveedor.update', $proveedor->idpersona]])!!}
+	{!!Form::model($proveedor, ['method'=>'PATCH', 'route'=>['insumo.proveedor.update', $proveedor->idpersona, $proveedor->idproveedor]])!!}
 	{{Form::token()}}
 	<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="nombre">Nombre</label>
-				<input type="text" name="nombre" required value="{{$persona->nombre}}" class="form-control" placeholder="Nombre">
+			<div class="form-group ">
+				<label>Nombre</label>
+				<input class='form-control' title="Se necesita un nombre" required value="{{$persona->nombre}}" type="text" name="nombre" required>
+
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="direccion">Direccion</label>
-				<input type="text" name="direccion" value="{{$persona->direccion}}" class="form-control" placeholder="Direccion">
+			<div class="form-group ">
+				<label>Apellido</label>
+				<input class='form-control' title="Se necesita un nombre" required value="{{$persona->apellido}}" type="text" name="apellido" required/>
+
 			</div>
 		</div>
 
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label>Documento</label>
-				<select name="tipo_documento" class="form-control">
-				@if ($persona->tipo_documento=='DNI')
-					<option value="DNI" selected>DNI</option>
-					<option value="RUC">RUC</option>
-					<option value="PASAPORTE">PASAPORTE</option>
-				@elseif ($persona->tipo_documento=='RUC')
-					<option value="DNI">DNI</option>
-					<option value="RUC" selected>RUC</option>
-					<option value="PASAPORTE">PASAPORTE</option>
-				@else
-					<option value="DNI">DNI</option>
-					<option value="RUC">RUC</option>
-					<option value="PASAPORTE" selected>PASAPORTE</option>
-				@endif
-				</select>
-			</div>
-		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="dni">NUM. DOCUMENTO</label>
-				<input type="text" name="dni"  value="{{$persona->dni}}" class="form-control" placeholder="Num. documento">
-			</div>
-		</div>
 
-		<div class="col-md-6 col-md-offset-3">
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label>Nacimiento</label>
-				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" required value="{{old('nacimiento')}}" class="form-control" placeholder="Nacimiento">
+				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" required value="{{$persona->nacimiento}}" class="form-control" placeholder="Nacimiento">
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="telefono">Teléfono</label>
-				<input type="text" name="telefono"  value="{{$persona->telefono}}" class="form-control" placeholder="Telefono">
-			</div>
-			
-		</div>
-		
-
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<label for="fecha">Pais</label>
-			<div class="form-group">
-				<select name="paisnombre" id="paisnombre" class="paisnombre form-control " data-live-search="true"  >
-					@foreach($pais as $pai)
-						<option >Seleccione Pais</option>
-						<option value="{{$pai->idpais}}">{{$pai->nombre}}</option>
-						
+				<label>Tipo Documento</label>
+				<select name="idtipo_documento" id="idtipo_documento" class="form-control selectpicker" data-live-search="true">
+					@foreach($tipodocumentos as $doc)
+						<option value="{{$doc->idtipo_documento}}">{{$doc->nombre}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -89,9 +54,28 @@
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
+				<label name="dni" for="dni">Documento</label>
+				<input name="documento" type="number"  class="form-control" required value="{{$persona->documento}}" placeholder="Documento">
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<label for="fecha">Pais</label>
+			<div class="form-group">
+				<select name="paisnombre" id="paisnombre" class="paisnombre form-control " data-live-search="true"  >
+					@foreach($pais as $pai)
+						<option ></option>
+						<option value="{{$pai->idpais}}">{{$pai->nombre}}</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+	
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
 				<label for="fecha">Provincia</label>
 				<select name="provincianombre" id="provincianombre"  class="provincianombre form-control" >
-					<option required value="{{$persona->provincianombre}}" disabled="true" selected="true"></option>
+					<option required value="" disabled="true" selected="true"></option>
 				</select>
 			</div>
 		</div>
@@ -107,20 +91,30 @@
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
+				<label name="direccion" for="direccion">Direccion</label>
+				<input name="direccion" id="direccion" type="text"  class="form-control" required value="{{$persona->direccion}}" placeholder="Direccion">
+			</div>
+		</div>
+
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label for="telefono">Telefono</label>
+				<input type="tel" name="telefono"  class="form-control" required value="{{$persona->telefono}}" placeholder="Telefono">
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
 				<label for="fecha">Email</label>
-				<input type='email' class='form-control' name="email" required value="{{old('email')}}"required placeholder="Email">
+				<input type='email' class='form-control' name="email" required value="{{$persona->email}}" required placeholder="email">
 			</div>
 		</div>
+
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="observaciones">Observaciones</label>
-				<textarea name="observaciones" id="observaciones"  class="form-control" rows="5" cols="10" required value="{{old('observaciones')}}"placeholder="Observaciones" required> </textarea>
-			</div>
-		</div>
-		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<div class="form-group">
-				<label for="observaciones">Contradicciones</label>
-				<textarea name="contradicciones" id="Contradicciones"  class="form-control" rows="5" cols="10" required value="{{old('Contradicciones')}}"placeholder="Observaciones" required> </textarea>
+				<label for="observaciones">Alertas Medicas</label>
+				<textarea name="contradicciones" id="contradicciones"  class="form-control" rows="5" cols="10" value="{{$persona->contradicciones}}" placeholder="contradicciones" required> {{$persona->contradicciones}} </textarea>
 			</div>
 		</div>
 
@@ -131,13 +125,9 @@
 			</div>
 		</div>
 
-		
-
-
-	</div>
 	{!!Form::close() !!}
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
@@ -220,5 +210,27 @@
 
     });
 </script>
+
+@push ('scripts')
+
+<script>
+		
+		$(document).ready(function() {
+
+	    $('.paisnombre').select2({
+       		theme: "bootstrap"
+    	});
+	    $('.ciudadnombre').select2({
+       		theme: "bootstrap"
+    	});;
+	    $('.provincianombre').select2({
+       		theme: "bootstrap"
+    	});;
+
+    
+	    
+	});
+	</script>
+@endpush
 
 @endsection

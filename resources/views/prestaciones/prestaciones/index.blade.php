@@ -6,7 +6,7 @@
 
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Listado de Prestaciones</p><a href="prestaciones/create"><button class="btn btn-success">Nuevo</button></a><a href="{{url('profesional/profesional')}}"><button class="btn btn-info">Obra Social</button></a></h3>
+			<h3>Listado de Prestaciones</p><a href="prestaciones/create"><button class="btn btn-success">Nuevo</button></a><a href="{{url('obrasocial/obrasocial')}}"><button class="btn btn-info">Obra Social</button></a></h3>
 
 			@include('prestaciones.prestaciones.search')
 		</div>

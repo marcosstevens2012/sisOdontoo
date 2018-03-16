@@ -19,7 +19,6 @@
 					<tr>
 						<td>{{$pre->nombre}}</td>
 						<td>
-							<a href="{{URL::action('PrestacionController@edit', $pre->idprestacion)}}"><button class="btn btn-info"> Editar</button></a>
 							<a href="" data-target="#modal-delete-{{$pre->idprestacion}}" data-toggle="modal"><button class="btn btn-danger"> Eliminar</button></a>
 						</td>
 					</tr>

@@ -11,7 +11,10 @@ class PrestacionObrasocial extends Model
     protected $primaryKey = 'idprestacionprof';
     public $timestamps = false;
     protected $fillable = [
-    	'idprofesional'
+    	'idobrasocial',
+    	'idprestacion',
+    	'coseguro',
+    	'codigo'
     ];
     protected $guarded = [ ];
 }

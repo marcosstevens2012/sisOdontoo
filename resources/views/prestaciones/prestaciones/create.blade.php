@@ -21,12 +21,12 @@
 			<h3>Prestaciones</h3>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<label for="fecha">Profesional</label>
+			<label for="fecha">Obra social</label>
 			<div class="form-group">
-				<select name="pprofesional" id="pprofesional" class="selectpicker form-control " data-live-search="true"  >
-					<option >Seleccione Profesional</option>
-					@foreach($profesional as $pro)	
-						<option value="{{$pro->idprofesional}}">{{$pro->nombre . " " . $pro->apellido}}</option>
+				<select name="pobrasocial" id="pobrasocial" class="selectpicker form-control " data-live-search="true"  >
+					<option >Seleccione obrasocial</option>
+					@foreach($obrasocial as $pro)	
+						<option value="{{$pro->idobrasocial}}">{{$pro->nombre . " " . $pro->apellido}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -48,16 +48,15 @@
 		
 				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
-						<label for="precio_compra">Plus ($)</label>
-						<input type="double" name="pplus" id="pplus" class="form-control" placeholder="Plus">
+						<label for="precio_compra">Importe</label>
+						<input type="double" name="pplus" id="pplus" class="form-control" placeholder="Importe">
 					</div>
 				</div>
 
 				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
-						<label name="tiempo" for="tiempo">Tiempo (hh:mm):</label>
-						<input type="text" class="form-control timepicker" onBlur="CheckTime(this)" name="ptiempo" id="ptiempo" placeholder="Tiempo"> 
-
+						<label name="tiempo" for="tiempo">Codigo</label>
+						<input type="text" class="form-control timepicker" name="ptiempo" id="ptiempo" placeholder="Codigo"> 
 					</div>
 				</div>
 
@@ -79,7 +78,7 @@
 							<th></th>
 							<th></th>
 							<th></th>
-							<th>'$' . ' '.</th>
+							
 						</tfoot>
 						<tbody>
 						
@@ -164,7 +163,7 @@
 			tiempo = $('#ptiempo').val();
 			plus = $('#pplus').val();
 			if(tiempo !="" && plus !=""){
-				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="prestacion[]" value="'+idprestacion+'">'+prestacion+'</td><td><input type="time" name="tiempo[]" value="'+tiempo+'"></td><td><input type="number" name="plus[]" value="'+plus+'"></td></tr>';
+				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="prestacion[]" value="'+idprestacion+'">'+prestacion+'</td><td><input type="number" name="tiempo[]" value="'+tiempo+'"></td><td><input type="number" name="plus[]" value="'+plus+'"></td></tr>';
 				cont++;
 				limpiar();
 				$('#detalles').append(fila);

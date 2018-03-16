@@ -13,7 +13,7 @@ class UsuarioController extends Controller
 {
     //constructor
     public function __construct(){
-         $this->middleware('auth');
+         
     }
 
     public function index(Request $request){

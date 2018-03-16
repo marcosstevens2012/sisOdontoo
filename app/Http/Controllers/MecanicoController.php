@@ -23,8 +23,9 @@ use DB;
 class mecanicoController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -73,6 +74,8 @@ class mecanicoController extends Controller
 
     public function store (mecanicoFormRequest $request)
     {
+        try {
+            DB::beginTransaction();
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
         $persona->apellido=$request->get('apellido');
@@ -96,9 +99,18 @@ class mecanicoController extends Controller
         $mecanico->matricula=$request->get('matricula');
         $mecanico->save();
         
-        
-        
-        return Redirect::to('mecanico/mecanico'); //redirecciona a la vista mecanico
+       DB::commit();
+        //flash('Welcome Aboard!');
+                $r = 'Mecanico Creado';
+            }
+
+        catch (\Exception $e) {
+        DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Mecanico';
+            }
+
+        return Redirect::to('mecanico/mecanico')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)
@@ -126,9 +138,23 @@ class mecanicoController extends Controller
     }
     public function update(mecanicoFormRequest $request,$id)
     {
+        try {
+            DB::beginTransaction();
         $persona=Persona::findOrFail($id);
         
-        return Redirect::to('/mecanico');
+        DB::commit();
+        //flash('Welcome Aboard!');
+                $r = 'Mecanico Creado';
+            }
+
+        catch (\Exception $e) {
+        DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Mecanico';
+            }
+
+        return Redirect::to('mecanico/mecanico')->with('notice',$r); //redirecciona a la vista turno
+
     }
    
     public function destroy($id)

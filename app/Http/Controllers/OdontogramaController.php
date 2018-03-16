@@ -17,8 +17,9 @@ use DB;
 class OdontogramaController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){

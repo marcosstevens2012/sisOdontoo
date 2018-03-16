@@ -31,8 +31,7 @@ class IngresoFormRequest extends FormRequest
         'num_comprobante'=>'required|max:10',
         'idinsumo'=>'required',
         'cantidad'=>'required',
-        'precio_compra'=>'required',
-        'precio_venta'=>'required'
+        'precio_compra'=>'required'
         ];
     }
 }

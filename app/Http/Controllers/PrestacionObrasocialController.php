@@ -17,8 +17,9 @@ use Illuminate\Support\Collection;
 class PrestacionObrasocialController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -43,17 +44,14 @@ class PrestacionObrasocialController extends Controller
     {
         
         $prestacion = prestacion::all();
-        $obrasocial = DB::table('persona as p')
-        ->join('obrasocial as pro','p.idpersona','=','pro.idpersona')
-        ->select('p.nombre as nombre','p.apellido as apellido','pro.idobrasocial')
-        ->get();
+        $obrasocial = Obrasocial::all();
         return view('prestaciones.prestaciones.create',["prestacion"=>$prestacion, "obrasocial"=>$obrasocial]);
     }
 
     public function store (PrestacionobrasocialFormRequest $request)
     {
     	$idobrasocial=$request->get('pobrasocial');
-        $idprestacion=$request->get('prestacion');
+        $idprestacion=$request->get('pprestacion');
         $tiempo = $request->get('tiempo');
         $costo = $request->get('plus');
 
@@ -64,14 +62,14 @@ class PrestacionObrasocialController extends Controller
                     $prestacionp=new Prestacionobrasocial();
                     $prestacionp->idobrasocial=$idobrasocial;
                     $prestacionp->idprestacion=$idprestacion[$cont];
-                    $prestacionp->tiempo=$tiempo[$cont];
-                    $prestacionp->costo=$costo[$cont];
+                    $prestacionp->codigo=$tiempo[$cont];
+                    $prestacionp->coseguro=$costo[$cont];
                     $prestacionp->save();
                     $cont=$cont+1;
             }
         
         
-        return Redirect::to('obrasocial/obrasocial'); //redirecciona a la vista obrasocial
+        return Redirect::to('paciente/obrasocial'); //redirecciona a la vista obrasocial
 
     }
     public function show($id)
@@ -81,7 +79,6 @@ class PrestacionObrasocialController extends Controller
     public function edit($id)
     {
         $prestacion = Prestacionobrasocial::findOrFail($id);
-        
         return view("prestaciones.prestaciones.edit",["prestacion"=>$prestacion]);
         //return view("almacen.categoria.edit",["categoria"=>Categoria::findOrFail($id)]);
 
@@ -89,10 +86,10 @@ class PrestacionObrasocialController extends Controller
     public function update(PrestacionobrasocialFormRequest $request,$id)
     {
         $prestacion=Prestacionobrasocial::findOrFail($id);
-        $prestacion->tiempo=$request->get('ptiempo');
-        $prestacion->costo=$request->get('pplus');
+        $prestacion->codigo=$request->get('ptiempo');
+        $prestacion->coseguro=$request->get('pplus');
         $prestacion->update();
-        return Redirect::to('prestaciones/prestaciones');
+        return Redirect::to('paciente/obrasocial');
     }
     public function destroy($id)
     {

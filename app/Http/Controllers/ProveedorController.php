@@ -23,8 +23,9 @@ use DB;
 class ProveedorController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -74,6 +75,8 @@ class ProveedorController extends Controller
 
     public function store (ProveedorFormRequest $request)
     {
+        try {
+            DB::beginTransaction();
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
         $persona->apellido=$request->get('apellido');
@@ -107,9 +110,18 @@ class ProveedorController extends Controller
             }
         
         
-        
-        
-        return Redirect::to('insumo/proveedor'); //redirecciona a la vista proveedor
+        DB::commit();
+        //flash('Welcome Aboard!');
+                $r = 'Proveedor Creado';
+            }
+
+        catch (\Exception $e) {
+            DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Proveedor';
+            }
+
+        return Redirect::to('insumo/proveedor')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)
@@ -122,9 +134,19 @@ class ProveedorController extends Controller
     }
    public function edit($id)
     {
-        return view("empresa.clientePersona.edit",["cliente"=>Cliente::findOrFail($id)]);
-    }
+        $proveedor=proveedor::findOrFail($id);
+        $persona = Persona::where('idpersona',$proveedor->idpersona)->first();
 
+        
+
+        $pais= DB::table('pais');
+        //dd($persona);
+        $tipodocumentos= DB::table('tipo_documento')->get(); 
+        
+        //return view("proveedor.proveedor.create",["paises"=>$paises, "obrasociales"=>$obrasociales]);
+        $pais= Pais::all();
+        return view("insumo.proveedor.edit",["tipodocumentos"=>$tipodocumentos,"proveedor"=>$proveedor,"persona"=>$persona,"pais"=>$pais]);
+    }
     public function update(proveedorFormRequest $request,$id)
     {
         $persona=Persona::findOrFail($id);

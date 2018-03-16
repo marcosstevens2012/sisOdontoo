@@ -14,6 +14,7 @@ class Paciente extends Model
     	'tipo_sangre',
     	'idpersona',
     	'idobra_social',
+        'saldo',
     	'condicion'
     ];
     protected $guarded = [ ];

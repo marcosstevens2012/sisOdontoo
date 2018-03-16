@@ -16,6 +16,7 @@ class PiezasController extends Controller
     //constructor
     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -39,12 +40,27 @@ class PiezasController extends Controller
     }
     public function store (PiezasFormRequest $request)
     {
+        try {
+            DB::beginTransaction();
         $pieza = new Piezas;
         $pieza->nombre=$request->get('nombre');
         $pieza->descripcion=$request->get('descripcion');
         $pieza->estado='Activo';
         $pieza->save();
-        return Redirect::to('mecanico/pieza'); //redirecciona a la vista categoria
+
+
+            DB::commit();
+        //flash('Welcome Aboard!');
+                $r = 'Pieza Creada';
+            }
+
+        catch (\Exception $e) {
+            DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Pieza';
+            }
+
+        return Redirect::to('mecanico/pieza')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)

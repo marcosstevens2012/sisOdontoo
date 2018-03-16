@@ -33,9 +33,8 @@ class TurnoFormRequest extends FormRequest
         $fin = Carbon::create(1975, 12, 25, 21)->toTimeString();;
         return [
         'idpaciente'=>'required',
-        'idprestacion'=>'required',
         'profesional'=>'required',
-        'hora_inicio'=>'required|before:' . $fin . '|after:' . $inicio,
+        //'hora_inicio'=>'required|before:' . $fin . '|after:' . $inicio,
         'hora_fin'=>'required',
         'fecha'=>'required|date|before:' . $after_date . '|after:' . $before_date,
         'idestado_turno',

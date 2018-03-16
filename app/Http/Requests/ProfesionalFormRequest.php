@@ -39,9 +39,6 @@ class ProfesionalFormRequest extends Request
             'telefono'=>'required',
             'email'=>'required',
             'observaciones'=>'required',
-            'tiempo'=>'required',
-            'plus'=>'required',
-            'prestacion'=>'required',
             'consultorio'=>'required'
         ];
     }

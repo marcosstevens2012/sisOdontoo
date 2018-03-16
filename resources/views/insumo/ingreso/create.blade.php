@@ -18,12 +18,13 @@
 	{{Form::token()}}
 	<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+
+
 			<div class="form-group">
 				<label for="proveedor">Proveedor</label>
-				
 				<select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true">
 				@foreach($personas as $persona)
-					<option value="{{$persona->idproveedor}}">{{$persona->nombre . " " . $persona->apellido}}</option>
+					<option value="{{$persona->idproveedor}}">{{$persona->apellido . " " . $persona->nombre}}</option>
 				@endforeach	
 				</select>
 			</div>
@@ -33,7 +34,7 @@
 			<div class="form-group">
 				<label>Tipo comprobante</label>
 				<select name="tipo_comprobante" class="form-control selectpicker">
-					<option value="Boleta">Boleta</option>
+					<option value="Recibo">Recibo</option>
 					<option value="Factura">Factura</option>
 					<option value="Ticket">Ticket</option>
 				</select>
@@ -55,8 +56,14 @@
 	</div>
 		
 	<div class="row">
-		<div class="panel panel-primary">
-			<div class="panel-body">
+                    <div class="col-md-12">
+                         
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Lista de Articulos Ingresados</h3>                
+                            </div>
+                      
+                            <div class="panel-body">
 				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 					<div class="form-group">
 						<label>Artículo</label>
@@ -75,36 +82,13 @@
 					</div>
 				</div>
 
-				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
-				<div class="form-group">
-				<label>Medida</label>
-						<select name="tipo_comprobante" class="form-control selectpicker">
-						<option value="Boleta">Un</option>
-						<option value="Factura">Lts</option>
-						<option value="Ticket">Cm</option>
-						</select>
-					</div>
-				</div>
-
 				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<label>Precio Compra $</label>
 					<div class="input-group">
 						<div class="input-group-addon">
                     		<i class="fa fa-usd"></i>
                   		</div>
-						
-						<input type="text" name="pprecio_compra" id="pprecio_compra" class="form-control" placeholder="Plus">
-					</div>
-				</div>
-
-				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-					<label>Precio Salida $</label>
-					<div class="input-group">
-						<div class="input-group-addon">
-                    		<i class="fa fa-usd"></i>
-                  		</div>
-						
-						<input type="text" name="pprecio_venta" id="pprecio_venta" class="form-control" placeholder="Plus">
+						<input type="text" name="pprecio_compra" id="pprecio_compra" class="form-control" placeholder="Precio de Compra">
 					</div>
 				</div>
 
@@ -121,7 +105,7 @@
 							<th>Insumo</th>
 							<th>Cantidad</th>
 							<th>Precion compra</th>
-							<th>Precio Salida</th>
+							
 							<th>subtotal</th>
 						</thead>
 						<tfoot>
@@ -129,7 +113,7 @@
 							<th></th>
 							<th></th>
 							<th></th>
-							<th></th>
+							
 							<th><h4 id="total"> 0.00</h4></th>
 						</tfoot>
 						<tbody>
@@ -161,7 +145,6 @@
 	<script type="text/javascript">
 		$(document).ready(function($){
 			$('#pprecio_compra').mask("#.##0,00", {reverse: true});
-			$('#pprecio_venta').mask("#.##0,00", {reverse: true});
 		})
 	</script>
 
@@ -183,11 +166,11 @@
 			insumo = $('#pidinsumo option:selected').text();
 			cantidad = $('#pcantidad').val();
 			precio_compra = $('#pprecio_compra').val();
-			precio_venta = $('#pprecio_venta').val();
-			if(idinsumo !="" && cantidad !="" && precio_compra != "" && precio_venta != ""){
+		
+			if(idinsumo !="" && cantidad !="" && precio_compra != ""){
 				subtotal[cont]=(parseFloat(cantidad) * parseFloat(precio_compra));
 				total = total + subtotal[cont];
-				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idinsumo[]" value="'+idinsumo+'">'+insumo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" name="precio_compra[]" value="'+precio_compra+'"></td><td><input type="text" name="precio_venta[]" value="'+precio_venta+'"></td><td>'+subtotal[cont]+'</td></tr>';
+				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idinsumo[]" value="'+idinsumo+'">'+insumo+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" name="precio_compra[]" value="'+precio_compra+'"></td><td>'+subtotal[cont]+'</td></tr>';
 				cont++;
 				limpiar();
 				$('#total').html("$ " + parseFloat(total));
@@ -202,7 +185,7 @@
 		function limpiar(){
 			$('#pcantidad').val("");
 			$('#pprecio_compra').val("");
-			$('#pprecio_venta').val("");
+			
 		}
 
 		function evaluar(){

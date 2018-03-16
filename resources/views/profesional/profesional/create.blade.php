@@ -36,7 +36,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Apellido</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un Apellido" required value="{{old('Apellido')}}" type="text" name="apellido" required/>
+				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un Apellido" required value="{{old('apellido')}}" type="text" name="apellido" required/>
 
 			</div>
 		</div>

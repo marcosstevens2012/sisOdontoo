@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use sisOdonto\Http\Requests\ObrasocialFormRequest;
 use sisOdonto\Obrasocial;
+use sisOdonto\Paciente;
 use sisOdonto\PrestacionObrasocial;
 use DB;
 
@@ -15,8 +16,9 @@ use DB;
 class ObrasocialController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -43,7 +45,7 @@ class ObrasocialController extends Controller
     }
     public function store (ObrasocialFormRequest $request)
     {
-         try {
+        try {
             DB::beginTransaction();
         $obrasocial=new obrasocial;
         $obrasocial->nombre=$request->get('nombre');
@@ -105,9 +107,18 @@ class ObrasocialController extends Controller
     }
     public function destroy($id)
     {
-        $obrasocial=obrasocial::findOrFail($id);
+        $obrasocial=Obrasocial::findOrFail($id);
+
+        $paciente = Paciente::where('idobra_social',$obrasocial->idobrasocial)->first();
+        
+        //$estado = DB::table('turno')->select('idpaciente')->where('idpaciente','=',$id)->first();
+        //dd($estado);
+        if ($paciente != ""){
+            return Redirect::to('paciente/obrasocial')->with('notice','No se puede eliminar, esta obra social pertenece a un paciente');
+             //redirecciona a la vista turn
+        }
         $obrasocial->estado='Inactivo';
         $obrasocial->update();
-        return Redirect::to('obrasocial/obrasocial');
+        return Redirect::to('paciente/obrasocial');
     }
 }

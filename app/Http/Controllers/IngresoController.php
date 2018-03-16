@@ -20,7 +20,7 @@ class IngresoController extends Controller
 {
     //constructor
     public function __construct(){
-
+        $this->middleware('auth');
     }
     public function index(Request $request){
     	if($request){
@@ -50,7 +50,7 @@ class IngresoController extends Controller
     	return view("insumo.ingreso.create",["personas"=>$persona,"insumos"=>$insumos]);
     }
     public function store(IngresoFormRequest $request){
-        try {
+       try {
             DB::beginTransaction();
             $ingreso = new Ingreso;
             $ingreso->idproveedor=$request->get('idproveedor');
@@ -65,26 +65,30 @@ class IngresoController extends Controller
             $idarticulo=$request->get('idinsumo');
             $cantidad = $request->get('cantidad');
             $precio_compra = $request->get('precio_compra');
-            $precio_venta = $request->get('precio_venta');
 
             //recorre los articulos agregados
             $cont = 0;
-            while ($cont < count($idartefacto)) {
+            while ($cont < count($idarticulo)) {
                 # code...
                     $detalle = new DetalleIngreso();
-                    $detalle->ingreso_id=$ingreso->id;
-                    $detalle->idartefacto=$idartefacto[$cont];
+                    $detalle->idingreso=$ingreso->idingreso;
+                    $detalle->idarticulo=$idarticulo[$cont];
                     $detalle->cantidad=$cantidad[$cont];
                     $detalle->precio_compra=$precio_compra[$cont];
-                    $detalle->precio_venta=$precio_venta[$cont];
                     $detalle->save();
                     $cont=$cont+1;
             }
             DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();}
-           
-        return Redirect::to('insumo/ingreso');
+        $r = 'Insumo Creado';
+        }
+
+        catch (\Exception $e) {
+        DB::rollback(); 
+        $r = 'No se ha podido crear Ingreso';
+        }
+
+        return Redirect::to('insumo/ingreso')->with('notice',$r); //redirecciona a la vista turno
+
     }
 
     public function show($id){

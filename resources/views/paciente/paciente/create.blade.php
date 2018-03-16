@@ -20,7 +20,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Nombre</label>
-				<input class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" required value="{{old('nombre')}}" type="text" name="nombre" required pattern="[A-Za-z0-9]{5,40}"
+				<input class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" required value="{{old('nombre')}}" type="text" name="nombre" required pattern="[A-Za-z]{5,40}"
          		title="Letras y números. Tamaño mínimo: 5. Tamaño máximo: 40"/>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Apellido</label>
-				<input class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un apellido" required value="{{old('apellido')}}"       type="text" id="apellido" name="apellido" required/>
+				<input class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un apellido" required value="{{old('apellido')}}"   required pattern="[A-Za-z]{5,40}"    type="text" id="apellido" name="apellido" required/>
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
@@ -40,6 +40,13 @@
 						<option value="{{$obr->idobrasocial}}">{{$obr->nombre}}</option>
 					@endforeach
 				</select>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+			<div class="form-group">
+				<label>Numero de Carnet</label>
+				<input type="text" name="carnet" id='carnet' title="Se necesita numero" required value="{{old('carnet')}}" class="form-control" placeholder="Numero de Carnet" required pattern="[0-9]{5,40}">
 			</div>
 		</div>
 
@@ -80,7 +87,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label name="documento" for="dni">Documento</label>
-				<input name="documento" id="documento" type="number"  class="form-control" required value="{{old('dni')}}" placeholder="DNI">
+				<input name="documento" id="documento" type="text"  class="form-control" required value="{{old('dni')}}" required pattern="[0-9]{5,20}" placeholder="DNI">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">

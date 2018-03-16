@@ -18,7 +18,9 @@ use Illuminate\Support\Collection;
 class TransaccionController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
+        
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -26,88 +28,93 @@ class TransaccionController extends Controller
     		$query=trim($request->get('searchText'));
     		$transacciones=DB::table('transaccion as tra')
     		->join('detalle_transaccion as di','tra.idtransaccion','=','di.idtransaccion')
-    		->join('paciente as pac','pac.idpersona','=','di.idpaciente')
+    		->join('paciente as pac','pac.idpaciente','=','tra.idpaciente')
     		->join('persona as per','per.idpersona','=','pac.idpersona')
     		->join('prestacion as pre','pre.idprestacion','=','di.idprestacion')
-    		->select('tra.idtransaccion','tra.fecha_hora','per.nombre','tra.tipo_comprobante','tra.serie_comprobante','tra.num_comprobante','tra.estado','tra.monto')
-    		->where('tra.num_comprobante','LIKE','%'.$query.'%')
+    		->select('tra.idtransaccion','tra.fecha_hora','per.*','tra.total_transaccion')
+    		->where('per.nombre','LIKE','%'.$query.'%')
 
     		->orderBy('tra.idtransaccion','desc')
-    		->groupBy('tra.idtransaccion','tra.fecha_hora','per.nombre','tra.num_comprobante','tra.estado')
+    		->groupBy('tra.idtransaccion','tra.fecha_hora','per.nombre')
     		->paginate(7);
     		return view('transaccion.transaccion.index',["transacciones"=>$transacciones,"searchText"=>$query]);
     	}
     }
     public function create(){
-    	$persona=DB::table('persona as p')
-    	->join('proveedor as pro','pro.idpersona','=','p.idpersona')
-        ->where('p.condicion','=','1')
-    	->get();
-    	$prestacion=DB::table('prestacion as pre')
-    	->join('prestacion_profesional as pro','pre.idprestacion','=','pro.idprestacion')
-    	->select('pre.nombre','pre.idprestacion','pro.costo')
-    	->get();
-    	$formapago=DB::table('forma_pago')->get();
-    	return view("transaccion.transaccion.create",["personas"=>$persona,"prestaciones"=>$prestacion, "formapago"=>$formapago]);
+        $personas=DB::table('paciente as pac')
+        ->join('persona as per','per.idpersona','=','pac.idpersona')
+        ->where('pac.idobra_social','=','7')
+        ->get();
+
+        $prestacion=DB::table('prestacion as pre')
+        ->join('prestacion_obrasocial as preo','pre.idprestacion','=','preo.idprestacion')
+        ->where('preo.idobrasocial','=','7')
+        ->get();
+
+        $formapago=DB::table('forma_pago')->get();
+        return view("transaccion.transaccion.create",["personas"=>$personas,"prestaciones"=>$prestacion, "formapago"=>$formapago]);
     }
-    public function store(transaccionFormRequest $request){
+    public function store(TransaccionFormRequest $request){
         try {
             DB::beginTransaction();
-            $transaccion = new transaccion;
+            $transaccion = new Transaccion;
             $transaccion->idpaciente=$request->get('idpaciente');
-            $transaccion->tipo_comprobante=$request->get('tipo_comprobante');
-            $transaccion->num_comprobante=$request->get('num_comprobante');
             $transaccion->total_transaccion=$request->get('total_transaccion');
-            
-            $mytime = Carbon::now();
-            $transaccion->fecha_hora = $mytime->toDateTimeString();
-            $transaccion->estado='A';
+            $date = Carbon::now();
+            $fecha_hora=date_format($date, 'd-m-Y h:i:s A');
+            $transaccion->fecha_hora = $fecha_hora;
             $transaccion->save();
-            
-            $idinsumo = $request->get('idarticulo');
-            $cantidad = $request->get('cantidad');
-            $descuento = $request->get('descuento');
-            $precio_transaccion = $request->get('precio_transaccion');
 
+            $idprestacion = $request->get('idprestacion');
+            $formapago = $request->get('formapago');
             //recorre los articulos agregados
             $cont = 0;
-            while ($cont < count($idarticulo)) {
+            while ($cont < count($idprestacion)) {
                 # code...
-                $detalle = new Detalletransaccion();
+                $detalle = new DetalleTransaccion();
                 $detalle->idtransaccion=$transaccion->idtransaccion;
                 $detalle->idprestacion=$idprestacion[$cont];
-                $detalle->descuento=$descuento[$cont];
-                $detalle->precio=$precio[$cont];
+                $detalle->idformadepago=$formapago[$cont];
                 $detalle->save();
                 $cont=$cont+1;
             }
             DB::commit();
-         } catch (\Exception $e) {
-            DB::rollback(); 
-        }
+        //flash('Welcome Aboard!');
+                $r = 'Turno Creado';
+            }
+
+        catch (\Exception $e) {
+        DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Turno';
+            }
            
-        return Redirect::to('transaccions/transaccion');
+        return Redirect::to('transaccion/transaccion')->with('notice',$r);
     }
     public function show($id){
-        $ingreso=DB::table('ingreso as i')
-            ->join('persona as p','i.idproveedor','=','p.idpersona')
-            ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
-            ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precio_compra) as total'))
-            ->where('i.idingreso','=',$id)
-             ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante', 'i.num_comprobante','i.impuesto','i.estado')
+            $transaccion=DB::table('transaccion as t')
+            ->join('detalle_transaccion as dt','t.idtransaccion','=','dt.idtransaccion')
+            ->join('paciente as p','p.idpaciente','=','t.idpaciente')
+            ->join('persona as per','per.idpersona','=','p.idpersona')
+            ->select('t.*','per.nombre','per.apellido')
+            ->where('t.idtransaccion','=',$id)
             ->first();
-            $detalles=DB::table('detalle_ingreso as d')
-            ->join('insumo as a', 'd.idarticulo','=', 'a.idinsumo')
-            ->select('a.nombre as articulo','d.cantidad', 'd.precio_compra', 'd.precio_transaccion')
-            ->where('d.idingreso','=',$id)
 
+            $detalles=DB::table('detalle_transaccion as d')
+            ->join('prestacion as pre', 'd.idprestacion','=', 'pre.idprestacion')
+            ->join('forma_pago as for','for.idformadepago','=','d.idformadepago')
+            ->select('pre.nombre as prestacion','d.importe','for.nombre as pago')
+            
             ->get();//obengo todos los detalles;
-            return view("insumo.ingreso.show",["ingreso"=>$ingreso,"detalles"=>$detalles]);
+
+
+            return view("transaccion.transaccion.show",["transaccion"=>$transaccion,"detalles"=>$detalles]);
     }
     public function destroy($id){
-        $ingreso=Ingreso::findOrFail($id); //coincida con el id
-        $ingreso->Estado='C';
-        $ingreso->update();
-        return Redirect::to('insumo/ingreso');
+        $transaccion=transaccion::findOrFail($id); //coincida con el id
+        $transaccion->Estado='C';
+        $transaccion->update();
+        return Redirect::to('transaccions/transaccion');
     }
+
 }

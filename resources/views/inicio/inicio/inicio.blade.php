@@ -7,14 +7,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>12</h3>
 
               <p>Turnos</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -22,14 +22,14 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>{{$finalizados}}<sup style="font-size: 20px"></sup></h3>
 
               <p>Turnos Atendidos</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('turno/turno')}}" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -37,7 +37,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{$turnos}}</h3>
 
               <p>Turnos Pendientes</p>
             </div>
@@ -64,7 +64,7 @@
         </div>
         <!-- ./col -->
       </div>
-      <div class="box box-solid bg-green-gradient">
+        <div class="box box-solid bg-green-gradient">
             <div class="box-header">
               <i class="fa fa-calendar"></i>
 
@@ -95,48 +95,6 @@
               <div id="calendar" style="width: 100%"></div>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer text-black">
-              <div class="row">
-                <div class="col-sm-6">
-                  <!-- Progress bars -->
-                  <div class="clearfix">
-                    <span class="pull-left">Task #1</span>
-                    <small class="pull-right">90%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #2</span>
-                    <small class="pull-right">70%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                  <div class="clearfix">
-                    <span class="pull-left">Task #3</span>
-                    <small class="pull-right">60%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #4</span>
-                    <small class="pull-right">40%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-            </div>
           </div>
           <!-- /.box -->
 

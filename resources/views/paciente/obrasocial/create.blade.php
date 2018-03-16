@@ -42,58 +42,69 @@
 				<input type="mail" name="email" required value="{{old('email')}}" class="form-control" placeholder="Email">
 			</div>
 		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label>Prestacion</label>
-				<select name="pidprestacion" id="pidprestacion" class="form-control selectpicker" data-live-search="true">
-						<option>Seleccione Prestacion</option>
-					@foreach($prestaciones as $pre)
-						<option value="{{$pre->idprestacion}}">{{$pre->nombre}}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-
-		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-			<div class="form-group">
-				<label name="coseguro" for="coseguro">Conseguro $</label>
-				<input type="number" class="form-control" name="pcoseguro" id="pcoseguro" placeholder="Conseguro"  value="{{old('conseguro')}}"/>
-			</div>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-			<div class="form-group">
-				<label name="codigo" for="coseguro">Codigo</label>
-				<input type="number" class="form-control" name="pcodigo" id="pcodigo" placeholder="Codigo"  value="{{old('codigo')}}"/>
-			</div>
-		</div>
-
-		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+		<div class="row">
+            <div class="col-md-12">   
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Seleccione Prestaciones</h3>                
+                    </div>
+                      
+                <div class="panel-body">
+				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 					<div class="form-group">
-						<button type="button" id="bt_add" style="margin-top: 25px " class="btn btn-primary btn-lg btn-block">Agregar</button>
+						<label>Prestacion</label>
+						<select name="pidprestacion" id="pidprestacion" class="form-control selectpicker" data-live-search="true">
+								<option>Seleccione Prestacion</option>
+							@foreach($prestaciones as $pre)
+								<option value="{{$pre->idprestacion}}">{{$pre->nombre}}</option>
+							@endforeach
+						</select>
 					</div>
 				</div>
 
-			<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-					<table id="detalles" class="table table-striped table-bordered table-condensed">
-						<thead style="background-color: #ccc">
-							<th>Opciones</th>
-							<th>Prestacion</th>
-							<th>Coseguro</th>
-							<th>Codigo</th>	
-						</thead>
-						<tfoot>
-							<th></th>
-							<th></th>
-							<th></th>
-							
-						</tfoot>
-						<tbody>
-						
-						</tbody>
-					</table>
+				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+					<div class="form-group">
+						<label name="coseguro" for="coseguro">Importe</label>
+						<input type="number" class="form-control" name="pcoseguro" id="pcoseguro" placeholder="Conseguro"  value="{{old('conseguro')}}"/>
+					</div>
 				</div>
+
+				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+					<div class="form-group">
+						<label name="codigo" for="coseguro">Codigo</label>
+						<input type="number" class="form-control" name="pcodigo" id="pcodigo" placeholder="Codigo"  value="{{old('codigo')}}"/>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+							<div class="form-group">
+								<button type="button" id="bt_add" style="margin-top: 25px " class="btn btn-primary btn-lg btn-block">Agregar</button>
+							</div>
+						</div>
+
+					<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+							<table id="detalles" class="table table-striped table-bordered table-condensed">
+								<thead style="background-color: #ccc">
+									<th>Opciones</th>
+									<th>Prestacion</th>
+									<th>Coseguro</th>
+									<th>Codigo</th>	
+								</thead>
+								<tfoot>
+									<th></th>
+									<th></th>
+									<th></th>
+									
+								</tfoot>
+								<tbody>
+								
+								</tbody>
+							</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
 
 		<div class="col-md-6 col-md-offset-3">
 			<div class="col-md-6 col-md-offset-3">

@@ -13,6 +13,7 @@ use sisOdonto\Persona;
 use sisOdonto\Tipodocumento;
 use sisOdonto\PrestacionProfesional;
 use sisOdonto\Pais;
+use sisOdonto\Turno;
 use sisOdonto\Provincia;
 use sisOdonto\Prestacion;
 use sisOdonto\Ciudad;
@@ -24,8 +25,9 @@ use DB;
 class ProfesionalController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -81,7 +83,7 @@ class ProfesionalController extends Controller
 
     public function store (profesionalFormRequest $request)
     {
-         try {
+        try {
             DB::beginTransaction();
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
@@ -187,6 +189,17 @@ class ProfesionalController extends Controller
     public function destroy($id)
     {
         $profesional=profesional::findOrFail($id);
+
+        $persona = Profesional::where('idprofesional',$profesional->idprofesional)->first();
+
+        $estado = Turno::where('idprofesional',$persona->idprofesional)->first();
+
+        //$estado = DB::table('turno')->select('idpaciente')->where('idpaciente','=',$id)->first();
+        //dd($estado);
+        if ($estado != "" && $estado->estado = "finalizado" ){
+            return Redirect::to('profesional/profesional')->with('notice','El profesional tiene turno');
+             //redirecciona a la vista turn
+        }
         $profesional->condicion=('Inactivo');
         $profesional->update();
         return Redirect::to('profesional/profesional');

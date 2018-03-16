@@ -20,22 +20,25 @@ use Illuminate\Support\Collection;
 class LiquidacionController extends Controller
 {
     //constructor
-    public function __construct(){
+     public function __construct(){
+        
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
     	if($request){
     		$query=trim($request->get('searchText'));
-    		$liquidacion=DB::table('turno as tur')
-    		->join('profesional as p','tur.idprofesional','=','p.idprofesional')
-            ->join('paciente as pac','pac.idpaciente','=','tur.idpaciente')
-            ->join('persona as per','p.idpersona','=','per.idpersona')
-            ->join('obrasocial as obr','obr.idobrasocial','=','pac.idobra_social')
-            ->join('prestacion as pre','pre.idprestacion','=','tur.idprestacion')
-    		->select('tur.*','per.nombre as profesional','per.apellido','obr.nombre as obrasocial','pre.nombre as prestacion','tur.idprofesional')
-    		->paginate(100);
+    		$liquidacion=DB::table('liquidacion as liq')
+            ->join('profesional as pro','pro.idprofesional','=','liq.profesional')
+            ->join('paciente as pac','pac.idpaciente','=','liq.paciente')
+            ->join('obrasocial as obr','obr.idobrasocial','=','liq.idobrasocial')
+            ->join('persona as p','p.idpersona','=','pac.idpersona')
+            ->join('prestacion as pre','pre.idprestacion','=','liq.idprestacion')
+            ->select('liq.*','pre.nombre as prestacion','obr.nombre as obrasocial', DB::raw('CONCAT(p.nombre, " ",p.apellido) AS pacientenombre'))
+            ->get();
             
-    		return view('profesional.liquidacion.index',["liquidaciones"=>$liquidacion,"searchText"=>$query]);
+            //dd($liquidacion);
+    		return view('profesional.liquidacion.index',["liquidaciones"=>$liquidacion, "searchText"=>$query]);
     	}
     }
     public function create(){
@@ -50,29 +53,6 @@ class LiquidacionController extends Controller
     public function store(liquidacionFormRequest $request){
         
             
-            $liquidacion = new liquidacion;
-            $liquidacion->idmecanico=$request->get('idmecanico');
-            $mytime = Carbon::now();
-            $liquidacion->fecha_hora = $mytime->toDateTimeString();
-            $liquidacion->estado='Activo';
-            $liquidacion->observaciones=$request->get('observaciones');
-            $liquidacion->save();
-
-            $idpieza=$request->get('idpieza');
-            $cantidad = $request->get('cantidad');
-            
-            //recorre los articulos agregados
-            $cont = 0;
-            while ($cont < count($idpieza)) {
-                # code...
-                    $detalle = new Detalleliquidacion();
-                    $detalle->idliquidacion=$liquidacion->idliquidacion;
-                    $detalle->idpieza=$idpieza[$cont];
-                    $detalle->cantidad=$cantidad[$cont];
-                    $detalle->save();
-                    $cont=$cont+1;
-            }
-       
            
         return Redirect::to('mecanico/liquidacion');
     }

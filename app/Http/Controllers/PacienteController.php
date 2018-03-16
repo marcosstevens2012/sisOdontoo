@@ -25,6 +25,7 @@ class PacienteController extends Controller
     //constructor
     public function __construct(){
         
+        $this->middleware('auth');
 
     }
     public function index(Request $request){
@@ -37,7 +38,7 @@ class PacienteController extends Controller
     		->join('persona as per', 'per.idpersona', '=', 'p.idpersona')
     		->join('obrasocial as o', 'o.idobrasocial','=','p.idobra_social')
     		//de la union eligo los campos que requiero
-    		->select('p.idpaciente', 'per.nombre as nombre','per.apellido as apellido', 'o.nombre as obrasocial', 'p.tipo_sangre','p.condicion','per.direccion as direccion','per.documento as documento','per.telefono as telefono','per.email as email' ,'per.contradicciones as contradicciones')
+    		->select('p.idpaciente', 'per.nombre as nombre','per.apellido as apellido', 'o.nombre as obrasocial', 'p.tipo_sangre','p.condicion','per.direccion as direccion','per.documento as documento','per.telefono as telefono','per.email as email' ,'per.contradicciones as contradicciones','per.nacimiento')
             ->where('p.condicion','=','Activo')
     		->where('per.nombre','LIKE','%'.$query.'%')
             //otro campo
@@ -79,7 +80,10 @@ class PacienteController extends Controller
     }
 
     public function store (PacienteFormRequest $request)
-    {
+    {   
+        try {
+            DB::beginTransaction();
+
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
         $persona->apellido=$request->get('apellido');
@@ -108,22 +112,39 @@ class PacienteController extends Controller
         $paciente->idobra_social=$idobra_social;
         $paciente->tipo_sangre=$tipo_sangre;
         $paciente->contradicciones=$request->get('contradicciones');
+        $paciente->carnet=$request->get('carnet');
         $paciente->condicion='Activo';
 
         $paciente->save();
-        
-        
-        return Redirect::to('paciente/paciente'); //redirecciona a la vista paciente
+        DB::commit();
+        //flash('Welcome Aboard!');
+                $r = 'Paciente Creado';
+            }
+
+            catch (\Exception $e) {
+        DB::rollback(); 
+        //Flash::success("No se ha podido crear turno");
+                $r = 'No se ha podido crear Paciente';
+            }
+
+        return Redirect::to('paciente/paciente')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)
-    {
-        return view("paciente.paciente.show",["paciente"=>paciente::findOrFail($id)]);//muestra categoria especifica
+    {   
+        $paciente  = DB::table('paciente as pac')
+        ->join('persona as per','per.idpersona','=','pac.idpersona')
+        ->join('obrasocial as obr','obr.idobrasocial','=','pac.idobra_social')
+        ->select('per.*','pac.*','obr.nombre as obrasocial')
+        ->first();
+
+        
+        return view("paciente.paciente.show",["paciente"=>$paciente]);//muestra categoria especifica
     }
    public function edit($id)
     {
         $paciente=Paciente::findOrFail($id);
-        $persona = Persona::where('idpersona',$paciente->idpersona);
+        $persona = Persona::where('idpersona',$paciente->idpersona)->first();
 
         $pais= DB::table('pais');
         //dd($persona);
@@ -169,11 +190,13 @@ class PacienteController extends Controller
    
     public function destroy($id)
     {
-        $paciente=paciente::findOrFail($id);
-        $estado = DB::table('turno')
-        ->select('idpaciente')->where('idpaciente','=',$id)->first();
-        dd($estado);
-        if ($estado != "" ){
+        $paciente=Paciente::findOrFail($id);
+        $persona = Paciente::where('idpaciente',$paciente->idpaciente)->first();
+        $estado = Turno::where('idpaciente',$persona->idpaciente)->first();
+
+        //$estado = DB::table('turno')->select('idpaciente')->where('idpaciente','=',$id)->first();
+        //dd($estado);
+        if ($estado != "" && $estado->estado = "pendiente" ){
             return Redirect::to('paciente/paciente')->with('notice','El paciente tiene turno');
              //redirecciona a la vista turn
         }

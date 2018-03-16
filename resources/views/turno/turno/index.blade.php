@@ -2,56 +2,63 @@
 @section ('contenido')
 	<div class="row">
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-			<h3>Listado de Turnos <a href="turno/create"><button class="btn btn-success">Nuevo</button></a></h3>
+			<h3>Listado de Turnos <a href="turno/create"><button class="btn btn-success">Nuevo</button></a>
+			<br><br>
 			@include('turno.turno.search')
 		</div>
 	</div>
-
 	@if(Session::has('notice'))<!-- crea una alerta de q ha sido creado correctamente el usuario-->
-                
-   					<div class="alert alert-info">{{ Session::get('notice') }}</div>
-				
+   					<div class="alert alert-info">
+   					<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    				<strong>Notice:</strong> {{Session::get('notice') }}</div>
     @endif
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
 				<table id="example1" class="table table-bordered table-striped">
 					<thead>
-						<th></th>
+						
 						<th>Paciente</th>
 						<th>Prestacion</th>
 						<th>Profesional</th>
 						<th>Estado</th>
 						<th>Inicio</th>
-						<th>Final</th>
+						
 						<th>Fecha</th>
 						<th>Opciones</th>
 					</thead>
 					<!-- bucle -->
 					@foreach ($turnos as $tur)
 					<tr>
-						<td><input type="checkbox" class="form-check-input"></td>
-						<td>{{$tur->paciente}}</td>
-						<td>{{$tur->prestacion}}</td>
-						<td>{{$tur->profesional}}</td>
+						<td align="center">{{$tur->paciente}}</td>
+						<td align="center" >{{$tur->prestacion}}</td>
+						<td align="center">{{$tur->profesional}}</td>
 						@if ($tur->estado=='Activo')
-						<td><small class="label pull-right bg-green">{{$tur->estado}}</small></td>
+						<td align="center"><small class="label pull-right bg-green">{{$tur->estado}}</small></td>
 						@elseif ($tur->estado=='Pendiente')
-						<td><small class="label pull-right bg-yellow">{{$tur->estado}}</small></td>
+						<td align="center"><small class="label pull-right bg-yellow">{{$tur->estado}}</small></td>
 						@else
-						<td><small class="label pull-right bg-red">{{$tur->estado}}</small></td>
+						<td align="center"> <small class="label pull-right bg-red">{{$tur->estado}}</small></td>
 						@endif
-						<td>{{$tur->hora_inicio}}</td>
-						<td>{{$tur->hora_fin}}</td>
-						<td>{{$tur->fecha}}</td>
+						<td align="right">{{$tur->hora_inicio}}</td>
+						
+						<td align="right"> <?php 
+												$originalDate = $tur->fecha;
+        										$newDate = date("d-m-Y", strtotime($originalDate));
+
+											?>{{$newDate}}</td>
 						<td>
-						<a href="{{URL::action('TurnoController@edit', $tur->idturno)}}"><button class="btn btn-info"> Estado</button></a>
-              			<a href="{{URL::action('TurnoController@show', $tur->idturno)}}"><button class="btn btn-info"> Seguimiento</button></a>
+						@if ($tur->estado=='Pendiente')
+						<a href="{{URL::action('TurnoController@edit', $tur->idturno)}}"><button class="btn-xs btn-primary"> Estado</button></a>
+						@endif
+						<a href="{{URL::action('PacienteController@show' , $tur->idpaciente)}}"><button class="btn-xs btn-primary">Paciente</button></a>
+              			<a href="{{URL::action('TurnoController@show', $tur->idturno)}}"><button class="btn-xs btn-info"> Seguimiento</button></a>
+              			<a href="{{URL::action('PdfturnoController@show', $tur->idturno)}}"><button class="btn-xs btn-info"> Reporte</button></a>
+              			<a href="" data-target="#modal-delete-{{$tur->idturno}}" data-toggle="modal"><button class="btn-xs btn-success">En Consultorio</button></a>
 						<!--<a href="" onclick="modalEditTurno({{$tur->idturno}})"><button class="btn btn-danger"> Eliminar</button></a>-->
 					</tr>
 					@include('turno.turno.modal')
 					@endforeach
-					
 				</table>
 				
 			</div>
