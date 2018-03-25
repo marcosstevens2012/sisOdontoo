@@ -133,9 +133,11 @@ class PacienteController extends Controller
     public function show($id)
     {   
         $paciente  = DB::table('paciente as pac')
+        ->join('turno as tur','tur.idpaciente','=','pac.idpaciente')
         ->join('persona as per','per.idpersona','=','pac.idpersona')
         ->join('obrasocial as obr','obr.idobrasocial','=','pac.idobra_social')
-        ->select('per.*','pac.*','obr.nombre as obrasocial')
+        ->select('per.*','pac.*','obr.nombre as obrasocial','tur.idprofesional')
+        ->where('pac.idpaciente','=',$id)
         ->first();
 
         

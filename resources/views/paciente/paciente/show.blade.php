@@ -39,7 +39,7 @@
 							
 						</tbody>
 					</table>
-					<a href="https://localhost/APPODONTOGRAMA/view/?idpaciente={{$paciente->idpaciente}}&nombre={{$paciente->nombre}}&apellido={{$paciente->apellido}}&documento={{$paciente->documento}}&obrasocial={{$paciente->obrasocial}}&telefono={{$paciente->telefono}}&sangre={{$paciente->tipo_sangre}}&nacimiento={{$paciente->nacimiento}}"><button class="btn .btn.bg-maroon">Odontograma</button></a>
+					<a href="https://localhost/APPODONTOGRAMA/view/?idpaciente={{$paciente->idpaciente}}&nombre={{$paciente->nombre}}&apellido={{$paciente->apellido}}&documento={{$paciente->documento}}&obrasocial={{$paciente->obrasocial}}&telefono={{$paciente->telefono}}&sangre={{$paciente->tipo_sangre}}&nacimiento={{$paciente->nacimiento}}&profesional={{$paciente->idprofesional}}"><button class="btn .btn.bg-maroon">Odontograma</button></a>
 				</div>
 			
 			

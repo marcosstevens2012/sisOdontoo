@@ -39,7 +39,7 @@
 						<td>{{$pac->condicion}}</td>
 						<td>
 							<a href="{{URL::action('PacienteController@edit', $pac->idpaciente)}}"><button class="btn btn-info"> Editar</button></a>
-							<a href="https://localhost/APPODONTOGRAMA/view/?idpaciente={{$pac->idpaciente}}&nombre={{$pac->nombre}}&apellido={{$pac->apellido}}&documento={{$pac->documento}}&obrasocial={{$pac->obrasocial}}&telefono={{$pac->telefono}}&sangre={{$pac->tipo_sangre}}&nacimiento={{$pac->nacimiento}}"><button class="btn .btn.bg-maroon">Odontograma</button></a>
+							<a href="https://localhost/APPODONTOGRAMA/view/index2/?idpaciente={{$pac->idpaciente}}&nombre={{$pac->nombre}}&apellido={{$pac->apellido}}&documento={{$pac->documento}}&obrasocial={{$pac->obrasocial}}&telefono={{$pac->telefono}}&sangre={{$pac->tipo_sangre}}&nacimiento={{$pac->nacimiento}}"><button class="btn .btn.bg-maroon">Odontograma</button></a>
 							<a href="" data-target="#modal-delete-{{$pac->idpaciente}}" data-toggle="modal"><button class="btn btn-danger"> Eliminar</button></a>
 						</td>
 					</tr>

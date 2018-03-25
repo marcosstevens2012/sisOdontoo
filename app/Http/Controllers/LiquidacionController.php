@@ -28,15 +28,14 @@ class LiquidacionController extends Controller
     public function index(Request $request){
     	if($request){
     		$query=trim($request->get('searchText'));
-    		$liquidacion=DB::table('liquidacion as liq')
-            ->join('profesional as pro','pro.idprofesional','=','liq.profesional')
+    		$liquidacion=DB::table('todontograma')
+            /*->join('profesional as pro','pro.idprofesional','=','liq.profesional')
             ->join('paciente as pac','pac.idpaciente','=','liq.paciente')
             ->join('obrasocial as obr','obr.idobrasocial','=','liq.idobrasocial')
             ->join('persona as p','p.idpersona','=','pac.idpersona')
             ->join('prestacion as pre','pre.idprestacion','=','liq.idprestacion')
-            ->select('liq.*','pre.nombre as prestacion','obr.nombre as obrasocial', DB::raw('CONCAT(p.nombre, " ",p.apellido) AS pacientenombre'))
+            ->select('liq.*','pre.nombre as prestacion','obr.nombre as obrasocial', DB::raw('CONCAT(p.nombre, " ",p.apellido) AS pacientenombre'))*/
             ->get();
-            
             //dd($liquidacion);
     		return view('profesional.liquidacion.index',["liquidaciones"=>$liquidacion, "searchText"=>$query]);
     	}
