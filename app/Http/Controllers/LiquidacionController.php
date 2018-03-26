@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 use sisOdonto\Http\Requests\liquidacionFormRequest;
 use sisOdonto\Turno;
 use sisOdonto\Paciente;
+use sisOdonto\Liquidacion;
 use sisOdonto\Profesional;
 use sisOdonto\Detalleliquidacion;
 
@@ -36,25 +37,31 @@ class LiquidacionController extends Controller
             ->join('prestacion as pre','pre.idprestacion','=','liq.idprestacion')
             ->select('liq.*','pre.nombre as prestacion','obr.nombre as obrasocial', DB::raw('CONCAT(p.nombre, " ",p.apellido) AS pacientenombre'))*/
             ->get();
+
+            
             //dd($liquidacion);
     		return view('profesional.liquidacion.index',["liquidaciones"=>$liquidacion, "searchText"=>$query]);
     	}
     }
     public function create(){
-    	$persona=DB::table('persona as p')
-        ->join('mecanico as mec','mec.idpersona','=','p.idpersona')
-        ->where('p.condicion','=','Activo')
+    	$liquidacion=DB::table('todontograma')
         ->get();
-        $pieza=DB::table('pieza as pie')
-        ->get();
-        return view("mecanico.liquidacion.create",["personas"=>$persona,"piezas"=>$pieza]);
+        return view("profesional.liquidacion.create",["liquidaciones"=>$liquidacion]);
     }
-    public function store(liquidacionFormRequest $request){
+    public function store(LiquidacionFormRequest $request)
         
+        {
+        $liquidacion=new Liquidacion;
+        $liquidacion->estado='Activo';
+        $liquidacion->save();
+
+        return Redirect::to('profesional/liquidacion'); //redirecciona a la vista turno
+
+    }
+
             
            
-        return Redirect::to('mecanico/liquidacion');
-    }
+     
 
     public function show($id){
         

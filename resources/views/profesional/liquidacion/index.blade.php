@@ -32,7 +32,7 @@
 					<tr>
 						<td>{{$liq->fechaRegistro}}</td>
 						<td>{{$liq->codigoPaciente}}</td>
-						<td><input name="<?php echo $namecontador ++ ?>" id="<?php echo $idcontador ++; ?>" class="<?php echo $classcontador ++;?>"></td>
+						<td><input name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
 						<td><input  class="estados" value="{{$liq->estados}}" ></td>
 						<td>
 							<a href="{{URL::action('LiquidacionController@show', $liq->codigoProfesional)}}"><button class="btn btn-info">Detalles</button></a>
