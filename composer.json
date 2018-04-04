@@ -12,7 +12,8 @@
         "nesbot/carbon": "^1.22",
         "acacha/admin-lte-template-laravel": "2.*",
         "barryvdh/laravel-dompdf": "0.6.*",
-        "laracasts/flash": "^3.0"
+        "laracasts/flash": "^3.0",
+        "maddhatter/laravel-fullcalendar": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

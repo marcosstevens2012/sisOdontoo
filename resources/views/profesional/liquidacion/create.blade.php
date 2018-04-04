@@ -2,7 +2,7 @@
 @section ('contenido')
 
 	<?php
-	$recibir = $_GET['idprofesional'];
+	$idprofesional = $_GET['idprofesional'];
 	?>
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -27,6 +27,7 @@
 					<thead>
 						
 						<th>Fecha</th>
+						<th>Profesional</th>
 						<th>Paciente</th>
 						<th>Tratamiento</th>
 						<th>Opciones</th>
@@ -36,15 +37,16 @@
 					<?php $idcontador = 0; ?>
 					<?php $classcontador = 0; ?>
 					@foreach ($liquidaciones as $liq)
-					@if($liq->codigoProfesional == $recibir)
+					@if($liq->idprofesional == $idprofesional)
 					
 					<tr>
-						<td>{{$liq->fechaRegistro}}</td>
-						<td>{{$liq->codigoPaciente}}</td>
+						<td>{{$liq->fecha_hora}}</td>
+						<td><input name="profesional" value="{{$liq->idprofesional}}" ></td>
+						<td><input name="paciente" value="{{$liq->idpaciente}}" ></td>
 						<td><input name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
 						<td><input  class="estados" value="{{$liq->estados}}" ></td>
 						<td>
-							<a href="{{URL::action('LiquidacionController@show', $liq->codigoProfesional)}}"><button class="btn btn-info">Detalles</button></a>
+							<a href="{{URL::action('LiquidacionController@show', $liq->idprofesional)}}"><button class="btn btn-info">Detalles</button></a>
 						</td>
 					</tr>
 

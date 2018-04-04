@@ -81,9 +81,7 @@ class PacienteController extends Controller
 
     public function store (PacienteFormRequest $request)
     {   
-        try {
-            DB::beginTransaction();
-
+       
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
         $persona->apellido=$request->get('apellido');
@@ -116,18 +114,8 @@ class PacienteController extends Controller
         $paciente->condicion='Activo';
 
         $paciente->save();
-        DB::commit();
-        //flash('Welcome Aboard!');
-                $r = 'Paciente Creado';
-            }
-
-            catch (\Exception $e) {
-        DB::rollback(); 
-        //Flash::success("No se ha podido crear turno");
-                $r = 'No se ha podido crear Paciente';
-            }
-
-        return Redirect::to('paciente/paciente')->with('notice',$r); //redirecciona a la vista turno
+        
+        return Redirect::to('paciente/paciente'); //redirecciona a la vista turno
 
     }
     public function show($id)

@@ -34,6 +34,7 @@ Route::resource('profesional/prestacion', 'PrestacionController');
 Route::resource('auditoria/auditoria', 'AuditoriaController');
 Route::resource('mecanico/mecanico', 'MecanicoController');
 Route::resource('mecanico/pedido', 'PedidoController');
+Route::get('events', 'EventController@index');
 Route::get('/buscarProvincia','PacienteController@buscarProvincia');
 Route::get('/buscarSaldo','TurnoController@buscarSaldo');
 Route::get('/buscarAlerta','TurnoController@buscarAlerta');

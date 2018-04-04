@@ -33,7 +33,7 @@ class TurnoController extends Controller
     //constructor
     public function __construct(){
         
-        $this->middleware('auth');
+        //$this->middleware('auth');
 
     }
    public function index(Request $request){
@@ -224,13 +224,13 @@ class TurnoController extends Controller
 
     
         DB::commit();
-        //flash('Welcome Aboard!');
+        
                 $r = 'Turno Creado';
             }
 
         catch (\Exception $e) {
         DB::rollback(); 
-        //Flash::success("No se ha podido crear turno");
+        
                 $r = 'No se ha podido crear Turno';
             }
 

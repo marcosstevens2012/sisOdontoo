@@ -29,7 +29,7 @@ class UsuarioController extends Controller
     	return view("seguridad.usuario.create");
     }
 
-    public function store(UsuarioFormRequest $request){
+    public function store(Request $request){
     	$usuario = new User;
     	$usuario->name=$request->get('name');
     	$usuario->email=$request->get('email');

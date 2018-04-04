@@ -1,5 +1,5 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$liq->codigoProfesional}}">
-	{{Form::Open(array('action'=>array('LiquidacionController@destroy',$liq->codigoProfesional),'method'=>'delete'))}}
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$liq->idprofesional}}">
+	{{Form::Open(array('action'=>array('LiquidacionController@destroy',$liq->idprofesional),'method'=>'delete'))}}
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

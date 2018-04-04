@@ -47,7 +47,7 @@ class ObrasocialController extends Controller
     {
         try {
             DB::beginTransaction();
-        $obrasocial=new obrasocial;
+        $obrasocial=new     Obrasocial;
         $obrasocial->nombre=$request->get('nombre');
         $obrasocial->telefono=$request->get('telefono');
         $obrasocial->email=$request->get('email');

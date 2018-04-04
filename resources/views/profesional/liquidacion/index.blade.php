@@ -1,10 +1,6 @@
 @extends ('layouts.admin')
 @section ('contenido')
 
-	<?php
-	$recibir = $_GET['idprofesional'];
-	?>
-
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			<h3>LISTADO DE LIQUIDACIONES</h3>
@@ -18,29 +14,21 @@
 					<thead>
 						
 						<th>Fecha</th>
+						<th>Profesional</th>
 						<th>Paciente</th>
 						<th>Tratamiento</th>
 						<th>Opciones</th>
 					</thead>
-					<!-- bucle -->
-					<?php $namecontador = 0; ?>
-					<?php $idcontador = 0; ?>
-					<?php $classcontador = 0; ?>
 					@foreach ($liquidaciones as $liq)
-					@if($liq->codigoProfesional == $recibir)
-					
 					<tr>
-						<td>{{$liq->fechaRegistro}}</td>
-						<td>{{$liq->codigoPaciente}}</td>
-						<td><input name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
-						<td><input  class="estados" value="{{$liq->estados}}" ></td>
+						<td>{{$liq->idprofesional}}</td>
+						<td>{{$liq->idpaciente}}</td>
+						<td>{{$liq->coseguro}}</td>
+						<td>{{$liq->idprestacion}}></td>
 						<td>
-							<a href="{{URL::action('LiquidacionController@show', $liq->codigoProfesional)}}"><button class="btn btn-info">Detalles</button></a>
+							<a href="{{URL::action('LiquidacionController@show', $liq->idprofesional)}}"><button class="btn btn-info">Detalles</button></a>
 						</td>
 					</tr>
-
-
-					@endif
 					@include('profesional.liquidacion.modal')
 					@endforeach
 					<?php $contador = 0; ?>

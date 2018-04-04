@@ -95,7 +95,6 @@ class ProfesionalController extends Controller
         $persona->idciudad=$request->get('ciudadnombre');
         $persona->direccion=$request->get('direccion');
         $persona->observaciones=$request->get('observaciones');
-        $persona->contradicciones=$request->get('contradicciones');
         $persona->condicion='Activo';
         $persona->nacimiento = $request->get('nacimiento'); // 1990-10-25
 
