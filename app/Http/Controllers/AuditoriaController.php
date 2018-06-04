@@ -21,7 +21,7 @@ class AuditoriaController extends Controller
     public function index(Request $request){
     	if($request){
     		$query=trim($request->get('searchText'));
-    		$audit=DB::table('audit as au')
+    		$audit=DB::table('auditoria as au')
     		//de la union eligo los campos que requiero
     		->select('au.*')
     		->where('au.tabla','LIKE','%'.$query.'%')

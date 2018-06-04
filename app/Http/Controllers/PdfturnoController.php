@@ -41,11 +41,10 @@ class PdfturnoController extends Controller
             ->join('profesional as pro','pro.idprofesional','=','i.idprofesional')
             ->join('persona as per','per.idpersona','=','p.idpersona')
             ->join('prestacion as pre','pre.idprestacion','=','i.idprestacion')
-            ->select('p.idproveedor', 'i.idingreso','i.fecha_hora','per.nombre','per.apellido','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precio_compra) as total'))
-            ->orderBy('i.idingreso','desc')
+            ->select('p.idproveedor','i.fecha_hora','per.nombre','per.apellido','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.impuesto','i.estado',DB::raw('sum(di.cantidad*precio_compra) as total'))
             ->groupBy('i.idingreso','i.fecha_hora','per.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado', 'p.idproveedor')
             ->paginate(7);
-            return view('pdf.index',["ingresos"=>$ingreso]);
+            return view('pdf.index',["turno"=>$turno]);
     }
     
 
@@ -94,9 +93,11 @@ class PdfturnoController extends Controller
     $view =  \View::make($vistaurl, compact('turnop', 'date'))->render();
     $pdf = \App::make('dompdf.wrapper');
     //$pdf->setPaper('A4');
-    $pdf->setOrientation('landscape');
-    $customPaper = array(0,0,500,700);
-    $pdf->setpaper($customPaper);
+    $pdf->setpaper('A4','landscape');
+    $options = new Options();
+    $options->set('enable_html5_parser', true);
+    //$customPaper = array(0,0,500,700);
+    //$pdf->set_paper($customPaper);
     $pdf->loadHTML($view);
     return $pdf->stream('reporte',["ventas"=>$turnop , "date"=>$date]);
     // return $this->crearPDF($venta, $vistaurl,$tipo);

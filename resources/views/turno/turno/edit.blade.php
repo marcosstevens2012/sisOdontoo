@@ -44,51 +44,6 @@
 			</div>
 		</div>
 
-		<div class="row">
-                    <div class="col-md-12">
-                         
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Lista de Prestaciones Brindadas</h3>                
-                            </div>
-                      
-                            <div class="panel-body">
-				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-					<div class="form-group">
-						<label>Artículo</label>
-						<select name="pidinsumo" id="pidinsumo" class="form-control selectpicker" data-live-search="true">
-							@foreach($prestacion as $pre)
-								<option value="{{$pre->idprestacion}}">{{$pre->nombre}}</option>
-							@endforeach	
-						</select>
-					</div>
-				</div>
-
-				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-					<div class="form-group">
-						<button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
-					</div>
-				</div>
-
-				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-					<table id="detalles" class="table table-striped table-bordered table-condensed">
-						<thead style="background-color: #ccc">
-							<th>Opciones</th>
-							<th>Prestacion</th>
-						</thead>
-						<tfoot>
-							<th></th>
-							<th></th>
-						</tfoot>
-						<tbody>
-						
-						</tbody>
-					</table>
-				</div>
-			</div>
-			
-		</div>
-
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<div class="form-group">
 				<label for="observaciones">Observaciones</label>

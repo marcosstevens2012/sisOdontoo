@@ -34,11 +34,9 @@ class TurnoFormRequest extends FormRequest
         return [
         'idpaciente'=>'required',
         'profesional'=>'required',
-        //'hora_inicio'=>'required|before:' . $fin . '|after:' . $inicio,
         'hora_fin'=>'required',
         'fecha'=>'required|date|before:' . $after_date . '|after:' . $before_date,
         'idestado_turno',
-        'observaciones'=>'required|max:512',
         'idturno',
         'idestado_turno'
         ];

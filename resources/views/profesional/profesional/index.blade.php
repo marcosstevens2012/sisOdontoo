@@ -39,7 +39,7 @@
 						<td style="text-align: center;">{{$pro->email}}</td>
 						<td>
 							<a href="{{URL::action('ProfesionalController@edit', $pro->idprofesional)}}"><button class="btn btn-info">Editar</button></a>
-							<a href="{{URL::action('LiquidacionController@create', ['idprofesional'=>$pro->idprofesional])}}"><button class="btn .btn.bg-maroon">Liquidaciones</button></a>
+							<a href="{{URL::action('PreliquidacionController@create', ['idprofesional'=>$pro->idprofesional])}}"><button class="btn .btn.bg-maroon">Liquidar</button></a>
 							<a href="" data-target="#modal-delete-{{$pro->idprofesional}}" data-toggle="modal"><button class="btn btn-danger"> Eliminar</button></a>
 						</td>
 					</tr>

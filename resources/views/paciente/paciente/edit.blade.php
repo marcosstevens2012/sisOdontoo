@@ -162,15 +162,12 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-
         $(document).on('change','.paisnombre',function(){
             //console.log("hmm its change");
-
             var idpais=$(this).val();
             console.log(idpais);
             
             var div=$(this).parent().parent().parent();
-
             var op=" ";
             
             $.ajax({
@@ -180,7 +177,6 @@
                 headers:{'X-CSFR-TOKEN':$('meta[name="csrf-token"]').attr('content')},
                 success:function(data){
                     console.log('success');
-
                     console.log(data);
                     
                     console.log(data.length);
@@ -190,22 +186,17 @@
                         
                         op+='<option value="'+data[i].idprovincia+'">'+data[i].nombre+'</option>';
                    }
-
                    div.find('.provincianombre').html(" ");
                    div.find('.provincianombre').append(op);
                   
                 },
                 error:function(){
-
                 }
             });
-
         });
-
         $(document).on('change','.provincianombre',function () {
             var idprovincia=$(this).val();
             var div=$(this).parent().parent().parent();
-
             var op=" ";
             $.ajax({
                 type:'get',
@@ -215,27 +206,19 @@
                 headers:{'X-CSFR-TOKEN':$('meta[name="csrf-token"]').attr('content')},
                 success:function(c){
                     console.log('success');
-
                     console.log(c);
-
                     //console.log(data.length);
                     op+='<option value="0" selected disabled>Seleccione Ciudad</option>';
                     for(var i=0;i<c.length;i++){
                         op+='<option value="'+c[i].idciudad+'">'+c[i].nombre+'</option>';
                    }
-
                    div.find('.ciudadnombre').html(" ");
                    div.find('.ciudadnombre').append(op);
-
                 },
                 error:function(){
-
                 }
             });
-
-
         });
-
     });
 </script>
 
@@ -244,7 +227,6 @@
 <script>
 		
 		$(document).ready(function() {
-
 	    $('.paisnombre').select2({
        		theme: "bootstrap"
     	});
@@ -254,7 +236,6 @@
 	    $('.provincianombre').select2({
        		theme: "bootstrap"
     	});;
-
     
 	    
 	});

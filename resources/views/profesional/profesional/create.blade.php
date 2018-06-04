@@ -26,7 +26,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label> Nombre</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" required/>
+				<input type="text" class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" required pattern="[a-z]"/>
 
 			</div>
 		</div>
@@ -34,8 +34,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Apellido</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un Apellido" required value="{{old('apellido')}}" type="text" name="apellido" required/>
-
+				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un Apellido" required value="{{old('apellido')}}" type="text" name="apellido" required="required" />
 			</div>
 		</div>
 
@@ -53,7 +52,7 @@
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
 				<label name="documento" for="dni">Documento</label>
-				<input name="documento" type="number"  class="form-control" required value="{{old('dni')}}" placeholder="DOCUMENTO" title="Introduzca numero de documento">
+				<input name="documento" type="number"  class="form-control" required value="{{old('dni')}}" placeholder="Documento" title="Introduzca numero de documento">
 			</div>
 		</div>
 

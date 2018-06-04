@@ -30,7 +30,6 @@
 								<td align="center"> <?php 
 												$originalDate = $paciente->nacimiento;
         										$newDate = date("d-m-Y", strtotime($originalDate));
-
 											?>{{$newDate}}</td>
 								<td>{{$paciente->tipo_sangre}}</td>			
 								<td>{{$paciente->obrasocial}}</td>

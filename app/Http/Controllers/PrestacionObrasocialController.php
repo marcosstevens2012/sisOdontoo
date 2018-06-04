@@ -33,7 +33,7 @@ class PrestacionObrasocialController extends Controller
     		->where('pre.nombre','LIKE','%'.$query.'%')
             //otro campo
     		->orderBy('pre.nombre','asc')
-    		->paginate(7);
+    		->paginate(100);
     		//retorna la vista en la carpeta almacen/categoria/index.php
     		//dd($prestaciones);
     		return view('prestaciones.prestaciones.index',["prestaciones"=>$prestaciones,"searchText"=>$query]);
@@ -51,7 +51,7 @@ class PrestacionObrasocialController extends Controller
     public function store (PrestacionobrasocialFormRequest $request)
     {
     	$idobrasocial=$request->get('pobrasocial');
-        $idprestacion=$request->get('pprestacion');
+        $idprestacion=$request->get('prestacion');
         $tiempo = $request->get('tiempo');
         $costo = $request->get('plus');
 

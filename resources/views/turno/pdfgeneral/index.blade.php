@@ -1,93 +1,220 @@
-@extends('layouts.admin')
-@section('contenido')
-                
-            <section id="main-content">
-                <div class="row">
-                    <div class="col-md-12">
-                        
-                        <!--breadcrumbs start -->
-                        <ul class="breadcrumb">
-                            <li><a href="inicio/inicio">Principal</a>
-                            </li>
-                             <li><a href="turno/turno">Turnos</a> </li>
-                             </li>
-                             <li class="active">Reporte</li>
-                        </ul>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Detalles de Turno</title>
+    <link rel="stylesheet" href="style.css" media="all" />
+<style>
+ 
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
-                        <!--breadcrumbs end -->
-                        <h1 class="h1">Filtros Reporte Estado de Producción</h1>
-                        
-                    </div>
-                </div>
-                {!! Form::open(array('url'=>'turno/pdfgeneral', 'method'=>'POST', 'autocomplete'=>'off', 'files'=>'true'))!!}
-                {{Form::token()}}
-                <div class="row">
-                    <div class="col-md-12">
-                         
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Seleccione los Filtros para Realizar el Reporte</h3>                
-                            </div>
-                      
-                            <div class="panel-body">
-                                    <div class="form-group col-lg-6 col-sm-6 col-md-6 col-xs-12">
-                                                <label class="control-label">Fecha Desde:</label>
-                                                <div >
-                                                    <input type="date" class="form-control " required  name="fecha_inicio" id="fecha_inicio" >
-                                                </div>
-                                    </div>
+a {
+  color: #007efc;
+  text-decoration: underline;
+}
 
-                                     
-                                    <div class="form-group col-lg-6 col-sm-6 col-md-6 col-xs-12">
-                                                <label class="control-label">Fecha Hasta:</label>
-                                                <div >
-                                                    <input type="date" class="form-control " required name="fecha_fin" id="fecha_fin">
-                                                </div>
-                                            </div>
-                                    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-                                                <div class="form-group">
-                                                    <label class="control-label" >Estado de Turno</label>
-                                                    <select name="estado_t" id="estado_t" class="estado_t form-control selectpicker" data-live-search="true">
-                                                    <option value="" disabled="true" selected="true">Seleccione</option>
-                                                              
-                                                    <option value="1">Pendiente</option>
+body {
+  margin: 30mm 8mm 2mm 30mm;
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color: #000000;
+  background: #FFFFFF;
+  font-size: 12px; 
+  font-family: "Helvetica Neue", Helvetica, sans-
+}
 
-                                                    <option value="2">Finalizado</option>  
-                                                     
-                                                    <option value="3">Cancelado</option> 
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
 
-                                                    <option value="4">Todos</option>   
-                                                    </select>    
-                                              </div>
-                                    </div>
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
 
-                                    <div class="form-group ">
-                                        <div class="col-sm-offset-8 col-sm-12">
-                                            <button type="submit" class="btn btn-primary">Aceptar</button>
-                                            <button type="reset" class="btn btn-danger">Cancelar</button>
-                                        </div>
-                                        
+}
 
-                                    </div>
-                                    
+#logo img {
+  width: 90px;
+}
 
-                              
-                            </div>
-                             
-                        </div>
-                        
-                    </div>
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
 
+pre {
+  color:black;
+}
+#project {
+  float: left;
+}
 
-                </div>
-                {!!Form::close() !!}
-@endsection
+#project span {
+  color: #097bed;
+  text-align: right;
+  width: 52px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 1.25em;
+}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+#company {
+  float: right;
+  text-align: right;
+}
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script src="{{asset('js/jQuery-3.1.1.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery-3.2.0.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>
+#project div,
+#company div {
+  white-space: nowrap;        
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+}
+
+table tr:nth-child(2n-1) td {
+  background: #F5F5F5;
+}
+
+table th,
+table td {
+  text-align: center;
+}
+
+table th {
+  padding: 5px 20px;
+  color:#267ed6;
+  border-bottom: 1px solid #267ed6;
+  white-space: nowrap;  
+  font-size: 1.25em;      
+  font-weight: normal;
+}
+
+table .service,
+table .desc {
+  text-align: left;
+}
+
+table td {
+  padding: 20px;
+  text-align: right;
+}
+
+table td.service,
+table td.desc {
+  vertical-align: top;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.2em;
+}
+
+table td.grand {
+  border-top: 1px solid #5D6975;;
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+  color: #5D6975;
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #C1CED9;
+  padding: 8px 0;
+  text-align: center;
+  background: SeaGreen;
+  color: white;
+  text-align: right;
+}
+
+footer .pagenum:before {
+        content: counter(page);
+    }
+</style>
     
+</head>
+  <body>
+    <header class="clearfix">
+      <div id="logo">
+          <img src="" />
+      </div>
+      <h1>BRUNA DENT - ESTADO TURNOS</h1>
+      <div id="company" class="clearfix">
+        <div>Bruna Dent</div>
+        <div>AV. ROQUE PEREZ<br /> 8020</div>
+        <div>3764568959</div>
+        <div><a href="mailto:info@bruna.com">info@bruna.com</a></div>
+      </div>
+      
+      <div>
+        <div>DETALLES:</div>
+        <div>Desde: {{$fecha_inicio}}</div> <div>Hasta: {{$fecha_fin}}</div>
+      </div>
+    </header>
+    <main>
+          <table class="table table-bordered">
+                  <thead>
+                     <tr>
+                      <th style="width: 40px">Estado</th>
+                      <th style="width: 40px">Fecha</th>
+                      <th style="width: 40px">Hora</th>
+                      <th style="width: 40px">Profesional</th>
+                      <th style="width: 40px">Paciente</th>
+                     
+                    </tr>
+                  </thead>
+                 
+                    <tbody>
+                 	@foreach ($turnos as $t)
+                     <?php $originalDate = $t->fecha;
+                      $newDate = date("d-m-Y", strtotime($originalDate)); ?>
+                    <tr>
+                      <td style="width: 40px" >{{$t->estado}}</td>
+                      <td style="width: 40px" >{{$newDate}}</td>
+                      <td style="width: 10px" >{{$t->hora_inicio}}</td>
+                      <td style="width: 10px" >{{$t->profesional}}</td>
+                      <td style="width: 10px" >{{$t->paciente}}</td>
+                     
+                    </tr>
+                    @endforeach
+                    
+                  </tbody>
+
+                  </table>
+
+                  <?php 
+                        
+                  $newDate = date("d-m-Y", strtotime($date));
+
+                  ?>
+    </main>
+    <footer>
+      Usuario: <?=$usuario;?>   Fecha y Hora de emision <?=$newDate;?> 
+      <div>Pag: <span class="pagenum"> </div>
+    </footer>
+  </body>
+</html>

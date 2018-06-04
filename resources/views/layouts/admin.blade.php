@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,7 +12,6 @@
 
     <script src="{{asset('sweetalert2.js')}}"></script>
     <link rel="stylesheet" href="{{asset('sweetalert2.scss')}}">
-
     <link rel="stylesheet" href="{{asset('daterangepicker.css')}}">
 
     <link href="{{asset('css/base.css')}}" rel="stylesheet">
@@ -37,7 +35,7 @@
     <script src="{{asset('datePicker/js/bootstrap-datepicker.js')}}"></script>
     <!-- Languaje -->
     <script src="{{asset('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
-    
+
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -50,7 +48,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
     <!-- fullCalendar -->
-    
+
     <!-- Theme style -->
     <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -68,7 +66,7 @@
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
-  <body class="hold-transition skin-green sidebar-mini">
+  <body style=" background-image: url('../images/fondo.jpg');" class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
@@ -91,44 +89,49 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
-              
+
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <small class="bg-red">Online</small>
-                  <span class="hidden-xs">Solunac Team</span>
+                  <span class="hidden-xs">Usuario</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    
+
                     <p>
                       www.solunacweb.net - Solucionando Problemas
                       <small>www.youtube.com</small>
                     </p>
                   </li>
-                  
+
                   <!-- Menu Footer-->
                   <li class="user-footer">
-                    
+
                     <div class="pull-right">
                       <a href="{{url('/logout')}}" class="btn btn-default btn-flat">Cerrar</a>
                     </div>
                   </li>
                 </ul>
               </li>
-              
+
             </ul>
           </div>
 
         </nav>
       </header>
-      <!-- Left side column. contains the logo and sidebar -->
+  
+      <?php  
+        $user=\Auth::user()->tipoUsuario; 
+
+      ?>
+       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
           <!-- Sidebar user panel -->
-                    
+
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
@@ -138,18 +141,16 @@
                 <span >INCIO</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
-              
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-laptop"></i>
-                <span>Almacén</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-users"></i>
+                <span>Turnos</span>
+                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{url('insumo/insumo')}}"><i class="fa fa-circle-o"></i> Insumos</a></li>
-                <li><a href="{{url('insumo/ingreso')}}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
-                <li><a href="{{url('insumo/proveedor')}}"><i class="fa fa-circle-o"></i> Proveedores</a></li>
+                <li><a href="{{url('turno/turno')}}"><i class="fa fa-circle-o"></i>Turnos</a></li>
+                <li><a href="{{url('turno/turno/create')}}"><i class="fa fa-circle-o"></i>Nuevo Turno</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -160,7 +161,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('paciente/paciente')}}"><i class="fa fa-circle-o"></i>Informacion Personal</a></li>
-                <li><a href="{{url('turno/turno')}}"><i class="fa fa-circle-o"></i>Turnos</a></li>
+                <li><a href="{{url('paciente/paciente/create')}}"><i class="fa fa-circle-o"></i>Nuevo Paciente</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -177,13 +178,25 @@
             </li>
             <li class="treeview">
               <a href="#">
+                <i class="fa fa-th"></i>
+                <span>Liquidaciones</span>
+                 <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{url('profesional/profesional')}}"><i class="fa fa-circle-o"></i>Liquidar</a></li>
+                
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
                 <i class="fa fa-user-md"></i>
                 <span>Profesionales</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+                <li><a href="{{url('profesional/profesional/create')}}"><i class="fa fa-circle-o"></i>Nuevo Profesional</a></li>
                 <li><a href="{{url('profesional/profesional')}}"><i class="fa fa-circle-o"></i>Informacion Personal</a></li>
-                
+
                 <li><a href="{{url('profesional/consultorio')}}"><i class="fa fa-circle-o"></i>Consultorios</a></li>
               </ul>
             </li>
@@ -196,9 +209,8 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('mecanico/mecanico')}}"><i class="fa fa-circle-o"></i>Informacion Personal</a></li>
-                
                 <li><a href="{{url('mecanico/pedido')}}"><i class="fa fa-circle-o"></i>Pedidos</a></li>
-
+                <li><a href="{{url('mecanico/pedido/create')}}"><i class="fa fa-circle-o"></i>Nuevo Pedido</a></li>
                 <li><a href="{{url('mecanico/pieza')}}"><i class="fa fa-circle-o"></i>Piezas</a></li>
               </ul>
             </li>
@@ -214,7 +226,21 @@
 
               </ul>
             </li>
-            
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-laptop"></i>
+                <span>Almacén</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{url('insumo/insumo')}}"><i class="fa fa-circle-o"></i> Insumos</a></li>
+                <li><a href="{{url('insumo/ingreso')}}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
+                <li><a href="{{url('insumo/ingreso/create')}}"><i class="fa fa-circle-o"></i>Nuevo Ingreso</a></li>
+                <li><a href="{{url('insumo/proveedor')}}"><i class="fa fa-circle-o"></i> Proveedores</a></li>
+                <li><a href="{{url('insumo/proveedor/create')}}"><i class="fa fa-circle-o"></i>Nuevo Proveedor</a></li>
+                <li><a href="{{url('almacen/insumo')}}"><i class="fa fa-circle-o"></i> Reporte de insumos</a></li>
+              </ul>
+            </li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-th"></i>
@@ -224,11 +250,12 @@
               <ul class="treeview-menu">
                 <li> <a href="{{URL::to('pdf')}}"> <i class="fa fa-circle-o"></i> Reporte de Ingreso</a></li>
                 <li><a href="{{url('turno/pdfgeneral')}}"><i class="fa fa-circle-o"></i> Reporte de Turnos</a></li>
+                <li><a href="{{url('liquidacion/pdfliquidaciones')}}"><i class="fa fa-circle-o"></i> Reporte de Liquidacion</a></li>
                 <li><a href="{{url('paciente/pdfgeneral')}}"><i class="fa fa-circle-o"></i> Reporte de Pacientes</a></li>
-                <li><a href="{{url('almacen/insumo')}}"><i class="fa fa-circle-o"></i> Reporte de insumos</a></li>
+                
               </ul>
             </li>
-
+              
               <li class="treeview">
               <a href="#">
                 <i class="fa fa-folder"></i> <span>Configuraciones</span>
@@ -236,20 +263,21 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-                
               </ul>
+              @if ($user==1)
               <ul class="treeview-menu">
-                <li><a href="{{url('auditoria/auditoria')}}"><i class="fa fa-circle-o"></i> Auditoria</a></li> 
+                <li><a href="{{url('auditoria/auditoria')}}"><i class="fa fa-circle-o"></i> Auditoria</a></li>
               </ul>
+              @endif
               <ul class="treeview-menu">
                 <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Formas de pago</a></li>
-                
               </ul>
               <ul class="treeview-menu">
                 <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Tipos de Personas</a></li>
-                
+
               </ul>
             </li>
+            
             <li>
               <a href="#">
                 <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
@@ -257,7 +285,7 @@
               </a>
             </li>
 
-           
+
              <li>
               <a href="#">
                 <i class="fa fa-plus-square"></i> <span>Ayuda</span>
@@ -265,7 +293,7 @@
               </a>
             </li>
 
-                        
+
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -273,15 +301,13 @@
 
 
 
-
-
        <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        
+
         <!-- Main content -->
         <section class="content">
-          
+
           <div class="row">
             <div class="col-md-12">
               <div class="box">
@@ -289,8 +315,8 @@
                   <h3 class="box-title">Sistema de Gestion Odontologica</h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    
-                    
+
+
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -302,7 +328,7 @@
                               <!--Fin Contenido-->
                         </div>
                       </div>
-                        
+
                       </div>
                     </div><!-- /.row -->
                 </div><!-- /.box-body -->
@@ -321,20 +347,20 @@
       </footer>
 
     @stack('scripts') <!-- si este script lo quiero utilizar en otra plantilla -->
-    
+
     <!-- Bootstrap 3.3.5 -->
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 
     <link href="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" rel="stylesheet"/>
-    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
     <!-- daterangepicker -->
     <script src="{{asset('moment.min.js')}}"></script>
-    <script src="{{asset('daterangepicker.js')}}"></script> 
-    
+    <script src="{{asset('daterangepicker.js')}}"></script>
+
 
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
@@ -342,6 +368,6 @@
     <script src="{{asset('js/app.min.js')}}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-    
+    @yield('script')
   </body>
 </html>

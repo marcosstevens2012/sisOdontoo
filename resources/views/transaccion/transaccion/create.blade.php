@@ -1,5 +1,9 @@
 @extends ('layouts.admin')
 @section ('contenido')
+
+	<?php
+	$idpaciente = $_GET['idpaciente'];
+	?>
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 			<h3>NUEVA TRANSACCION</h3>
@@ -16,18 +20,9 @@
 	</div>
 	{!! Form::open(array('url'=>'transaccion/transaccion', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
-	<div class="row">
-		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-			<div class="form-group">
-				<label for="cliente">Paciente</label>
-				<select name="idpaciente" id="idpaciente" class="form-control selectpicker" data-live-search="true">
-				@foreach($personas as $persona)
-					<option value="{{$persona->idpaciente}}">{{$persona->nombre ." ". $persona->apellido}}</option>
-				@endforeach	
-				</select>
-			</div>
-		</div>
-	</div>
+	
+						<input style="display:none;" type="number" name="idpaciente" id="idpaciente" class="form-control" placeholder="Paciente" value="{{$idpaciente}}"></label>
+		
 		
 	<div class="row">
 		<div class="panel panel-primary">
@@ -38,7 +33,9 @@
 						<select name="pidprestacion" id="pidprestacion" class="form-control selectpicker" data-live-search="true">
 								<option>Seleccione</option>
 							@foreach($prestaciones as $pre)
-								<option value="{{$pre->idprestacion}}_{{$pre->coseguro}}">{{$pre->nombre}}</option>
+								
+									<option value="{{$pre->idprestacion}}_{{$pre->coseguro}}">{{$pre->nombre}}</option>
+								
 							@endforeach	
 						</select>
 					</div>
@@ -57,7 +54,7 @@
 						<select name="pformapago" id="pformapago" class="form-control selectpicker" data-live-search="true">
 								<option>Seleccione</option>
 							@foreach($formapago as $for)
-								<option value="{{$for->idformadepago}}">{{$for->nombre}}</option>
+								<option value="{{$for->idformadepago}}">{{$for->tipo}}</option>
 							@endforeach	
 						</select>
 					</div>

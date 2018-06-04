@@ -27,7 +27,7 @@
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group ">
 				<label clas=>Paciente</label>
-				<select name="idpaciente" id="idpaciente" class="idpaciente form-control">
+				<select name="idpaciente" id="idpaciente" required="required" class="idpaciente form-control">
 					<option>Seleccione Paciente</option>
 					@foreach($personas as $per)
 						<option value="{{$per->idpaciente}}">{{$per->apellido . " " . $per->nombre . " " . $per->documento}}</option>
@@ -51,7 +51,7 @@
 		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
 				<label for="fecha">Fecha </label> 
-				<input type="date" id="fecha" name="fecha" class="fecha form-control" data-date-format="mm/dd/yyyy" min="{{$fechamax}}">
+				<input type="date" id="fecha" name="fecha" class="fecha form-control" value="<?php echo date("Y-m-d");?>" data-date-format="mm/dd/yyyy" min="<?php echo date("Y-m-d");?>" data-date-format="mm/dd/yyyy" required="required">
 			</div>
 		</div>
 
@@ -105,7 +105,7 @@
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<div class="form-group">
 				<label for="observaciones">Observaciones</label>
-				<textarea name="observaciones" required value="{{old('observaciones')}}" class="form-control" rows="5" cols="10" placeholder="Observaciones" required> </textarea>
+				<textarea name="observaciones" required value="{{old('observaciones')}}" class="form-control" rows="5" cols="10" placeholder="Observaciones"> </textarea>
 			</div>
 		</div>
 		

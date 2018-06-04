@@ -41,18 +41,18 @@ class TransaccionController extends Controller
     	}
     }
     public function create(){
-        $personas=DB::table('paciente as pac')
-        ->join('persona as per','per.idpersona','=','pac.idpersona')
-        ->where('pac.idobra_social','=','7')
-        ->get();
-
+       
         $prestacion=DB::table('prestacion as pre')
-        ->join('prestacion_obrasocial as preo','pre.idprestacion','=','preo.idprestacion')
-        ->where('preo.idobrasocial','=','7')
-        ->get();
+            ->join('prestacion_obrasocial as preo','preo.idprestacion','=','pre.idprestacion')
+            ->where('preo.idobrasocial','=',1) 
+            ->get();
 
-        $formapago=DB::table('forma_pago')->get();
-        return view("transaccion.transaccion.create",["personas"=>$personas,"prestaciones"=>$prestacion, "formapago"=>$formapago]);
+            $pacientes = DB::table('paciente as pac')
+            ->join('persona as per','per.idpersona','=','pac.idpersona')
+            ->get();
+
+            $formapago=DB::table('forma_pago')->get();
+        return view("transaccion.transaccion.create",["prestaciones"=>$prestacion, "pacientes"=>$pacientes,"formapago"=>$formapago]);
     }
     public function store(TransaccionFormRequest $request){
         try {

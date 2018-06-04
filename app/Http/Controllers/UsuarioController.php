@@ -13,7 +13,9 @@ class UsuarioController extends Controller
 {
     //constructor
     public function __construct(){
-         
+        
+        $this->middleware('usuarioAdmin');
+
     }
 
     public function index(Request $request){

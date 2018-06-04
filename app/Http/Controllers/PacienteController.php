@@ -45,8 +45,8 @@ class PacienteController extends Controller
             ->orwhere('per.documento','LIKE','%'.$query.'%')
     		->orderBy('p.idpaciente','desc')
              
-    		->paginate(10);
-
+    		->get();
+           
 
     		//retorna la vista en la carpeta almacen/categoria/index.php
     		return view('paciente.paciente.index',["pacientes"=>$pacientes,"searchText"=>$query]);

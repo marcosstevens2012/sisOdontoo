@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-condensed table-hover">
+				<table id="example1" class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
 						<th>Nombre</th>
 						<th>Telefono</th>
@@ -48,4 +48,14 @@
 			
 		</div>
 	</div>
+	<script type="text/javascript">
+$(document).ready(function(){
+    $('#example1').DataTable({
+    	"language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+     }
+    } );
+} 
+);
+</script>
 @endsection

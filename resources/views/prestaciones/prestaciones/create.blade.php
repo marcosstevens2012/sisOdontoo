@@ -39,7 +39,7 @@
 					<option >Seleccione Prestacion</option>
 					@foreach($prestacion as $pre)
 						
-						<option value="{{$pre->idprestacion}}">{{$pre->nombre}}</option>
+						<option value="{{$pre->idprestacion}}">{{$pre->nombre}}_{{$pre->codigo}}</option>
 						
 					@endforeach
 				</select>

@@ -11,7 +11,7 @@
         "owen-it/laravel-auditing": "^4.1",
         "nesbot/carbon": "^1.22",
         "acacha/admin-lte-template-laravel": "2.*",
-        "barryvdh/laravel-dompdf": "0.6.*",
+        "barryvdh/laravel-dompdf": "0.8.*",
         "laracasts/flash": "^3.0",
         "maddhatter/laravel-fullcalendar": "~1.0"
     },

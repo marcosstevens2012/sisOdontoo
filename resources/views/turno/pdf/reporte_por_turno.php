@@ -5,7 +5,6 @@
     <title>Detalles de Turno</title>
     <link rel="stylesheet" href="style.css" media="all" />
 <style>
- 
 .clearfix:after {
   content: "";
   display: table;
@@ -166,7 +165,6 @@ footer .pagenum:before {
         <div>3764568959</div>
         <div><a href="mailto:info@bruna.com">info@bruna.com</a></div>
       </div>
-      
     </header>
     <main>
       <table class="table table-bordered">
@@ -183,8 +181,6 @@ footer .pagenum:before {
                   <?php ?>
                   <?php $originalDate = $turnop->fecha;
                   $newDate = date("d-m-Y", strtotime($originalDate)); ?>
-                  
-                 
                     <tr>
                       <td style="width: 10px" ><?= $newDate; ?></td>
                       <td style="width: 10px" ><?= $turnop->hora_inicio; ?></td>
@@ -192,19 +188,22 @@ footer .pagenum:before {
                       <td style="width: 10px" ><?= $turnop->paciente; ?></td>
                       <td style="width: 10px" ><?= $turnop->idconsultorio; ?></td>
                     </tr>
-                    
                     <?php ?>
-                    
                   </tbody>
-
-                  </table>
+      </table>
       <div id="notices">
         <div>AVISO:</div>
         <div class="notice">El turno se puede cancelar o modificar con previo aviso </div>
       </div>
     </main>
+
+    <?php 
+                        
+                  $newDate = date("d-m-Y", strtotime($date));
+
+                  ?>
     <footer>
-      Fecha y Hora de emision <?=$date;?>
+      Fecha y Hora de emision <?=$newDate;?>
       <div>Pag: <span class="pagenum"> </div>
     </footer>
   </body>

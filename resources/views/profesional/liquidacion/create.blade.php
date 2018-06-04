@@ -29,28 +29,28 @@
 						<th>Fecha</th>
 						<th>Profesional</th>
 						<th>Paciente</th>
-						<th>Tratamiento</th>
-						<th>Opciones</th>
+						<th>Tratamientos</th>
+						
+						
 					</thead>
 					<!-- bucle -->
 					<?php $namecontador = 0; ?>
 					<?php $idcontador = 0; ?>
+					<?php $idcontadordiente = 1000; ?>
 					<?php $classcontador = 0; ?>
 					@foreach ($liquidaciones as $liq)
 					@if($liq->idprofesional == $idprofesional)
-					
 					<tr>
-						<td>{{$liq->fecha_hora}}</td>
-						<td><input name="profesional" value="{{$liq->idprofesional}}" ></td>
-						<td><input name="paciente" value="{{$liq->idpaciente}}" ></td>
-						<td><input name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
-						<td><input  class="estados" value="{{$liq->estados}}" ></td>
-						<td>
-							<a href="{{URL::action('LiquidacionController@show', $liq->idprofesional)}}"><button class="btn btn-info">Detalles</button></a>
-						</td>
+						<td><input type="hidden" name="fecha_hora[]" value="{{$liq->fecha_hora}}">{{$liq->fecha_hora}}</td>
+						<td><input type="hidden" name="profesional" value="{{$liq->idprofesional}}">{{$liq->profesionalnombre}}</td>
+						<td><input type="hidden" name="paciente[]" value="{{$liq->idpaciente}}">{{$liq->pacientenombre}}</td>
+						<td style="display: none"><input  type="hidden" name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
+						<td style="display: none"><input  type="hidden" name="dientes[]" id="<?php echo $idcontadordiente ++; ?>" class="dientes"></td>
+						<td><input size="30" readonly class="estados" value="{{$liq->estados}}" ></td>
+						<td><input type="hidden" class="ultimaliq" id="ultimaliq" name="ultimaliq" value="{{$liq->ultimaliq}}" ></td>
+						<td><input type="hidden" class="idodontograma" id="idodontograma" name="idodontograma" value="{{$liq->id}}" ></td>
+						
 					</tr>
-
-
 					@endif
 					@endforeach					
 				</table>
@@ -60,9 +60,10 @@
 			
 		</div>
 		<div class="col-md-6 col-md-offset-3">
-			<div class="col-md-6 col-md-offset-3">
-				<button class="btn btn-primary" type="submit">Guardar</button>
-				<button class="btn btn-danger" type="reset">Cancelar</button>
+			<div class="col-md-12 col-md-offset-3">
+				<button class="btn btn-primary" id='siguiente'  type="submit">Siguiente</button>
+				<a href="{{url('liquidacion/liquidacion')}}"><button>Ver Liquidacion</button> </a>
+				<button class="btn btn-danger" id="siguiente" type="reset">Cancelar</button>
 			</div>
 		</div>
 
@@ -75,39 +76,69 @@
     $(document).ready(function(){
 
     		window.onload=function() {
-            console.log("hmm its change");
             var contador = 0; 
+            var contadordiente = 1000;
 
+            var ultimaliq = $('#ultimaliq').val();
+            console.log(ultimaliq);
             var arr = $.map(<?php echo json_encode($liquidaciones); ?>, function(el) { return el });
-            var contador;
             var tags = [];
+            var tagsdiente = [];
+
+
+            
          	$('.estados').each(function(){
          		tags = []
+         		tagsdiente = []
+
          		var estados = ($(this).val());
          		var datosPrestacion= (estados).split("__");
+         		if (ultimaliq = datosPrestacion.length){
+            	document.getElementById("siguiente").disabled = true;
+            	swal({
+                  type: 'warning',
+                  title:'NADA PARA LIQUIDAR',//carga el titulo con lo q hay en el input notice
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"70%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+            	
+            	}
          		//console.log(datosPrestacion);
-         		for(var i=0; i<datosPrestacion.length; i++)
-				{
-				var partesEstado=datosPrestacion[i].split("_");
-				var tratamiento=partesEstado[2].split("-");
-				var idtratamiento=tratamiento[0];
-				
-				tags.push(idtratamiento); 
+         		for(var i=ultimaliq; i<datosPrestacion.length; i++)
+					{	
 
-				//console.log(tags);
+						var partesEstado=datosPrestacion[i].split("_");
+						var tratamiento=partesEstado[2].split("-");
+						var diente=partesEstado[0];
+						var idtratamiento=tratamiento[0];
+						
+						tags.push(idtratamiento); 
+						tagsdiente.push(diente);
 				}		
-
-				console.log(contador);
-
-        		setValue(contador, tags);
+				console.log(tagsdiente);
 				console.log(tags);
+				setValuetratamientos(contador, tags);
+				setValuedientes(contadordiente, tagsdiente);
 				
-				function setValue(id,newvalue) {
+				function setValuetratamientos(id,newvalue) {
   				var s= document.getElementById(id);
   				s.value = newvalue;
+				}
 
-				}  
-				contador++;  
+				function setValuedientes(id,newvalue) {
+  				var x= document.getElementById(id);
+  				x.value = newvalue;
+				}
+
+				//var x= document.getElementById('ultimaliq');
+  				//x.value = i;
+
+
+				contador++;
+				contadordiente++;  
 
 				
          	});

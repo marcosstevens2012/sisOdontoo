@@ -49,5 +49,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \sisOdonto\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'usuarioAdmin'=> \sisOdonto\Http\Middleware\MDusuarioadmin::class,
+        'usuarioStandard'=> \sisOdonto\Http\Middleware\MDusuariostandard::class,
     ];
 }

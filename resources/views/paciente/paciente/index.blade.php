@@ -49,7 +49,6 @@
 				</table>
 				
 			</div>
-			{{$pacientes->render()}}
 			
 		</div>
 
@@ -57,14 +56,11 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#example1').DataTable({
-
-
     	"language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
      }
     } );
 } 
 );
-
 </script>
 @endsection
