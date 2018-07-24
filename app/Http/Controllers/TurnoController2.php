@@ -63,7 +63,7 @@ class TurnoController2 extends Controller
                   //$query = $query->orWhere('a.tags','like',"%$search%");
                 });
                 $turnos = $turnos->whereBetween('t.fecha_inicio', [$fecha_inicio, $fecha_fin])
-                ->select('t.idturno', DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 't.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'), 't.idconsultorio as consultorio','est.estado as estado', 't.hora_inicio', 't.hora_fin', 't.fecha','t.tiempo_at','t.idestado')
+                ->select('t.idturno', DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 't.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'), 't.idprofesional', 't.idconsultorio as consultorio','est.estado as estado', 't.hora_inicio', 't.hora_fin', 't.fecha','t.tiempo_at','t.idestado')
                 ->orderBy('t.fecha', 'desc')
                 ->get();
               
@@ -150,7 +150,7 @@ class TurnoController2 extends Controller
                     ->join('estado_turno as est','t.idestado','=','est.idestado_turno')
                     
                     ->select('t.idestado')
-                    ->select('t.idturno', DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 't.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'), 't.idconsultorio as consultorio','est.estado as estado', 't.hora_inicio', 't.hora_fin', 't.fecha','t.tiempo_at','t.idestado')
+                    ->select('t.idturno', DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 't.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'),'t.idprofesional', 't.idconsultorio as consultorio','est.estado as estado', 't.hora_inicio', 't.hora_fin', 't.fecha','t.tiempo_at','t.idestado')
                 ->get();
                
               

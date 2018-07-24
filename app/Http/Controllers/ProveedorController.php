@@ -36,7 +36,7 @@ class ProveedorController extends Controller
             //join de dos tablas
             ->join('persona as per', 'per.idpersona', '=', 'p.idpersona')
             //de la union eligo los campos que requiero
-            ->select('p.idproveedor', 'per.nombre as nombre', 'per.apellido','per.documento as dni','per.email as email' ,'per.observaciones as observaciones','per.contradicciones as contradicciones')
+            ->select('p.idproveedor', 'per.nombre as nombre', 'per.apellido','per.documento as dni','per.email as email')
             ->where('per.nombre','LIKE','%'.$query.'%')
             //otro campo
             ->orwhere('per.documento','LIKE','%'.$query.'%')
@@ -75,19 +75,19 @@ class ProveedorController extends Controller
 
     public function store (ProveedorFormRequest $request)
     {
-        try {
-            DB::beginTransaction();
+        //try {
+            //DB::beginTransaction();
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
         $persona->apellido=$request->get('apellido');
         $persona->idtipo_documento=$request->get('tipodocumento');
         $persona->documento=$request->get('documento');
         $persona->idciudad=$request->get('ciudadnombre');
-        $persona->observaciones=$request->get('observaciones');
-        $persona->contradicciones=$request->get('contradicciones');
         $persona->condicion='1';
         $persona->nacimiento=$request->get('nacimiento');
-        //$persona->edad = Carbon::parse($edad)->age; // 1990-10-25
+        $persona->direccion=$request->get('direccion');
+        $persona->email=$request->get('email');
+        $persona->telefono=$request->get('telefono');
         $persona->save();
 
         $direccion = $request->get('precio_compra');
@@ -97,9 +97,7 @@ class ProveedorController extends Controller
         $proveedor = new proveedor;
         $proveedor->idpersona= $persona->idpersona;
         $proveedor->save();
-
-        $cont = 0;
-        while ($cont < count($direccion)) {
+        /*while ($cont < count($direccion)) {
                 # code...
                 $contacto = new Contacto;
                 $contacto->idproveedor= $proveedor->idproveedor;
@@ -109,19 +107,19 @@ class ProveedorController extends Controller
                 $cont=$cont+1;
             }
         
-        
-        DB::commit();
+        */
+        //DB::commit();
         //flash('Welcome Aboard!');
-                $r = 'Proveedor Creado';
-            }
+               //$r = 'Proveedor Creado';
+            //}
 
-        catch (\Exception $e) {
-            DB::rollback(); 
+        //catch (\Exception $e) {
+            //DB::rollback(); 
         //Flash::success("No se ha podido crear turno");
-                $r = 'No se ha podido crear Proveedor';
-            }
+                //$r = 'No se ha podido crear Proveedor';
+            //}
 
-        return Redirect::to('insumo/proveedor')->with('notice',$r); //redirecciona a la vista turno
+        return Redirect::to('insumo/proveedor'); //redirecciona a la vista turno
 
     }
     public function show($id)

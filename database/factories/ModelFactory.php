@@ -1,5 +1,6 @@
 <?php
-
+use sisOdonto\Paciente; 
+use sisOdonto\Persona;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -11,11 +12,38 @@
 |
 */
 
-$factory->define(sisOdonto\User::class, function (Faker\Generator $faker) {
+$factory->define(sisOdonto\Persona::class, function (Generator $faker) {
+
+	$faker = Faker\Factory::create('es_ES');
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'apellido'=>$faker->lastName,
+      	'nombre'=>$faker->name,
+      	//'fecha_registro'=>$faker->dateTimeBetween($startDate = '-1 month', $endDate = 'now', $timezone = null),
+      	'idtipo_documento'=>'1',
+        'email'=>$faker->email,
+        'idciudad'=>'1',
+      	'documento'=>$faker->numberBetween($min = 33, $max = 36)."-".$faker->numberBetween($min = 1111, $max = 999).$faker->numberBetween($min = 1111, $max = 999)."-".$faker->numberBetween($min = 1, $max = 9),
+      	'nacimiento'=>$faker->dateTimeThisCentury->format('Ymd'),
+      	'contradicciones'=>'observaciones persona',
+        'telefono'=>$faker->e164PhoneNumber
+    ];
+});
+
+$factory->define(sisOdonto\Paciente::class, function (Generator $faker) {
+
+ $faker = Faker\Factory::create('es_ES');
+    static $number = 60;
+    return [
+
+        'direccion'=>$faker->streetAddress,
+      	'idciudad'=>$faker->numberBetween($min = 9307, $max = 9310),
+      	'identidad'=>$number++,
+      	'telefono1'=>$faker->numberBetween($min = 3755, $max = 3844)."-".$faker->numberBetween($min = 441608, $max = 996632),
+      	'telefono2'=>$faker->numberBetween($min = 3755, $max = 3844)."-".$faker->numberBetween($min = 441608, $max = 996632),
+      	'email'=>$faker->email,
+      	'nota'=>'nota direccion',
+      	'estado'=>'Activo'
+      	
+      	
     ];
 });

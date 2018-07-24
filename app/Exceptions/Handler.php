@@ -1,14 +1,15 @@
 <?php
-
+ 
 namespace sisOdonto\Exceptions;
-
+ 
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Illuminate\Support\Facades\Redirect;
+ 
 class Handler extends ExceptionHandler
 {
     /**
@@ -21,8 +22,9 @@ class Handler extends ExceptionHandler
         HttpException::class,
         ModelNotFoundException::class,
         ValidationException::class,
+        ErrorException::class,
     ];
-
+ 
     /**
      * Report or log an exception.
      *
@@ -35,7 +37,7 @@ class Handler extends ExceptionHandler
     {
         parent::report($e);
     }
-
+ 
     /**
      * Render an exception into an HTTP response.
      *
@@ -43,23 +45,57 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
-    {
-        if($this->isHttpException($exception)){
-            switch ($exception->getStatusCode()) {
-                // PAGINA NO ENCONTRADA
-                case 404:
-                    return response()->view('errors.404',[],404);
-                break;
-                // ERROR INTERNO DEL SERVIDOR
-                case '1452':
-                    return response()->view('errors.500',[],500);    
-                break;
-                default:
-                    return $this->renderHttpException($exception);
-                break;
+     public function render($request, Exception $e)
+    {   
+        //dd($e);
+        //check if exception is an instance of ModelNotFoundException.
+        //or NotFoundHttpException
+ 
+        
+        if ($e instanceof ModelNotFoundException or $e instanceof NotFoundHttpException) {
+            // ajax 404 json feedback
+            if ($request->ajax()) {
+                return Redirect::to('inicio/inicio');
+ 
             }
+ 
+            // normal 404 view page feedback
+           return Redirect::to('inicio/inicio');
         }
-        return parent::render($request, $exception);
+        if ($e instanceof \ErrorException) {
+ 
+        return Redirect::to('inicio/inicio');
+        }
+        if ($e instanceof \BadMethodCallException) {
+            //dd('asdasda');
+        return Redirect::to('inicio/inicio');
+        }
+        if ($e instanceof TokenMismatchException) {
+        return Redirect::to('inicio/inicio');;
+        }
+         if ($e instanceof ErrorException) {
+ 
+        return Redirect::to('inicio/inicio');
+        }
+ 
+        if ($e instanceof BadMethodCallException) {
+            //dd('asdasda');
+        return Redirect::to('inicio/inicio');
+        }
+ 
+        if ($e instanceof \NotFoundHttpException) {
+            //dd('asdasda');
+        return Redirect::to('inicio/inicio');
+        }
+        if ($e instanceof \PDOException) {
+             
+        return Redirect::to('/login')->with('notice','No se ha podido Conectar con la Base de Datos, Intente Nuevamente.');
+        }
+ 
+           
+        return parent::render($request, $e);
     }
+ 
+     
+ 
 }

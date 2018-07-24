@@ -24,7 +24,7 @@ class PiezasController extends Controller
     		$query=trim($request->get('searchText'));
     		$piezas=DB::table('pieza as p')
     		//de la union eligo los campos que requiero
-    		->select('p.idpieza', 'p.nombre', 'p.descripcion', 'p.estado')
+    		->select('p.idpieza', 'p.nombre', 'p.descripcion')
     		->where('p.nombre','LIKE','%'.$query.'%')
             //otro campo
             //->orwhere('p.nombre','LIKE','%'.$query.'%')
@@ -45,22 +45,22 @@ class PiezasController extends Controller
         $pieza = new Piezas;
         $pieza->nombre=$request->get('nombre');
         $pieza->descripcion=$request->get('descripcion');
-        $pieza->estado='Activo';
         $pieza->save();
 
 
-            DB::commit();
-        //flash('Welcome Aboard!');
-                $r = 'Pieza Creada';
-            }
-
-        catch (\Exception $e) {
+         DB::commit();
+            $r='Pieza Creada Correctamente';
+            $o='open';
+         } catch (\Exception $e) {
             DB::rollback(); 
-        //Flash::success("No se ha podido crear turno");
-                $r = 'No se ha podido crear Pieza';
-            }
+            $r='Pieza NO ha sido Creado!.';
+            $o='close';
 
-        return Redirect::to('mecanico/pieza')->with('notice',$r); //redirecciona a la vista turno
+        }
+        
+        return Redirect::to('mecanico/pieza')->with('popup', $o)->with('notice', $r);
+
+
 
     }
     public function show($id)

@@ -57,15 +57,15 @@
 		
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label name="documento" for="documento">DOCUMENTO</label>
-				<input name="documento" type="number"  class="form-control" required value="{{old('documento')}}" placeholder="DOCUMENTO" maxlength="8" >
+				<label name="documento" for="documento">Documento</label>
+				<input name="documento" type="text"  class="form-control" required value="{{old('documento')}}" placeholder="DOCUMENTO" maxlength="8">
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label name="email" for="email">EMAIL</label>
-				<input name="email" type="mail"  class="form-control" required value="{{old('email')}}" placeholder="EMAIL" >
+				<label name="email" for="email">Email</label>
+				<input name="email" type="mail"  class="form-control" required value="{{old('email')}}" placeholder="Email" >
 			</div>
 		</div>
 
@@ -105,40 +105,15 @@
 		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
 						<label for="telefono">Telefono</label>
-						<input type="" name="ptelefono" id="ptelefono"  class="form-control" value="{{old('telefono')}}" placeholder="Telefono">
+						<input type="" name="telefono" id="telefono"   class="form-control" value="{{old('telefono')}}" placeholder="Telefono">
 					</div>
 		</div>
 		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 				<div class="form-group">
 					<label for="fecha">Direccion</label>
-					<input type='text' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" class='form-control' name="pemail" id="pemail" required value="{{old('email')}}" placeholder="Direccion">
+					<input type='text' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" class='form-control' name="direccion" id="direccion" required value="{{old('direccion')}}" placeholder="Direccion">
 					</div>
 		</div>
-
-		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
-			<div class="form-group">
-				<button type="button" id="bt_add" class="btn btn-primary">Agregar</button>
-			</div>
-			</div>
-
-				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-					<table id="detalles" class="table table-striped table-bordered table-condensed">
-						<thead style="background-color: #ccc">
-							<th>Opciones</th>
-							<th>Telefono</th>
-							<th>Direccion</th>
-							
-						</thead>
-						<tfoot>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tfoot>
-						<tbody>
-						
-						</tbody>
-					</table>
-				</div>
 
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<div class="form-group">
@@ -166,7 +141,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
+<script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>
+<script type="text/javascript">
+	//MASCARAS PARA LOS INPUTS
+$(document).ready(function($){
+		$('.matricula').mask("99-99-99", {reverse: true});
+		$('.documento').mask("99999999", {reverse: true});
+		$(".telefono").mask("9999-999999");
+		
+	})
+</script>
 
 <script type="text/javascript">
     $(document).ready(function(){

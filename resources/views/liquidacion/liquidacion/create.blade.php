@@ -45,7 +45,7 @@
 						<td><input type="hidden" name="profesional" value="{{$liq->idprofesional}}">{{$liq->profesionalnombre}}</td>
 						<td><input type="hidden" name="paciente[]" value="{{$liq->idpaciente}}">{{$liq->pacientenombre}}</td>
 						<td style="display: none"><input  type="hidden" name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
-						<td style="display: none"><input  type="hidden" name="dientes[]" id="<?php echo $idcontadordiente ++; ?>" class="dientes"></td>
+						<td style="display: none"><input  type="" name="dientes[]" id="<?php echo $idcontadordiente ++; ?>" class="dientes"></td>
 						<td><input size="30" readonly class="estados" value="{{$liq->estados}}" ></td>
 						<td><input type="hidden" class="ultimaliq" id="ultimaliq" name="ultimaliq" value="" ></td>
 						<td><input type="hidden" class="idodontograma" id="idodontograma" name="idodontograma" value="{{$liq->codigoOdontograma}}" ></td>

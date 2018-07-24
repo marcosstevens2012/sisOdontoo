@@ -11,7 +11,7 @@
 			</div>
 
 			<div class="modal-body">
-				<p>Confirme si desea modificar Turno</p>
+				<p>Confirme si desea modificar Turno A sala de espera</p>
 			</div>
 
 			<div class="modal-footer">

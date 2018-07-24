@@ -49,6 +49,7 @@ Route::resource('mecanico/pieza', 'PiezasController');
 //PACIENTE
 Route::resource('paciente/paciente', 'PacienteController');
 Route::resource('paciente/obrasocial', 'ObrasocialController');
+Route::resource('paciente/historial', 'HistorialController');
 
 //PROFESIONAL
 Route::resource('profesional/consultorio', 'ConsultorioController');

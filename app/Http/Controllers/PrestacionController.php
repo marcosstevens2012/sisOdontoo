@@ -35,7 +35,7 @@ class PrestacionController extends Controller
     		->where('i.nombre','LIKE','%'.$query.'%')
             //otro campo
     		->orderBy('i.idprestacion','desc')
-    		->paginate(7);
+    		->get();
     		//retorna la vista en la carpeta almacen/categoria/index.php
     		return view('profesional.prestacion.index',["prestaciones"=>$prestaciones,"searchText"=>$query]);
     	}

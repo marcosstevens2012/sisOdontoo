@@ -20,19 +20,19 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="nombre">Nombre</label>
-				<input type="text" name="nombre" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" required value="{{old('nombre')}}" class="form-control" placeholder="Nombre">
+				<input type="text" name="nombre" style="text-transform:uppercase;" onkeyup="aMays(event, this); this.value=this.value.replace(/[^a-zA-Z]/g,'');" required value="{{old('nombre')}}" class="form-control" placeholder="Nombre">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="codigo">Numero</label>
-				<input type="number" name="numero" required value="{{old('numero')}}" class="form-control" placeholder="Numero">
+				<label for="Numero">Numero</label>
+				<input type="number" name="numero" id="numero" required value="{{old('numero')}}" class="numero form-control" placeholder="Numero" maxlength="20">
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="stock">Telefono</label>
-				<input type="tel" name="telefono" required value="{{old('telefono')}}" class="form-control" placeholder="Telefono">
+				<input type="tel" name="telefono" id="telefono" required value="{{old('telefono')}}" class="telefono form-control" placeholder="Telefono">
 			</div>
 			
 		</div>
@@ -64,15 +64,15 @@
 
 				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
-						<label name="coseguro" for="coseguro">Importe</label>
-						<input type="number" class="form-control" name="pcoseguro" id="pcoseguro" placeholder="Conseguro"  value="{{old('conseguro')}}"/>
+						<label name="importe" for="importe">Importe<i class="fa fa-usd" aria-hidden="true"></i></label>
+						<input type="text" class="pcoseguro form-control" name="pcoseguro" id="pcoseguro" placeholder="Conseguro"  value="{{old('conseguro')}}"/>
 					</div>
 				</div>
 
 				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 					<div class="form-group">
 						<label name="codigo" for="coseguro">Codigo</label>
-						<input type="number" class="form-control" name="pcodigo" id="pcodigo" placeholder="Codigo"  value="{{old('codigo')}}"/>
+						<input type="text" class="pcodigo form-control" name="pcodigo" id="pcodigo" placeholder="Codigo"  value="{{old('codigo')}}"/>
 					</div>
 				</div>
 
@@ -118,7 +118,19 @@
 
 	</div>
 	{!!Form::close() !!}
+<script type="text/javascript" src="{{asset('js/jquery-3.2.0.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>
 
+<script type="text/javascript">
+	//MASCARAS PARA LOS INPUTS
+$(document).ready(function($){
+		$('.numero').mask("99999999", {reverse: true});
+		$('.pcoseguro').mask("#.##0,00", {reverse: true});
+		$(".pcodigo").mask("9999");
+		$(".telefono").mask("9999-999999");
+		
+	})
+</script>
 
 <script type="text/javascript">
 
@@ -147,7 +159,7 @@ tecla=(document.all) ? e.keyCode : e.which;
 			
 			if(idprestacion !="" && coseguro !="" && codigo != ""){
 				
-				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idprestacion[]" value="'+idprestacion+'">'+prestacion+'</td><td><input type="number" name="coseguro[]" value="'+coseguro+'"></td><td><input type="text" name="codigo[]" value="'+codigo+'"></td></tr>';
+				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')" >X</button></td><td><input type="hidden" name="idprestacion[]" value="'+idprestacion+'">'+prestacion+'</td><td><input type="text" name="coseguro[]" value="'+coseguro+'"></td><td><input type="text" name="codigo[]" value="'+codigo+'"></td></tr>';
 				cont++;
 				limpiar();
 				

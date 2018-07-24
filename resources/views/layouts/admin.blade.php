@@ -8,6 +8,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/animations.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap-select.min.css')}}">
 
     <script src="{{asset('sweetalert2.js')}}"></script>
@@ -127,7 +128,7 @@
 
       ?>
        <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+      <aside class=" main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
           <!-- Sidebar user panel -->
@@ -173,7 +174,7 @@
               <ul class="treeview-menu">
                 <li><a href="{{url('paciente/obrasocial')}}"><i class="fa fa-circle-o"></i> Obra Social</a></li>
                 <li><a href="{{url('profesional/prestacion')}}"><i class="fa fa-circle-o"></i>Prestaciones</a></li>
-                <li><a href="{{url('profesional/liquidacion')}}"><i class="fa fa-circle-o"></i>Liquidacion</a></li>
+                <li><a href="{{url('liquidacion/liquidacion')}}"><i class="fa fa-circle-o"></i>Liquidacion</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -235,9 +236,9 @@
               <ul class="treeview-menu">
                 <li><a href="{{url('insumo/insumo')}}"><i class="fa fa-circle-o"></i> Insumos</a></li>
                 <li><a href="{{url('insumo/ingreso')}}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
-                <li><a href="{{url('insumo/ingreso/create')}}"><i class="fa fa-circle-o"></i>Nuevo Ingreso</a></li>
+                <li><a href="{{url('insumo/ingreso/create')}}"><i class="fa fa-circle-o"></i> Nuevo Ingreso</a></li>
                 <li><a href="{{url('insumo/proveedor')}}"><i class="fa fa-circle-o"></i> Proveedores</a></li>
-                <li><a href="{{url('insumo/proveedor/create')}}"><i class="fa fa-circle-o"></i>Nuevo Proveedor</a></li>
+                <li><a href="{{url('insumo/proveedor/create')}}"><i class="fa fa-circle-o"></i> Nuevo Proveedor</a></li>
                 <li><a href="{{url('almacen/insumo')}}"><i class="fa fa-circle-o"></i> Reporte de insumos</a></li>
               </ul>
             </li>
@@ -256,24 +257,27 @@
               </ul>
             </li>
               
-              <li class="treeview">
+            <li class="treeview">
               <a href="#">
                 <i class="fa fa-folder"></i> <span>Configuraciones</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i>Gestion de Usuarios</a></li>
               </ul>
               @if ($user==1)
               <ul class="treeview-menu">
-                <li><a href="{{url('auditoria/auditoria')}}"><i class="fa fa-circle-o"></i> Auditoria</a></li>
+                <li><a href="{{url('auditoria/auditoria')}}"><i class="fa fa-circle-o"></i>Auditoria</a></li>
               </ul>
               @endif
               <ul class="treeview-menu">
-                <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Formas de pago</a></li>
+                <li><a href="{{url('empresa/empresa')}}"><i class="fa fa-circle-o"></i>Datos Consultorio</a></li>
               </ul>
               <ul class="treeview-menu">
-                <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i> Tipos de Personas</a></li>
+                <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i>Formas de pago</a></li>
+              </ul>
+              <ul class="treeview-menu">
+                <li><a href="{{url('seguridad/usuario')}}"><i class="fa fa-circle-o"></i>Tipos de Personas</a></li>
 
               </ul>
             </li>
@@ -343,7 +347,7 @@
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.3.0
         </div>
-        <strong>Copyright &copy; 2015-2020 <a href="www.incanatoit.com">SOLUNAC</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2015-2020 <a href="https://www.solunacweb.net">SOLUNAC</a>.</strong> All rights reserved.
       </footer>
 
     @stack('scripts') <!-- si este script lo quiero utilizar en otra plantilla -->

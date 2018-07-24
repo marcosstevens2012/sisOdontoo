@@ -36,11 +36,80 @@ class LiquidacionController extends Controller
             $search=trim($request->get('searchText'));
             $fecha_inicio=trim($request->get('fecha_inicio'));
             $fecha_fin=trim($request->get('fecha_fin'));
-            $estado=trim($request->get('estado_t'));
+            $estado=trim($request->get('estado'));
             $paciente=trim($request->get('paciente'));
             $profesional=trim($request->get('profesional'));
             $obra=trim($request->get('idobra_social'));
-            //dd($profesional);
+            $estado=trim($request->get('estado'));
+            //dd($fecha_fin);
+
+            
+            if( $paciente=="" && $search ==""  && $fecha_fin == "" && $fecha_inicio == "" && $profesional != "" && $obra == "" && $estado != ""){
+
+                $liquidaciones=DB::table('preliquidacion as liq')
+                ->join('profesional as pro','pro.idprofesional','=','liq.idprofesional')
+                ->join('persona as per','per.idpersona','=','pro.idpersona')
+                ->join('paciente as pac','pac.idpaciente','=','liq.idpaciente')
+                ->join('obrasocial as obr','obr.idobrasocial','=','liq.idobrasocial')
+                ->join('persona as p','p.idpersona','=','pac.idpersona')
+                ->join('prestacion as pre','pre.codigo','=','liq.idprestacion')
+                ->where('liq.idprofesional','=',$profesional)->where('liq.liquidado','=',$estado)
+                ->select('liq.*','pre.nombre as prestacion','obr.nombre as obrasocial', DB::raw('CONCAT(p.nombre, " ",p.apellido) AS pacientenombre'),DB::raw('CONCAT(per.nombre, " ",per.apellido) AS profesionalnombre'))
+                ->get();
+
+                $pacientes = DB::table('persona as p')
+                ->join('paciente as pac','p.idpersona','=','pac.idpersona')
+                ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pac.idpaciente','p.documento')
+                ->where('pac.condicion','=','Activo')
+                ->orderBy('p.apellido','asc')
+                ->get();
+
+
+            
+                $profesionales = DB::table('persona as p')
+                ->join('profesional as pro','p.idpersona','=','pro.idpersona')
+                ->join('consultorio as con','con.idconsultorio','=','pro.consultorio')
+                ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pro.idprofesional','con.numero as consultorio')
+                ->orderBy('p.apellido','asc')
+                ->get();
+
+                $obrasociales = DB::table('obrasocial')->get();
+
+                return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin, "estado"=>$estado,"obrasocial"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesionales, "profesionales"=>$profesional, "paciente"=>$paciente, "obra"=>$obrasociales]);
+            }
+            if( $paciente=="" && $search ==""  && $fecha_fin == "" && $fecha_inicio == "" && $profesional != "" && $obra == ""){
+
+                $liquidaciones=DB::table('preliquidacion as liq')
+                ->join('profesional as pro','pro.idprofesional','=','liq.idprofesional')
+                ->join('persona as per','per.idpersona','=','pro.idpersona')
+                ->join('paciente as pac','pac.idpaciente','=','liq.idpaciente')
+                ->join('obrasocial as obr','obr.idobrasocial','=','liq.idobrasocial')
+                ->join('persona as p','p.idpersona','=','pac.idpersona')
+                ->join('prestacion as pre','pre.codigo','=','liq.idprestacion')
+                ->where('liq.idprofesional','=',$profesional)
+                ->select('liq.*','pre.nombre as prestacion','obr.nombre as obrasocial', DB::raw('CONCAT(p.nombre, " ",p.apellido) AS pacientenombre'),DB::raw('CONCAT(per.nombre, " ",per.apellido) AS profesionalnombre'))
+                ->get();
+
+                $pacientes = DB::table('persona as p')
+                ->join('paciente as pac','p.idpersona','=','pac.idpersona')
+                ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pac.idpaciente','p.documento')
+                ->where('pac.condicion','=','Activo')
+                ->orderBy('p.apellido','asc')
+                ->get();
+
+
+            
+                $profesionales = DB::table('persona as p')
+                ->join('profesional as pro','p.idpersona','=','pro.idpersona')
+                ->join('consultorio as con','con.idconsultorio','=','pro.consultorio')
+                ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pro.idprofesional','con.numero as consultorio')
+                ->orderBy('p.apellido','asc')
+                ->get();
+
+                $obrasociales = DB::table('obrasocial')->get();
+
+                 return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin, "estado"=>$estado,"obrasocial"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesionales, "profesionales"=>$profesional, "paciente"=>$paciente, "obra"=>$obrasociales]);
+            }
 
             if( $paciente!="" && $search ==""  && $fecha_fin == "" && $fecha_inicio == "" && $profesional != "" && $obra == ""){
 
@@ -71,11 +140,12 @@ class LiquidacionController extends Controller
                 ->orderBy('p.apellido','asc')
                 ->get();
 
-                $obra = DB::table('obrasocial')->get();
+                $obras = DB::table('obrasocial')->get();
 
-                return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin,"estado"=>$estado,"obra"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesional]);
+                return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin, "estado"=>$estado,"obrasocial"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesionales, "profesionales"=>$profesional, "paciente"=>$paciente, "obra"=>$obrasociales]);
             }
 
+            //TODO VACIO 
 
             if( $paciente=="" && $search==""  && $fecha_fin == "" && $fecha_inicio == "" && $profesional == "" && $obra == ""){
 
@@ -98,16 +168,16 @@ class LiquidacionController extends Controller
 
 
             
-                $profesional = DB::table('persona as p')
+                $profesionales = DB::table('persona as p')
                 ->join('profesional as pro','p.idpersona','=','pro.idpersona')
                 ->join('consultorio as con','con.idconsultorio','=','pro.consultorio')
                 ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pro.idprofesional','con.numero as consultorio')
                 ->orderBy('p.apellido','asc')
                 ->get();
 
-                $obra = DB::table('obrasocial')->get();
+                $obrasociales = DB::table('obrasocial')->get();
 
-    		    return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin, "estado"=>$estado,"obra"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesional]);
+    		    return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin, "estado"=>$estado,"obrasocial"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesionales, "profesionales"=>$profesional, "paciente"=>$paciente, "obra"=>$obrasociales]);
             }
 
 
@@ -179,7 +249,7 @@ class LiquidacionController extends Controller
             
             }
 
-            if( $paciente=="" && $search==""  && $fecha_fin != "" && $fecha_inicio != "" && $profesional == "" && $obra == ""){
+            if( $paciente =="" && $search ==""  && $fecha_fin != "" && $fecha_inicio != "" && $profesional == "" && $obra == ""){
 
                 $liquidaciones=DB::table('preliquidacion as liq')
                 ->join('profesional as pro','pro.idprofesional','=','liq.idprofesional')
@@ -190,9 +260,10 @@ class LiquidacionController extends Controller
                 ->join('prestacion as pre','pre.codigo','=','liq.idprestacion')
                 ->whereBetween('liq.fecha', [$fecha_inicio, $fecha_fin])
                 ->select('liq.*','liq.idpaciente','pre.nombre as prestacion','obr.nombre as obrasocial', DB::raw('CONCAT(p.nombre, " ",p.apellido) AS pacientenombre'),DB::raw('CONCAT(per.nombre, " ",per.apellido) AS profesionalnombre'))
-                ->where('pre.nombre','=',$search)
                 ->get();
 
+
+                //dd($liquidaciones);
                 $pacientes = DB::table('persona as p')
                 ->join('paciente as pac','p.idpersona','=','pac.idpersona')
                 ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pac.idpaciente','p.documento')
@@ -200,7 +271,7 @@ class LiquidacionController extends Controller
                 ->orderBy('p.apellido','asc')
                 ->get();
             
-                $profesional = DB::table('persona as p')
+                $profesionales = DB::table('persona as p')
                 ->join('profesional as pro','p.idpersona','=','pro.idpersona')
                 ->join('consultorio as con','con.idconsultorio','=','pro.consultorio')
                 ->select('p.nombre as nombre','p.apellido as apellido','p.idpersona','pro.idprofesional','con.numero as consultorio')
@@ -209,9 +280,7 @@ class LiquidacionController extends Controller
 
                 $obra = DB::table('obrasocial')->get();
 
-                
-                return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin,"estado"=>$estado,"obra"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesional]);
-            
+                return view('liquidacion.liquidacion.index',["liquidaciones"=>$liquidaciones, "searchText"=>$search, "fecha_inicio"=>$fecha_inicio, "fecha_fin"=>$fecha_fin, "estado"=>$estado,"obra"=>$obra,"paciente"=>$pacientes,"profesional"=>$profesionales, "profesionales"=>$profesional, "paciente"=>$paciente, "obrasocial"=>$obra]);
             }
 
              if( $paciente=="" && $search==""  && $fecha_fin =="" && $fecha_inicio =="" && $profesional !="" && $obra !=""){

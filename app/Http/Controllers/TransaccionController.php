@@ -44,18 +44,19 @@ class TransaccionController extends Controller
        
         $prestacion=DB::table('prestacion as pre')
             ->join('prestacion_obrasocial as preo','preo.idprestacion','=','pre.idprestacion')
-            ->where('preo.idobrasocial','=',1) 
+            ->where('preo.idobrasocial','=',4) 
             ->get();
 
             $pacientes = DB::table('paciente as pac')
             ->join('persona as per','per.idpersona','=','pac.idpersona')
+            ->join('turno as tur','tur.idpaciente','=','pac.idpaciente')
             ->get();
 
             $formapago=DB::table('forma_pago')->get();
         return view("transaccion.transaccion.create",["prestaciones"=>$prestacion, "pacientes"=>$pacientes,"formapago"=>$formapago]);
     }
     public function store(TransaccionFormRequest $request){
-        try {
+            try {
             DB::beginTransaction();
             $transaccion = new Transaccion;
             $transaccion->idpaciente=$request->get('idpaciente');
@@ -78,18 +79,18 @@ class TransaccionController extends Controller
                 $detalle->save();
                 $cont=$cont+1;
             }
-            DB::commit();
-        //flash('Welcome Aboard!');
-                $r = 'Turno Creado';
-            }
+           DB::commit();
+            $r='Transaccion Creada Correctamente';
+            $o='open';
+            } catch (\Exception $e) {
+            DB::rollback(); 
+            $r='Transaccion NO Creada';
+            $o='close';
 
-        catch (\Exception $e) {
-        DB::rollback(); 
-        //Flash::success("No se ha podido crear turno");
-                $r = 'No se ha podido crear Turno';
-            }
-           
-        return Redirect::to('transaccion/transaccion')->with('notice',$r);
+        }
+        
+        return Redirect::to('transaccion/transaccion')->with('popup', $o)->with('notice', $r);
+
     }
     public function show($id){
             $transaccion=DB::table('transaccion as t')

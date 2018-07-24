@@ -38,10 +38,10 @@ class PacienteController extends Controller
     		->join('persona as per', 'per.idpersona', '=', 'p.idpersona')
     		->join('obrasocial as o', 'o.idobrasocial','=','p.idobra_social')
     		//de la union eligo los campos que requiero
-    		->select('p.idpaciente', 'per.nombre as nombre','per.apellido as apellido', 'o.nombre as obrasocial', 'p.tipo_sangre','p.condicion','per.direccion as direccion','per.documento as documento','per.telefono as telefono','per.email as email' ,'per.contradicciones as contradicciones','per.nacimiento')
+    		->select('p.idpaciente', 'per.nombre as nombre','per.apellido as apellido', 'o.nombre as obrasocial', 'p.tipo_sangre','p.condicion','per.direccion as direccion','per.documento as documento','per.telefono as telefono','per.email as email' ,'p.contradicciones as contradicciones','per.nacimiento')
             ->where('p.condicion','=','Activo')
     		->where('per.nombre','LIKE','%'.$query.'%')
-            //otro campo
+            ->orwhere('per.apellido','LIKE','%'.$query.'%')
             ->orwhere('per.documento','LIKE','%'.$query.'%')
     		->orderBy('p.idpaciente','desc')
              
@@ -53,14 +53,16 @@ class PacienteController extends Controller
     	}
     }
     public function create()
-    {
+    {   
+        $fechamax = Carbon::now();
+        $fechamax = $fechamax->format('d-m-Y');
         //$paises = DB::table('paises')->get();
         $obrasociales = DB::table('obrasocial')->get();
         $tipodocumentos= DB::table('tipo_documento')->get(); 
         //return view("paciente.paciente.create",["paises"=>$paises, "obrasociales"=>$obrasociales]);
         $pais= Pais::all();
             //retorna la vista en la carpeta almacen/categoria/index.php
-        return view('paciente.paciente.create',["obrasociales"=>$obrasociales,"tipodocumentos"=>$tipodocumentos,"pais"=>$pais]);
+        return view('paciente.paciente.create',["obrasociales"=>$obrasociales,"tipodocumentos"=>$tipodocumentos,"pais"=>$pais,$fechamax='fechamax']);
     }
 
     public function buscarProvincia(Request $request){
@@ -79,8 +81,10 @@ class PacienteController extends Controller
         return response()->json($c);
     }
 
-    public function store (PacienteFormRequest $request)
+    public function store (Request $request)
     {   
+        try {
+            DB::beginTransaction();
        
         $persona=new Persona;
         $persona->nombre=$request->get('nombre');
@@ -95,41 +99,58 @@ class PacienteController extends Controller
         $persona->condicion='Activo';
         $persona->nacimiento=$request->get('nacimiento');
         //$persona->edad = Carbon::parse($edad)->age; // 1990-10-25
-
-
-        $persona->observaciones=$request->get('observaciones');
-        $persona->contradicciones=$request->get('contradicciones');
-              
+        if(Input::hasFile('imagen')){
+            $file =  Input::file('imagen');
+            $file->move(public_path().'/imagenes/articulos/', $file->getClientOriginalName());
+            $persona->imagen=$file->getClientOriginalName();
+        }    
         $persona->save();
-
-        $idobra_social=$request->get('idobra_social');
         $tipo_sangre = $request->get('tipo_sangre');
 
         $paciente=new Paciente;
         $paciente->idpersona=$persona->idpersona;
-        $paciente->idobra_social=$idobra_social;
+        $paciente->idobra_social=$request->get('obrasocial');
         $paciente->tipo_sangre=$tipo_sangre;
         $paciente->contradicciones=$request->get('contradicciones');
         $paciente->carnet=$request->get('carnet');
         $paciente->condicion='Activo';
 
+       
+
+
         $paciente->save();
         
-        return Redirect::to('paciente/paciente'); //redirecciona a la vista turno
+
+
+        DB::commit();
+            $r='Paciente ha sido Creado Correctamente';
+            $o='open';
+         } catch (\Exception $e) {
+            DB::rollback(); 
+            $r='Paciente NO ha sido Creado!.';
+            $o='close';
+
+        }
+        
+        return Redirect::to('paciente/paciente')->with('popup', $o)->with('notice', $r);
 
     }
     public function show($id)
     {   
+
+        $odontograma = DB::table('todontograma as odo')
+        ->where('odo.codigoPaciente','=',$id)->get();
+
         $paciente  = DB::table('paciente as pac')
-        ->join('turno as tur','tur.idpaciente','=','pac.idpaciente')
         ->join('persona as per','per.idpersona','=','pac.idpersona')
         ->join('obrasocial as obr','obr.idobrasocial','=','pac.idobra_social')
-        ->select('per.*','pac.*','obr.nombre as obrasocial','tur.idprofesional')
+        ->select('per.*','pac.*','obr.nombre as obrasocial')
         ->where('pac.idpaciente','=',$id)
         ->first();
 
-        
-        return view("paciente.paciente.show",["paciente"=>$paciente]);//muestra categoria especifica
+        $idprofesional = 0;
+        //dd($idprofesional);
+        return view("paciente.paciente.show",["paciente"=>$paciente, "odontograma"=>$odontograma, "idprofesional"=>$idprofesional]);//muestra categoria especifica
     }
    public function edit($id)
     {

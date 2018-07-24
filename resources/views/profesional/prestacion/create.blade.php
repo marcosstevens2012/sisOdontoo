@@ -19,8 +19,8 @@
 		<div class="row">
 			<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 				<div class="form-group ">
-					<label> Nombre</label>
-					<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}" type="text" name="nombre" id="nombre" required placeholder="NOMBRE">
+					<label> Nombre*</label>
+					<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this); this.value=this.value.replace(/[^a-zA-Z]/g,'');" title="Se necesita un nombre" required value="{{old('nombre')}}" type="text" name="nombre" id="nombre" required placeholder="NOMBRE">
 
 				</div>
 			</div>
@@ -29,8 +29,8 @@
 
 			<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
-						<label name="tiempo" for="tiempo">Tiempo (hh:mm):</label>
-						<input type="text" class="form-control timepicker" onBlur="CheckTime(this)" name="tiempo" id="tiempo" placeholder="TIEMPO"> 
+						<label name="tiempo" for="tiempo">Tiempo (hh:mm):*</label>
+						<input type="text" class="tiempo form-control timepicker" onBlur="CheckTime(this)" name="tiempo" id="tiempo" placeholder="TIEMPO"> 
 					</div>
 			</div>
 		</div>
@@ -40,7 +40,7 @@
 
 			<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 				<div class="form-group">
-					<label>Insumo</label>
+					<label>Insumo*</label>
 					<select name="pidinsumo" id="pidinsumo" class="form-control selectpicker" data-live-search="true">
 						@foreach($insumos as $ins)
 							<option value="{{$ins->idinsumo}}">{{$ins->insumo}}</option>
@@ -51,8 +51,8 @@
 
 			<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 				<div class="form-group">
-					<label name="cantidad" for="cantidad">Cantidad:</label>
-					<input type="number" class="form-control" name="pcantidad" id="pcantidad" placeholder="Cantidad"  value="{{old('cantidad')}}"/>
+					<label name="cantidad" for="cantidad">Cantidad:*</label>
+					<input type="text" class="cantidad form-control" name="pcantidad" id="pcantidad" placeholder="Cantidad"  value="{{old('cantidad')}}"/>
 				</div>
 			</div>
 
@@ -105,6 +105,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+<script type="text/javascript" src="{{asset('js/jquery-3.2.0.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>
+
+<script type="text/javascript">
+	//MASCARAS PARA LOS INPUTS
+$(document).ready(function($){
+		$('.tiempo').mask("00:00", {reverse: true});
+		$('.cantidad').mask("999", {reverse: true});
+		$(".pcodigo").mask("9999");
+		
+	})
+</script>
 @push ('scripts') <!-- Trabajar con el script definido en el layout-->
 	<script>
 		$(document).ready(function(){
@@ -203,8 +218,6 @@
 </script> 
 
 <script type="text/javascript">
-
-
 
 
 function aMays(e, elemento) {

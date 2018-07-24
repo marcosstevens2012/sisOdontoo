@@ -3,10 +3,9 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-			<h3>Listado de Prestaciones y Tratamientos</h3>
+			<h3>Listado de Prestaciones y Tratamientos para liquidar</h3>
 			<a href="turno/create"><button class="btn btn-success">Liquidar Mes</button></a>
 			<br><br>
-			
 			@include('profesional.liquidacion.search')
 			
 		</div>
@@ -16,7 +15,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
 				<table name="example1" id="example1" class="example1 table table-striliq table-bordered table-condensed table-hover">
-					<thead>
+					<thead style="background: #9BE2F3;">
 						<th>Fecha Liquidacion</th>
 						<th>Obra Social</th>
 						<th>Profesional</th>
@@ -25,18 +24,24 @@
 						<th>Pieza Dentaria</th>
 						<th>Tratamiento</th>
 						<th>Codigo</th>
+						<th>Estado</th>
 						<th>Liquidar</TH>
 					</thead>
+					<?php $sum = 0; ?>
 					@foreach ($liquidaciones as $liq)
 					<tr>
+						<?php
+							$sum = $liq->coseguro + $sum;  
+							 ?>
 						<td>{{$liq->fecha}}</td>
 						<td>{{$liq->obrasocial}}</td>
 						<td>{{$liq->profesionalnombre}}</td>
 						<td>{{$liq->pacientenombre}}</td>
 						<td>$ {{$liq->coseguro}}</td>
-						<td></td>
+						<td>{{$liq->diente}}</td>
 						<td>{{$liq->prestacion}}</td>
 						<td>{{$liq->codigo}}</td>
+						<td>{{$liq->liquidado}}</td>
 						<td><a href="" data-target="#modal-consultorio-{{$tur->idturno}}" data-toggle="modal"><button class="btn-xs btn-primary">Liquidar</button></a></td>
 					</tr>
 					@include('profesional.liquidacion.modal')
@@ -44,10 +49,7 @@
 					<?php $contador = 0; ?>
 					
 				</table>
-
 			</div>
-			
-
 		</div>
 	</div>
 

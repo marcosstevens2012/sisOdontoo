@@ -79,6 +79,11 @@ class TurnoeditController extends Controller
         $turno->update();
         }
 
+        if($accion->val == 'F'){
+        $turno->idestado=('2');
+        $turno->update();
+        }
+
         $estados = new Turnoestado;
         $date = Carbon::now();
         $date->toDateTimeString();  

@@ -79,18 +79,18 @@ class PedidoController extends Controller
                     $cont=$cont+1;
             }
             DB::commit();
-        //flash('Welcome Aboard!');
-                $r = 'Pedido Creado';
-            }
-
-            catch (\Exception $e) {
+                    $r='El Pedido ha sido Creado Correctamente';
+                    $o='open';
+            } catch (\Exception $e) {
             DB::rollback(); 
-        //Flash::success("No se ha podido crear turno");
-                $r = 'No se ha podido crear Pedido';
-            }
+                    $r='El Pedido NO ha sido Creado!.';
+                    $o='close';
 
-        return Redirect::to('mecanico/pedido')->with('notice',$r); //redirecciona a la vista turno
+        }
+        
+        return Redirect::to('mecanico/pedido')->with('popup', $o)->with('notice', $r);
 
+        
     }
 
     public function show($id){

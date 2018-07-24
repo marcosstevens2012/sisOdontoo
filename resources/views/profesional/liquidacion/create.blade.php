@@ -6,7 +6,7 @@
 	?>
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h3 class="box-title">NUEVA LIQUIDACION</h3>
+			<h3 class="box-title">PREPARAR LIQUIDACION</h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -40,15 +40,19 @@
 					<?php $classcontador = 0; ?>
 					@foreach ($liquidaciones as $liq)
 					@if($liq->idprofesional == $idprofesional)
+
 					<tr>
+						@if($liq->ultimaliq == 0)
 						<td><input type="hidden" name="fecha_hora[]" value="{{$liq->fecha_hora}}">{{$liq->fecha_hora}}</td>
 						<td><input type="hidden" name="profesional" value="{{$liq->idprofesional}}">{{$liq->profesionalnombre}}</td>
 						<td><input type="hidden" name="paciente[]" value="{{$liq->idpaciente}}">{{$liq->pacientenombre}}</td>
-						<td style="display: none"><input  type="hidden" name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
-						<td style="display: none"><input  type="hidden" name="dientes[]" id="<?php echo $idcontadordiente ++; ?>" class="dientes"></td>
+						<td style="display: none"><input  type="" name="prestaciones[]" id="<?php echo $idcontador ++; ?>" class="prestaciones"></td>
+						<td style="display: none"><input  type="" name="dientes[]" id="<?php echo $idcontadordiente ++; ?>" class="dientes"></td>
+						<td style="display: none"><input  type="" name="CodigoOdontograma[]" id="CodigoOdontograma" value="{{$liq->CodigoOdontograma}}" class=""></td>
+
 						<td><input size="30" readonly class="estados" value="{{$liq->estados}}" ></td>
-						<td><input type="hidden" class="ultimaliq" id="ultimaliq" name="ultimaliq" value="{{$liq->ultimaliq}}" ></td>
-						<td><input type="hidden" class="idodontograma" id="idodontograma" name="idodontograma" value="{{$liq->id}}" ></td>
+						@endif
+
 						
 					</tr>
 					@endif
@@ -62,8 +66,6 @@
 		<div class="col-md-6 col-md-offset-3">
 			<div class="col-md-12 col-md-offset-3">
 				<button class="btn btn-primary" id='siguiente'  type="submit">Siguiente</button>
-				<a href="{{url('liquidacion/liquidacion')}}"><button>Ver Liquidacion</button> </a>
-				<button class="btn btn-danger" id="siguiente" type="reset">Cancelar</button>
 			</div>
 		</div>
 
@@ -71,7 +73,11 @@
 
 	</div>
 	{!!Form::close() !!}
-
+	<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-12 col-md-offset-3">
+				<a href="/liquidacion/liquidacion"><button class="btn btn-danger" id="siguiente" type="reset">Volver a Liquidaciones</button></a>
+			</div>
+		</div>
 	<script type="text/javascript">
     $(document).ready(function(){
 
@@ -79,11 +85,28 @@
             var contador = 0; 
             var contadordiente = 1000;
 
-            var ultimaliq = $('#ultimaliq').val();
-            console.log(ultimaliq);
+            //var ultimaliq = $('#ultimaliq').val();
+            //console.log(ultimaliq);
             var arr = $.map(<?php echo json_encode($liquidaciones); ?>, function(el) { return el });
             var tags = [];
             var tagsdiente = [];
+            var estadoss = document.getElementById("estados");
+            console.log(estadoss);
+			if (estadoss == null){
+
+				document.getElementById("siguiente").disabled = true;
+				swal({
+                  type: 'warning',
+                  title:'NADA PARA LIQUIDAR',
+                  text: 'Selecciones Ver Liquidaciones para continuar',//carga el titulo con lo q hay en el input notice
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"70%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+            };	
+
 
 
             
@@ -92,32 +115,25 @@
          		tagsdiente = []
 
          		var estados = ($(this).val());
-         		var datosPrestacion= (estados).split("__");
-         		if (ultimaliq = datosPrestacion.length){
-            	document.getElementById("siguiente").disabled = true;
-            	swal({
-                  type: 'warning',
-                  title:'NADA PARA LIQUIDAR',//carga el titulo con lo q hay en el input notice
-                  showConfirmButton:true,
-                  confirmButtonText:"Aceptar",
-                  width:"70%",
-                  padding: '10em',
-                  showLoaderOnConfirm: true,
-                });
+         		var datosPrestacion= (estados).split("_");
+         		//if (ultimaliq == datosPrestacion.length){
+            	//
             	
-            	}
-         		//console.log(datosPrestacion);
-         		for(var i=ultimaliq; i<datosPrestacion.length; i++)
-					{	
+            	
+            	//}
+         		console.log(datosPrestacion);
+         		//for(var i = 0;/*=ultimaliq;*/ i<datosPrestacion.length; i++)
+					//{	
 
-						var partesEstado=datosPrestacion[i].split("_");
-						var tratamiento=partesEstado[2].split("-");
-						var diente=partesEstado[0];
+						//var partesEstado=datosPrestacion[i].split("_");
+						var tratamiento=datosPrestacion[2].split("-");
+						//console.log(tratamiento);
+						var diente=datosPrestacion[0];
 						var idtratamiento=tratamiento[0];
 						
 						tags.push(idtratamiento); 
 						tagsdiente.push(diente);
-				}		
+				//}		
 				console.log(tagsdiente);
 				console.log(tags);
 				setValuetratamientos(contador, tags);

@@ -38,7 +38,7 @@ class ProfesionalController extends Controller
     		//join de dos tablas
     		->join('persona as per', 'per.idpersona', '=', 'p.idpersona')
     		//de la union eligo los campos que requiero
-    		->select('p.idprofesional', 'per.nombre as nombre', 'per.apellido', 'p.matricula','per.direccion as direccion','per.documento as dni','per.telefono as telefono','per.email as email' ,'per.observaciones as observaciones','per.contradicciones as contradicciones')
+    		->select('p.idprofesional', 'per.nombre as nombre', 'per.apellido', 'p.matricula','per.direccion as direccion','per.documento as dni','per.telefono as telefono','per.email as email')
             ->where('per.condicion','=','Activo')
     		->where('per.nombre','LIKE','%'.$query.'%')
             //otro campo

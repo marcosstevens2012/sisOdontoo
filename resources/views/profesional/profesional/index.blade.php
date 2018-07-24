@@ -16,7 +16,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
 				<table id="example1" class= "table table-striped table-bordered table-condensed table-hover">
-					<thead>
+					<thead style="background: #9BE2F3;">
 					
 						<th>Nombre</th>
 						<th>Apellido</th>

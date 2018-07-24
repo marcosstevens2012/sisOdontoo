@@ -20,42 +20,40 @@
                                                 <div class="form-group">
                                                     <h4>Obra Social</h4>
                                                     <select name="idobra_social" id="idobra_social" class="form-control selectpicker" data-live-search="true">
-                                                        <option value="">Seleccione Obra Social</option>
+                                                        <option value="{{$obrasocial}}">Seleccione Obra Social</option>
                                                     @foreach($obra as $obr)
                                                             <option value="{{$obr->idobrasocial}}">{{$obr->nombre}}</option>
                                                     @endforeach
                                                     </select>    
                                               </div>
                                     </div>
-
+                                    <input type="hidden" name="pro" id="pro" value="{{$profesionales}}">
                                     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
                                                 <div class="form-group">
                                                     <h4>Profesional</h4>
-                                                    <select name="profesional" id="profesional" class="idpaciente form-control selectpicker data-live-search">
-                                                        <option value="">Seleccione Profesional</option>
-                                                             @foreach($profesional as $pro)
-                                                                <option value="{{$pro->idprofesional}}">{{$pro->apellido . " " . $pro->nombre}}</option>
-                                                             @endforeach
-                                                    </select> 
+                                                    <select name="profesional" id="profesional" class="estado form-control selectpicker data-live-search">
+                                                        <option value="{{$profesionales}}"  selected="true">Profesional</option>
+                                                    @if ($profesionales=="")
+                                                        <option value=""  selected="true">Seleccione</option>
+                                                    @endif
+                                                        @foreach($profesional as $pro)
+                                                            <option value="{{$pro->idprofesional}}">{{$pro->nombre}} {{$pro->apellido}}</option>
+                                                        @endforeach
+                                                    </select>
                                               </div>
                                     </div>
 
                                     <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
                                                 <div class="form-group">
-                                                    <h4>Paciente</h4>
-                                                    <select name="paciente" id="paciente" class="idpaciente form-control selectpicker data-live-search">
-                                                        <option value="">Seleccione Paciente</option>
-                                                             @foreach($paciente as $per)
-                                                                <option value="{{$per->idpaciente}}">{{$per->apellido . " " . $per->nombre . " " . $per->documento}}</option>
-                                                             @endforeach
+                                                    <h4>Estado</h4>
+                                                    <select name="estado" id="estado" class="estado form-control selectpicker data-live-search">
+                                                        <option value="{{$estado}}">Seleccione Estado</option>
+                                                             <option value="1">Liquidado</option>
+                                                             <option value="0">No liquidado</option>
                                                     </select> 
                                               </div>
                                     </div>
-                                    <div class="form-group col-lg-4 col-sm-4 col-md-4 col-xs-12">
-                                        <h4>Buscar </h4>
-                                        <input type="text" class="form-control" id="searchText" name="searchText" value="{{$searchText}}" placeholder="Numero de orden, etc." >
-                                        
-                                    </div>
+                    
                                     <div class="form-group col-lg-4 col-sm-4 col-md-4 col-xs-12">
                                         <h4>Buscar </h4>
                                         <span class="input-group-btn"><button type="submit" class="btn btn-primary">Buscar</button></span>
@@ -70,20 +68,14 @@
 {{Form::close()}}
 
 
-{!! Form::open(['route' => ['liquidacion.pdfliquidaciones.store', 'searchText' =>$searchText,'fecha_inicio'=>$fecha_inicio,'fecha_fin'=>$fecha_fin,'estado'=>$estado, 'obra'=>$obra, 'profesional'=>$profesional, 'paciente'=>$paciente], 'method' => 'POST']) !!}
+{!! Form::open(['route' => ['liquidacion.pdfliquidaciones.store', 'searchText' =>$searchText,'fecha_inicio'=>$fecha_inicio,'fecha_fin'=>$fecha_fin,'estado'=>$estado, 'obra'=>$obra, 'profesionales'=>$profesionales, 'paciente'=>$paciente], 'method' => 'POST']) !!}
         <div class="form-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
             <button type="submit" id="" class="btn btn-info"><i class="fa fa-print"> Reporte</button></i>
-        </div>
-        </div>
+        
 </div>
 {!! Form::close() !!}
+@include('profesional.liquidacion.modal')
+<a href="" data-target="#modal-delete" data-toggle="modal"><button class="btn btn-primary" id="consumir" style="">Liquidar Todo</button></a>
 
-{!! Form::open(['route' => ['liquidacion.pdfliquidaciones.store', 'searchText' =>$searchText,'fecha_inicio'=>$fecha_inicio,'fecha_fin'=>$fecha_fin,'estado'=>$estado, 'obra'=>$obra, 'profesional'=>$profesional, 'paciente'=>$paciente], 'method' => 'POST']) !!}
-        <div class="form-group col-lg-12 col-sm-12 col-md-12 col-xs-12">
-            <button type="submit" id="" class="btn btn-info"><i class="fa fa-print"> Liquidar Todo</button></i>
-        </div>
-        </div>
-</div>
-{!! Form::close() !!}
 
 

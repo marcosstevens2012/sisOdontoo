@@ -50,7 +50,7 @@ class IngresoController extends Controller
     	return view("insumo.ingreso.create",["personas"=>$persona,"insumos"=>$insumos]);
     }
     public function store(IngresoFormRequest $request){
-       try {
+      try {
             DB::beginTransaction();
             $ingreso = new Ingreso;
             $ingreso->idproveedor=$request->get('idproveedor');
@@ -113,11 +113,11 @@ class IngresoController extends Controller
         $ingreso->Estado='Cancelado';
 
         $detalle = DetalleIngreso::where('idingreso',$ingreso->idingreso)
-        ->select('idarticulo')
+        
         ->get();
 
         $detalle->toArray();
-        dd($detalle);
+        //  dd($detalle);
         $idarticulo=$detalle->idarticulo;
         $cantidad = $detalle->cantidad;
 

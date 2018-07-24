@@ -36,7 +36,7 @@ class mecanicoController extends Controller
             //join de dos tablas
             ->join('persona as per', 'per.idpersona', '=', 'p.idpersona')
             //de la union eligo los campos que requiero
-            ->select('p.idmecanico', 'p.estado as estado', 'per.nombre as nombre', 'per.apellido','per.documento as dni','per.email as email' ,'per.observaciones as observaciones','per.contradicciones as contradicciones')
+            ->select('p.idmecanico', 'p.estado as estado', 'per.nombre as nombre', 'per.apellido','per.documento as dni','per.email as email' )
             ->where('per.nombre','LIKE','%'.$query.'%')
             //otro campo
             ->orwhere('per.documento','LIKE','%'.$query.'%')
@@ -72,7 +72,7 @@ class mecanicoController extends Controller
         return response()->json($c);
     }
 
-    public function store (mecanicoFormRequest $request)
+    public function store (MecanicoFormRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -82,12 +82,9 @@ class mecanicoController extends Controller
         $persona->idtipo_documento=$request->get('tipodocumento');
         $persona->documento=$request->get('documento');
         $persona->idciudad=$request->get('ciudadnombre');
-        $persona->observaciones=$request->get('observaciones');
         $persona->direccion=$request->get('direccion');
         $persona->telefono=$request->get('telefono');
         $persona->email=$request->get('email');
-        $persona->contradicciones=$request->get('contradicciones');
-        
         $persona->nacimiento=$request->get('nacimiento');
         //$persona->edad = Carbon::parse($edad)->age; // 1990-10-25
         $persona->save();
@@ -99,18 +96,18 @@ class mecanicoController extends Controller
         $mecanico->matricula=$request->get('matricula');
         $mecanico->save();
         
-       DB::commit();
-        //flash('Welcome Aboard!');
-                $r = 'Mecanico Creado';
-            }
+        DB::commit();
+            $r='El Mecanico ha sido Creado Correctamente';
+            $o='open';
+         } catch (\Exception $e) {
+            DB::rollback(); 
+            $r='El Mecanico NO ha sido Creado!.';
+            $o='close';
 
-        catch (\Exception $e) {
-        DB::rollback(); 
-        //Flash::success("No se ha podido crear turno");
-                $r = 'No se ha podido crear Mecanico';
-            }
+        }
+        
+        return Redirect::to('mecanico/mecanico')->with('popup', $o)->with('notice', $r);
 
-        return Redirect::to('mecanico/mecanico')->with('notice',$r); //redirecciona a la vista turno
 
     }
     public function show($id)

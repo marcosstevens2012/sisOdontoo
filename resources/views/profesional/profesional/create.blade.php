@@ -26,7 +26,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label> Nombre</label>
-				<input type="text" class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" required pattern="[a-z]"/>
+				<input type="text" class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this); this.value=this.value.replace(/[^a-zA-Z]/g,'');" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" />
 
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Apellido</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un Apellido" required value="{{old('apellido')}}" type="text" name="apellido" required="required" />
+				<input class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this); this.value=this.value.replace(/[^a-zA-Z]/g,'');" title="Se necesita un Apellido" required value="{{old('apellido')}}" type="text" name="apellido" required="required" />
 			</div>
 		</div>
 
@@ -52,14 +52,14 @@
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
 				<label name="documento" for="dni">Documento</label>
-				<input name="documento" type="number"  class="form-control" required value="{{old('dni')}}" placeholder="Documento" title="Introduzca numero de documento">
+				<input name="documento" type="text" id="documento" class="documento form-control" required value="{{old('dni')}}" placeholder="Documento" title="Introduzca numero de documento" maxlength="8">
 			</div>
 		</div>
 
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
 				<label name="matricula" for="matricula">Matricula</label>
-				<input name="matricula" type="number"  class="form-control" required value="{{old('matricula')}}" placeholder="MATRICULA" title="Introduzca numero de matricula">
+				<input name="matricula" id="matricula" type="text"  class="matricula form-control" required value="{{old('matricula')}}" placeholder="MATRICULA" title="Introduzca numero de matricula" maxlength="8">
 			</div>
 		</div>
 
@@ -119,14 +119,14 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label name="direccion" for="direccion">Direccion</label>
-				<input name="direccion" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="direccion" type="text"  class="form-control" required value="{{old('direccion')}}" placeholder="Direccion">
+				<input name="direccion" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="direccion" maxlength="50" type="text"  class="form-control" required value="{{old('direccion')}}" placeholder="Direccion">
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="telefono">Telefono</label>
-				<input type="text" name="telefono" id="telefono"  class="form-control" required value="{{old('telefono')}}" placeholder="Telefono" >
+				<input type="text" name="telefono" id="telefono"  class="telefono form-control" required="required" value="{{old('telefono')}}" placeholder="Telefono" >
 			</div>
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
@@ -141,7 +141,7 @@
 		</div>
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label for="observaciones">Observaciones</label>
+				<label for="Observaciones">Observaciones</label>
 				<textarea name="observaciones" style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" id="observaciones"  class="form-control" required value="{{old('observaciones')}}"placeholder="Observaciones" required> </textarea>
 			</div>
 		</div>
@@ -160,8 +160,18 @@
 	{!!Form::close() !!}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>
+<script type="text/javascript">
+	//MASCARAS PARA LOS INPUTS
+$(document).ready(function($){
+		$('.matricula').mask("99-99-99", {reverse: true});
+		$('.documento').mask("99999999", {reverse: true});
+		$(".telefono").mask("9999-999999");
+		
+	})
+</script>
 
 @push ('scripts')
 

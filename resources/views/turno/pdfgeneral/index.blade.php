@@ -172,7 +172,9 @@ footer .pagenum:before {
       
       <div>
         <div>DETALLES:</div>
+        @if($fecha_inicio != '')
         <div>Desde: {{$fecha_inicio}}</div> <div>Hasta: {{$fecha_fin}}</div>
+        @endif
       </div>
     </header>
     <main>

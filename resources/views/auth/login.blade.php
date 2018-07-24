@@ -1,11 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
+@if (Session::has('notice'))
+         <input type="hidden" name="notice" id="notice" value="{{Session::get('notice')}}"> <!--cargo en un input el valor para q sea mas facil acceder a ese valoe desde javascript //es la form q se jajaj -->
+           @if (session()->has('popup') && Session::get('popup')=='open') 
+           <!--si todo salio bien al guardar entra aca e genera la alerta -->
+            <script>  
+                 swal({
+                  type: 'success',
+                  title: $('#notice').val(),//carga el titulo con lo q hay en el input notice
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"70%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+
+            </script>
+            @endif
+
+            @if (session()->has('popup') && Session::get('popup')!='open') 
+        
+            <script>
+                //si no  se guardo correctaente tira error perro
+                 swal({
+                  type: 'error',
+                  title: $('#notice').val(),
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"100%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+            </script>
+            @endif
+
+        @endif
 <div  class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Iniciar Sesion</div>
+            <div class="expandOpen panel panel-default">
+                <div class=" panel-heading">Iniciar Sesion</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}

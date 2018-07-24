@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 			<h3>Listado de Prestaciones y Tratamientos</h3>
-			<a href="turno/create"><button class="btn btn-success">Liquidar Mes</button></a>
+			<a href="/profesional/profesional"><button class="btn btn-success">Liquidar Mes</button></a>
 			<br><br>
 			
 			@include('profesional.liquidacion.search')
@@ -16,7 +16,8 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
 				<table name="example1" id="example1" class="example1 table table-striliq table-bordered table-condensed table-hover">
-					<thead>
+					<thead style="background: #9BE2F3;">
+						<th>Fecha</th>
 						<th>Obra Social</th>
 						<th>Profesional</th>
 						<th>Paciente</th>
@@ -24,18 +25,28 @@
 						<th>Pieza Dentaria</th>
 						<th>Tratamiento</th>
 						<th>Codigo</th>
+						<th>Estado</th>
 						<th>Liquidar</TH>
 					</thead>
+					<?php  $sum = 0; $suml =0; ?>
 					@foreach ($liquidaciones as $liq)
+					<?php $sum= $sum + $liq->coseguro ?>
 					<tr>
+						<td>{{$liq->fecha}}</td>
 						<td>{{$liq->obrasocial}}</td>
 						<td>{{$liq->profesionalnombre}}</td>
 						<td>{{$liq->pacientenombre}}</td>
-						<td>$ {{$liq->coseguro}}</td>
-						<td></td>
+						<td>${{$liq->coseguro}}</td>
+						<td>{{$liq->diente}}</td>
 						<td>{{$liq->prestacion}}</td>
 						<td>{{$liq->codigo}}</td>
-						<td><a href="" data-target="#modal-liquidar-{{$liq->id}}" data-toggle="modal"><button class="btn-xs btn-primary">Liquidar</button></a></td>
+						@if ($liq->liquidado=='1')
+						<?php $suml= $suml + $liq->coseguro ?>
+						<td align="center"><small class="label pull-right bg-green">Liquidado</small></td>
+						@else
+						<td align="center"><small class="label pull-right bg-red">No Liquidado</small></td>
+						@endif
+						<td>@if($liq->liquidado=='0')<a href="" data-target="#modal-liquidar-{{$liq->id}}" data-toggle="modal"><button class="btn-xs btn-primary">Liquidar</button></a>@endif</td>
 					</tr>
 					@include('liquidacion.liquidacion.liquidar')
 					@endforeach
@@ -44,10 +55,48 @@
 				</table>
 
 			</div>
+		</div>
+		
+		
+			
+		
+	</div>
 
-
+	
+	<div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Para los datos en tabla</h3>                
+                </div>
+                      
+               	<div class="panel-body">
+				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<table id="detalles" class="table table-striped table-bordered table-condensed">
+						<thead style="background-color: #ccc">
+							<th>Total</th>
+							<th>Total Liquidado</th>
+						</thead>
+						<tfoot>
+							<th></th>
+							<th></th>
+						</tfoot>
+						<tbody>
+							
+							<tr>
+								<td>$ {{$sum}}</td>
+								<td>$ {{$suml}}</td>
+							</tr>
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
+</div>
+			
+	
 
 
 	<script type="text/javascript">

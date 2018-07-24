@@ -9,7 +9,7 @@ class Persona extends Model
     //declaración de los atributos de la tabla
     protected $table = 'persona';
     protected $primaryKey = 'idpersona';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
     	'nombre',
         'apellido',

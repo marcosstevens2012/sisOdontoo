@@ -6,21 +6,51 @@
 			@include('paciente.paciente.search')
 		</div>
 	</div>
-	@if(Session::has('notice'))<!-- crea una alerta de q ha sido creado correctamente el usuario-->
-   					<div class="alert alert-info">
-   					<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-    				<strong>Info:</strong> {{Session::get('notice') }}</div>
+	@if (Session::has('notice'))
+         <input type="hidden" name="notice" id="notice" value="{{Session::get('notice')}}"> <!--cargo en un input el valor para q sea mas facil acceder a ese valoe desde javascript //es la form q se jajaj -->
+           @if (session()->has('popup') && Session::get('popup')=='open') 
+           <!--si todo salio bien al guardar entra aca e genera la alerta -->
+            <script>  
+                 swal({
+                  type: 'success',
+                  title: $('#notice').val(),//carga el titulo con lo q hay en el input notice
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"70%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+
+            </script>
+            @endif
+
+            @if (session()->has('popup') && Session::get('popup')!='open') 
+        
+            <script>
+              	//si no  se guardo correctaente tira error perro
+                 swal({
+                  type: 'error',
+                  title: $('#notice').val(),
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"100%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+            </script>
+            @endif
+
         @endif
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
 				<table id="example1" class="table table-striped table-bordered table-condensed table-hover">
-					<thead>
+					<thead style="background: #9BE2F3;">
 						<th>Nombre</th>
 						<th>Apellido</th>
 						<th>DNI</th>
 						<th>Obra Social</th>
-						<th>Sangre</th>
+						
 						<th>Telefono</th>
 						<th>Email</th>
 						<th>Condicion</th>
@@ -33,13 +63,14 @@
 						<td>{{$pac->apellido}}</td>
 						<td>{{$pac->documento}}</td>
 						<td>{{$pac->obrasocial}}</td>
-						<th>{{$pac->tipo_sangre}}</th>
+						
 						<td>{{$pac->telefono}}</td>
 						<td>{{$pac->email}}</td>
 						<td>{{$pac->condicion}}</td>
 						<td>
-							<a href="{{URL::action('PacienteController@edit', $pac->idpaciente)}}"><button class="btn btn-info"> Editar</button></a>
-							<a href="https://localhost/APPODONTOGRAMA/view/?idpaciente={{$pac->idpaciente}}&nombre={{$pac->nombre}}&apellido={{$pac->apellido}}&documento={{$pac->documento}}&obrasocial={{$pac->obrasocial}}&telefono={{$pac->telefono}}&sangre={{$pac->tipo_sangre}}&nacimiento={{$pac->nacimiento}}"><button class="btn .btn.bg-maroon">Odontograma</button></a>
+							
+							<a href="{{URL::action('PacienteController@edit', $pac->idpaciente)}}"><button class="fa fa-pencil-square-o btn btn-info"></button></a>
+							<a href="{{URL::action('PacienteController@show', $pac->idpaciente)}}?profesional={{$pac->idpaciente}}"><button class="btn btn-info">Historial/Detalles</button></a>
 							<a href="" data-target="#modal-delete-{{$pac->idpaciente}}" data-toggle="modal"><button class="btn btn-danger"> Eliminar</button></a>
 						</td>
 					</tr>

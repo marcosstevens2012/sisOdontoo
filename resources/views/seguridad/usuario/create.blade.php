@@ -2,7 +2,7 @@
 @section ('contenido')
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h3>Nueva usuari</h3>
+			<h3>Nuevo usuario</h3>
 			@if (count($errors)>0)
 			<div class="alert alert-danger">
 				<ul>
@@ -14,7 +14,25 @@
 			@endif
 			{!! Form::open(array('url'=>'seguridad/usuario', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 			{{Form::token()}}
-			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+
+                    <div class="form-group{{ $errors->has('tipo') ? ' has-error' : '' }}">
+
+
+                            <label for="nombre" class="col-md-4 control-label">Tipo</label>
+
+                            <div class="col-md-6">
+                                <select name="tipo" id="tipo" class="form-control">
+                                    <option >Seleccione Tipo</option>
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Profesional</option>
+                                    <option value="3">Secretario/a</option>
+                                </select>
+                            </div>
+                    </div>
+
+			         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+
+
                             <label for="nombre" class="col-md-4 control-label">Nombre</label>
 
                             <div class="col-md-6">

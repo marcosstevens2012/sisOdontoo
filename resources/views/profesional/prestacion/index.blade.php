@@ -9,8 +9,8 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-condensed table-hover">
-					<thead>
+				<table id="example1" class="table table-bordered table-striped">
+					<thead style="background: #9BE2F3;">
 						<th>Nombre</th>
 						<th>Opciones</th>
 					</thead>
@@ -28,9 +28,23 @@
 				</table>
 				
 			</div>
-			{{$prestaciones->render()}}
+			
 			
 		</div>
 
 	</div>
+
+	<script type="text/javascript">
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        "order": [[ 1, "desc" ]],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+            
+     }
+    });
+} );
+</script>
 @endsection
+
+

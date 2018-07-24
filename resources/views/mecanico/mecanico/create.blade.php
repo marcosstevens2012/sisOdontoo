@@ -20,7 +20,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label>Nombre</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" 
+				<input class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this); this.value=this.value.replace(/[^a-zA-Z]/g,'');" title="Se necesita un nombre" required value="{{old('nombre')}}"type="text" name="nombre" 
          		title="Letras"/>
 
 			</div>
@@ -29,7 +29,7 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group ">
 				<label> Apellido</label>
-				<input class='form-control' style="text-transform:uppercase;" onkeyup="aMays(event, this)" onblur="aMays(event, this)" title="Se necesita un apellido" required value="{{old('apellido')}}"type="text" name="apellido"  />
+				<input class='form-control'  style="text-transform:uppercase;" onkeyup="aMays(event, this); this.value=this.value.replace(/[^a-zA-Z]/g,'');" title="Se necesita un apellido" required value="{{old('apellido')}}"type="text" name="apellido"  />
 
 			</div>
 		</div>
@@ -39,30 +39,28 @@
 				<select name="tipodocumento" id="tipodocumento" required class="form-control selectpicker">
 					<option >Seleccione Documento</option>
 					@foreach($documento as $doc)
-
 						<option value="{{$doc->idtipo_documento}}">{{$doc->nombre}}</option>
-						
 					@endforeach
 				</select>
 			</div>
 		</div>
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
-				<label name="documento" for="documento">DOCUMENTO</label>
-				<input name="documento" type="number"  class="form-control" required value="{{old('documento')}}" placeholder="DOCUMENTO" maxlength="8" >
+				<label name="documento" for="documento">Documento</label>
+				<input name="documento" id="documento" type="text"  class="documento form-control" required value="{{old('documento')}}" placeholder="Documento" maxlength="8">
 			</div>
 		</div>
 
 		<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 			<div class="form-group">
-				<label name="matricula" for="documento">MATRICULA</label>
-				<input name="matricula" type="number"  class="form-control" required value="{{old('matricula')}}" placeholder="DOCUMENTO" maxlength="8" >
+				<label name="matricula" for="documento">Matricula</label>
+				<input name="matricula" type="text"  class="matricula form-control" required value="{{old('matricula')}}" placeholder="Matricula" maxlength="8" >
 			</div>
 		</div>
 
 		<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 			<div class="form-group">
-				<label>Nacimiento</label>
+				<label>Fecha de Nacimiento</label>
 				<input type="date" name="nacimiento" id='nacimiento' title="Se necesita fecha" required value="{{old('nacimiento')}}" class="form-control" placeholder="Nacimiento" min="1800-01-01" max="2020-12-31">
 			</div>
 		</div>
@@ -102,18 +100,18 @@
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
-				<label name="email" for="email">EMAIL</label>
-				<input name="email" type="mail"  class="form-control" required value="{{old('email')}}" placeholder="EMAIL" >
+				<label name="email" for="email">Email</label>
+				<input name="email" type="mail"  class="form-control" required value="{{old('email')}}" placeholder="Email" >
 			</div>
 		</div>
 
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-					<div class="form-group">
-						<label for="telefono">Telefono</label>
-						<input type="" name="telefono" id="telefono"  class="form-control" value="{{old('telefono')}}" placeholder="Telefono">
-					</div>
+			<div class="form-group">
+				<label name="telefono" for="telefono">Telefono*</label>
+				<input name="telefono" id="telefono" type="text"  class="telefono form-control" required value="{{old('telefono')}}" placeholder="Telefono"
+         		title="Ingrese un numero de telefono valido">
+			</div>
 		</div>
-
 		
 
 		<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -147,9 +145,21 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="{{asset('js/jQuery-3.1.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jquery-3.2.0.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>
 
+
+<script type="text/javascript">
+$(document).ready(function($){
+
+		$('.matricula').mask("99999999", {reverse: true});
+		$('.documento').mask("99999999", {reverse: true});
+		$(".telefono").mask("9999-999999");
+		
+	})
+</script>
 
 <script type="text/javascript">
     $(document).ready(function(){

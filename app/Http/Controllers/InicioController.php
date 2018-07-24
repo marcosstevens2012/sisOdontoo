@@ -56,7 +56,7 @@ class InicioController extends Controller
                 if($data->count()) {
                     foreach ($data as $key => $value) {
                         $events[] = Calendar::event(
-                            $value->idturno,
+                            $value->idpaciente,
                             true,
                             new \DateTime($value->fecha),
                             new \DateTime($value->fecha.' +1 day'),

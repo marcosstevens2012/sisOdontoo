@@ -12,11 +12,12 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
 				<table id="example1" class="table table-striped table-bordered table-condensed table-hover">
-					<thead>
+					<thead style="background: #9BE2F3;">
 						<th>Usuario</th>
 						<th>Tabla</th>
 						<th>Evento</th>
-						<th>Valores</th>
+						<th>Valor Nuevo</th>
+						<th>Valor anteriror</th>
 						<th>Fecha y Hora</th>
 					</thead>
 					<!-- bucle -->
@@ -26,6 +27,7 @@
 						<td>{{$aud->tabla}}</td>
 						<td>{{$aud->evento}}</td>
 						<td>{{$aud->newval}}</td>
+						<td>{{$aud->oldval}}</td>
 						<td>{{$aud->fechahora}}</td>
 					</tr>
 					@include('auditoria.auditoria.modal')

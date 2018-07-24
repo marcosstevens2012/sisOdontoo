@@ -5,11 +5,48 @@
 			<h3>Listado de Trasacciones <a href="transaccion/create"><button class="btn btn-success">Nuevo</button></a>			@include('transaccion.transaccion.search')
 		</div>
 	</div>
+
+	 @if (Session::has('notice'))
+         <input type="hidden" name="notice" id="notice" value="{{Session::get('notice')}}"> <!--cargo en un input el valor para q sea mas facil acceder a ese valoe desde javascript //es la form q se jajaj -->
+           @if (session()->has('popup') && Session::get('popup')=='open') 
+           <!--si todo salio bien al guardar entra aca e genera la alerta -->
+            <script>  
+                 swal({
+                  type: 'success',
+                  title: $('#notice').val(),//carga el titulo con lo q hay en el input notice
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"70%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+
+            </script>
+            @endif
+
+            @if (session()->has('popup') && Session::get('popup')!='open') 
+        
+            <script>
+              //si no  se guardo correctaente tira error perro
+                 swal({
+                  type: 'error',
+                  title: $('#notice').val(),
+                  showConfirmButton:true,
+                  confirmButtonText:"Aceptar",
+                  width:"100%",
+                  padding: '10em',
+                  showLoaderOnConfirm: true,
+                });
+            </script>
+            @endif
+
+        @endif
+
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed table-hover">
-					<thead>
+					<thead style="background: #9BE2F3;">
 						<th>Fecha</th>
 						<th>Paciente</th>
 						<th>Total</th>

@@ -160,7 +160,7 @@ footer .pagenum:before {
   <body>
     <header class="clearfix">
       <div id="logo">
-          <img src="" />
+          <img src="../public/images/pp.jpg" />
       </div>
       <h1>BRUNA DENT - LIQUIDACIONES</h1>
       <div id="company" class="clearfix">
@@ -179,9 +179,8 @@ footer .pagenum:before {
           <table class="table table-bordered">
                   <thead>
                      <tr>
-                      <th style="width: 40px">Fecha</th>
-                      <th style="width: 40px">Paciente</th>
                       <th style="width: 40px">Profesional</th>
+                      <th style="width: 40px">Paciente</th>
                       <th style="width: 40px">Prestacion</th>
                       <th style="width: 40px">Coseguro</th>
                      
@@ -194,9 +193,9 @@ footer .pagenum:before {
                       $newDate = date("d-m-Y", strtotime($originalDate)); ?>
                     <tr>
                       
-                      <td style="width: 40px" >{{$newDate}}</td>
-                      <td style="width: 10px" >{{$liq->paciente}}</td>
                       <td style="width: 10px" >{{$liq->profesional}}</td>
+                      <td style="width: 10px" >{{$liq->paciente}}</td>
+                      
                       <td style="width: 10px" >{{$liq->prestacion}}</td>
                       <td style="width: 40px" >{{$liq->coseguro}}</td>
                      

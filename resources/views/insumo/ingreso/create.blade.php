@@ -43,14 +43,14 @@
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="serie_comprobante">Serie Comprobante</label>
-				<input type="" name="serie_comprobante"  value="{{old('serie_comprobante')}}" class="form-control" placeholder="Serie Comprobante" pattern="[A-Za-z]{4-16}" required="required">
+				<input type="" name="serie_comprobante"  value="{{old('serie_comprobante')}}" class="serie_comprobante form-control" placeholder="Serie Comprobante" pattern="[A-Za-z]{4-16}" required="required">
 			</div>
 		</div>
 		
 		<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 			<div class="form-group">
 				<label for="num_comprobante">Número Comprobante</label>
-				<input type="" name="num_comprobante" required="required" value="{{old('num_comprobante')}}" class="form-control" placeholder="Numero Comprobante" pattern="[A-Za-z]{4-16}">
+				<input type="" name="num_comprobante" required="required" value="{{old('num_comprobante')}}" class="num_comprobante form-control" placeholder="Numero Comprobante" pattern="[A-Za-z]{4-16}">
 			</div>
 		</div>
 	</div>
@@ -78,7 +78,7 @@
 				<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 					<div class="form-group">
 						<label for="cantidad">Cantidad</label>
-						<input type="number" name="pcantidad" id="pcantidad" class="form-control " placeholder="cantidad">
+						<input type="number" name="pcantidad" id="pcantidad" class="cantidad form-control " placeholder="cantidad">
 					</div>
 				</div>
 
@@ -140,11 +140,15 @@
 	<script src="{{asset('js/jQuery-3.1.1.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('js/jquery-3.2.0.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>
-	
+
+
 
 	<script type="text/javascript">
 		$(document).ready(function($){
-			$('#pprecio_compra').mask("#.##0,00", {reverse: true});
+				$('#pprecio_compra').mask("#.##0,00", {reverse: true});
+				$('.num_comprobante').mask("999-99999", {reverse: true});
+				$('.serie_comprobante').mask("99-999999", {reverse: true});
+				$(".cantidad").mask("9999");
 		})
 	</script>
 

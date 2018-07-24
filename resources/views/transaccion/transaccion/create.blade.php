@@ -1,10 +1,7 @@
 @extends ('layouts.admin')
 @section ('contenido')
-
-	<?php
-	$idpaciente = $_GET['idpaciente'];
-	?>
-	<div class="row">
+	
+		<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 			<h3>NUEVA TRANSACCION</h3>
 			@if (count($errors)>0)
@@ -21,12 +18,24 @@
 	{!! Form::open(array('url'=>'transaccion/transaccion', 'method'=>'POST', 'autocomplete'=>'off'))!!}
 	{{Form::token()}}
 	
-						<input style="display:none;" type="number" name="idpaciente" id="idpaciente" class="form-control" placeholder="Paciente" value="{{$idpaciente}}"></label>
 		
 		
 	<div class="row">
 		<div class="panel panel-primary">
 			<div class="panel-body">
+
+				<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+					<div class="form-group">
+						<label>Paciente</label>
+						<select name="idpaciente" id="idpaciente" class="form-control selectpicker" data-live-search="true">
+							<option>Seleccione</option>
+							@foreach($pacientes as $pas)
+									<option value="{{$pas->idpaciente}}">{{$pas->nombre}} {{$pas->apellido}}_____ {{$pas->documento}}</option>
+							@endforeach	
+						</select>
+					</div>
+				</div>
+				
 				<div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
 					<div class="form-group">
 						<label>Prestacion</label>

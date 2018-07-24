@@ -67,10 +67,26 @@ class PdfliquidacionesController extends Controller
 
     $fecha_i=$request->get('fecha_inicio');
     $fecha_f=$request->get('fecha_fin');
-    $profesional=$request->get('profesional');
+    $profesional=$request->get('profesionales');
+    $estado =$request->get('estado');
+
+
     $vistaurl="liquidacion.Pdfliquidaciones.show";
 
-    $liquidacion=DB::table('liquidacion as l')
+    //dd($estado);
+    if( $fecha_f == "" && $fecha_i == "" ){
+    $liquidacion=DB::table('preliquidacion as l')
+            ->join('profesional as pro','pro.idprofesional','=','l.idprofesional')
+            ->join('persona as per','per.idpersona','=','pro.idpersona')
+            ->join('paciente as pac','pac.idpaciente','=','l.idpaciente')
+            ->join('persona as p','p.idpersona','=','pac.idpersona')
+            ->join('prestacion as pre','pre.codigo','=','l.idprestacion')
+            ->select('l.*',DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 'l.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'))
+            ->get();
+    }
+    
+    if( $fecha_f != "" && $fecha_i != "" ){
+    $liquidacion=DB::table('preliquidacion as l')
             ->join('profesional as pro','pro.idprofesional','=','l.idprofesional')
             ->join('persona as per','per.idpersona','=','pro.idpersona')
             ->join('paciente as pac','pac.idpaciente','=','l.idpaciente')
@@ -78,9 +94,38 @@ class PdfliquidacionesController extends Controller
             ->join('prestacion as pre','pre.codigo','=','l.idprestacion')
             ->select('l.*',DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 'l.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'))
             ->whereBetween('l.fecha',[$fecha_i, $fecha_f])
-            ->orderBy('l.idliquidacion','desc')
             ->get();
-    
+    }
+
+    if( $profesional != "" && $estado == ""){
+
+            $liquidacion=DB::table('preliquidacion as l')
+            ->join('profesional as pro','pro.idprofesional','=','l.idprofesional')
+            ->join('persona as per','per.idpersona','=','pro.idpersona')
+            ->join('paciente as pac','pac.idpaciente','=','l.idpaciente')
+            ->join('persona as p','p.idpersona','=','pac.idpersona')
+            ->join('prestacion as pre','pre.codigo','=','l.idprestacion')
+            ->select('l.*',DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 'l.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'))
+            ->where('l.idprofesional','=',$profesional)
+            ->get();
+            //dd($liquidacion);
+    }
+
+    if( $profesional != "" && $estado != ""){
+
+            $liquidacion=DB::table('preliquidacion as l')
+            ->join('profesional as pro','pro.idprofesional','=','l.idprofesional')
+            ->join('persona as per','per.idpersona','=','pro.idpersona')
+            ->join('paciente as pac','pac.idpaciente','=','l.idpaciente')
+            ->join('persona as p','p.idpersona','=','pac.idpersona')
+            ->join('prestacion as pre','pre.codigo','=','l.idprestacion')
+            ->select('l.*',DB::raw('CONCAT(p.apellido, " ",p.nombre) AS paciente'), 'l.idpaciente' ,'pre.nombre as prestacion',DB::raw('CONCAT(per.apellido, " ",per.nombre) AS profesional'))
+            ->where('l.idprofesional','=',$profesional)
+            ->where('l.liquidado','=',$estado)
+            ->get();
+            //dd($liquidacion);
+    }
+
     $date = date_create($fecha_i);
     $fecha_inicio=date_format($date, 'd-m-Y');
 
@@ -100,7 +145,7 @@ class PdfliquidacionesController extends Controller
     //$pdf->setpaper($customPaper);
     $pdf->loadHTML($view);
     
-    return $pdf->stream('reporte',['fecha_inicio'=>$fecha_inicio,'fecha_fin'=>$fecha_fin,'date'=>$date,'usuario'=>$usuario,"liquidacion"=>$liquidacion,"profesional"=>$profesional]);
+    return $pdf->stream('reporte',['fecha_inicio'=>$fecha_inicio,'fecha_fin'=>$fecha_fin,'date'=>$date,'usuario'=>$usuario,"liquidacion"=>$liquidacion]);
     // return $this->crearPDF($venta, $vistaurl,$tipo);
 
     }
@@ -132,6 +177,6 @@ class PdfliquidacionesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
